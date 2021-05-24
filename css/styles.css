@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
+body {
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.debug {
+    border: solid black;
+}
+
+hr {
+    width: 99%;
+}
+
+.title-head {
+    font-size: 35px;
+    padding-left: 40px;
+    height: 80px;
+    padding-top: 20px;
+    display: inline;
+}
+
+.dot {
+    color: #007bff;
+}
+
+.signinButton {
+    background-color: #007bff;
+    color: white;
+    display: inline;
+    margin-left: 35%;
+    width: auto;
+}
+
+.signoutButton {
+    background-color: #007bff;
+    color: white;
+    display: inline;
+    width: auto;
+}
+
+.container1 {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.container2 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    border: 2px solid black;
+    width: 300px;
+    margin: 10px 10px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: center;
+    border: none;
+}
+
+.card-header1 {
+    display: flex;
+    justify-content: center;
+    border: none;
+}
+
+.card-body {
+    display: flex;
+    justify-content: center;
+}
+
+.cardIcon {
+    font-size: 37px;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.card:hover {
+    color: #007bff;
+    transition: all 0.2s ease-out;
+    box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+    top: -8px;
+    border: 1px solid #cccccc;
+    background-color: white;
+}
+
