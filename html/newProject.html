@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/newProjectCSS.css">
+    <title>SB® | New Project</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand mr-5" href="../index.html">
+            <h3 class="title-head1">Sukalpi Brainworks<strong class="dot">.</strong><sup>®</sup></h3>
+        </a>
+        <div class="collapse navbar-collapse navbarList" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="#">New Project</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Manage Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Payouts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Revenues</a>
+                </li>
+            </ul>
+            <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
+        </div>
+    </nav>
+
+    <div class="container newProjectContainer">
+        <div class="row mt-2 mb-2 newProjectTitle">
+            <h4>Set up a New Project</h4>
+        </div>
+        <div class="row mb-3 card-header card-headerNewProject">
+            <h5 class="">Client Details</h4>
+        </div>
+        <form>
+            <div class="form-group row">
+                <label for="clientName" class="col-6 col-sm-2 col-form-label">Client Name</label>
+                <div class="col-sm-4 col-6">
+                  <input type="text" class="form-control" id="clientName" placeholder="Client Name">
+                </div>
+
+                <label for="contactPerson" class="col-6 col-sm-2 col-form-label">Contact Person</label>
+                <div class="col-6 col-sm-4">
+                  <input type="email" class="form-control" id="contactPerson" placeholder="Contact Person">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="clientCountry" class="col-6 col-sm-2 col-form-label">Client's Country</label>
+                <div class="col-sm-4 col-6">
+                  <input type="text" class="form-control" id="clientCountry" placeholder="Client's Country">
+                </div>
+
+                <label for="rating" class="col-6 col-sm-2 col-form-label">Rating</label>
+                <div class="col-6 col-sm-4">
+                  <input type="email" class="form-control" id="rating" placeholder="Rating">
+                </div>
+            </div>
+        </form>
+        <div class="row mb-3 card-header card-headerNewProject">
+            <h5>Project Details</h4>
+        </div>
+        <form>
+            <div class="form-group row">
+                <label for="projectName" class="col-6 col-sm-2 col-form-label">Project Name</label>
+                <div class="col-sm-4 col-6">
+                  <input type="text" class="form-control" id="projectName" placeholder="Project Name">
+                </div>
+
+                <label for="projectTypeSelect" class="col-6 col-sm-2 col-form-label">Project Type</label>
+                <div class="col-6 col-sm-4">
+                    <select class="custom-select" id="projectTypeSelect">
+                        <option>Project Type 1</option>
+                        <option>Project Type 2</option>
+                        <option>Project Type 3</option>
+                        <option>Project Type 4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="projectValue" class="col-6 col-sm-2 col-form-label">Project Value</label>
+                <div class="col-sm-4 col-6">
+                  <input type="text" class="form-control" id="projectValue" placeholder="Project Value">
+                </div>
+
+                <label for="contractTypeSelect" class="col-6 col-sm-2 col-form-label">Contract Type</label>
+                <div class="col-6 col-sm-4">
+                    <select class="custom-select" id="contractTypeSelect">
+                        <option>Contract Type 1</option>
+                        <option>Contract Type 2</option>
+                        <option>Contract Type 3</option>
+                        <option>Contract Type 4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="feesRate" class="col-6 col-sm-2 col-form-label">Fees Rate</label>
+                <div class="col-sm-4 col-6">
+                  <input type="text" class="form-control" id="feesRate" placeholder="Fees Rate">
+                </div>
+                <label for="expectedRevenue" class="col-6 col-sm-2 col-form-label">Expected Revenue</label>
+                <div class="col-6 col-sm-4">
+                  <input type="email" class="form-control" id="expectedRevenue" placeholder="Expected Revenue (INR)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="dueDate" class="col-6 col-sm-2 col-form-label">Due Date</label>
+                <div class="col-sm-4 col-6">
+                  <input type="text" class="form-control" id="dueDate" placeholder="Due Date">
+                </div>
+            </div>
+            <button class="btn newProjectSaveButton" onclick="">Save</button>
+            <button class="btn newProjectSaveManage" onclick="">Save & Manage</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
