@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/manageProjects.css">
+    <title>SB® | Manage Projects</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand mr-5" href="../index.html">
+            <h3 class="title-head1">Sukalpi Brainworks<strong class="dot">.</strong><sup>®</sup></h3>
+        </a>
+        <div class="collapse navbar-collapse navbarList" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="./newProject.html">New Project</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="#">Manage Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Payouts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Revenues</a>
+                </li>
+            </ul>
+            <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row manageProjectTitle">
+            <div class="col-8">
+                <h4>Manage Ongoing Projects</h4>
+            </div>
+            <div class="col-4">
+                <button class="btn manageProjectSaveButton" onclick="">Save</button>
+            </div>
+        </div>
+
+        <div id="accordion1" class="manageProjectContainer">
+            <div class="card manageProjectCard">
+                <div class="card-header d-flex" id="headingOne">
+                    <a class="title col-7">
+                        <h5 class="mb-0" data-toggle="collapse" data-target="#collapseOne">
+                            SB001 : Project 1  
+                        </h5>
+                    </a>
+                    <div class="col-2">
+                         
+                    </div>
+                    <div class="col-3 manageProjectsToggle d-flex">
+                        <h6 class="ml-4 ongoingText">
+                            Ongoing
+                        </h6>
+                        <label class="ml-2 mr-2 switch toggleButton">
+                            <input type="checkbox" id="openingToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <h6 class="completedText">
+                            Completed
+                        </h6>
+                    </div>
+                </div>
+          
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
+                    <div class="card-body">
+                        <div class="row ml-3">
+                            <button class="btn manageProjectAddTaskButton" onclick="">Add New Task</button>
+                        </div>
+                        <div class="row ml-1 mt-3">
+                            <div class="col-2">
+                                <h6>Task Name</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Task Name</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Task Name</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Task Name</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Task Name</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Task Name</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
