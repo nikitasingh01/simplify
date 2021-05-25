@@ -113,24 +113,25 @@
             </div>
             <div class="form-group row">
                 <label for="feesRate" class="col-6 col-sm-2 col-form-label">Fees Rate</label>
+                <button class="btn calculatorButton" onclick=""><i class="bi bi-calculator"></i></button>
                 <div class="col-sm-4 col-6">
-                  <input type="text" class="form-control" id="feesRate" placeholder="Fees Rate">
+                    <input type="text" class="form-control" id="feesRate" placeholder="Fees Rate" style="display: inline;">
                 </div>
                 <label for="expectedRevenue" class="col-6 col-sm-2 col-form-label">Expected Revenue</label>
                 <div class="col-6 col-sm-4">
-                  <input type="text" class="form-control" id="expectedRevenue" placeholder="Expected Revenue (INR)">
+                  <input type="text" class="form-control" id="expectedRevenue" placeholder="Expected Revenue (₹)">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="dueDate" class="col-6 col-sm-2 col-form-label">Due Date</label>
                 <div class="col-sm-4 col-6 form-group">
-                    <div class='input-group date' id='datepicker' data-date-format="dd-mm-yyyy">
-                        <input type='text' placeholder="dd-mm-yyyy" class="form-control" />
-                        <span class="input-group-addon calendarIconSpan">
-                            <i class="bi bi-calendar-day calendarIcon"></i>
+                    <div class='input-group date datepicker' id='datepicker' data-date-format="dd-mm-yyyy">
+                        <input type='text' placeholder="dd-mm-yyyy" class="form-control" id="dueDate">
+                        <span class="input-group-addon">
                         </span>
                     </div>
                 </div>
+                <i class="bi bi-calendar-day calendarIcon"></i>
             </div>
             <button class="mt-2 btn newProjectSaveManage" onclick="">Save & Manage</button>
             <button class="mt-2 btn newProjectSaveButton" onclick="">Save</button>

@@ -57,12 +57,28 @@ body {
     background-color: #f1f1f1;
 }
 
-.calendarIconSpan {
-    display: flex;
-    justify-content: center;
+.calculatorButton {
+    display: inline;
+    font-size: 25px;
+    margin-left: -51px;
+    background-color: white;
+    z-index: 10;
+    height: 25px;
+    color: black;
+}
+
+.calculatorButton:active {
+    box-shadow: none;
+    color: #007bff;
+}
+
+#dueDate {
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .calendarIcon {
-    font-size: 25px;
-    margin-left: 10px;
+    font-size: 20px;
+    margin-left: -45px;
+    margin-top: 5px;
 }
