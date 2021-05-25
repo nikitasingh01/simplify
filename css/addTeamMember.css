@@ -1,0 +1,39 @@
+.teamTitle {
+    border-bottom: 1px solid black;
+}
+
+.addMemberBox {
+    margin-top: 20px;
+}
+
+.form-control {
+    border: 2px black solid;
+}
+
+.custom-select {
+    border: 2px black solid;
+}
+
+.addMemberSaveButton {
+    background-color: #007bff;
+    color: white;
+    float: right;
+    width: 150px;
+}
+
+.backButton {
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: white;
+    font-size: 30px;
+}
+
+.backButton:hover {
+    margin-right: 15px;
+    margin-left: -5px;
+    transition: 0.3s;
+}
+
+.backButton:active {
+    box-shadow: none;
+}
