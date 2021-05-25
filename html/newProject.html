@@ -27,16 +27,16 @@
                     <a class="nav-link" href="./manageProjects.html">Manage Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Team</a>
+                    <a class="nav-link" href="./team.html">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Payouts</a>
+                    <a class="nav-link" href="./payouts.html">Payouts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Reports</a>
+                    <a class="nav-link" href="./reports.html">Reports</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Revenues</a>
+                    <a class="nav-link" href="./revenues.html">Revenues</a>
                 </li>
             </ul>
             <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
@@ -44,13 +44,13 @@
     </nav>
 
     <div class="container newProjectContainer">
-        <div class="row mt-2 mb-2 newProjectTitle">
+        <div class="row mt-3 mb-2 newProjectTitle">
             <h4>Set up a New Project</h4>
         </div>
-        <div class="row mt-2 mb-2 card-headerNewProject">
+        <div class="row mt-3 mb-2 card-headerNewProject">
             <h5 class="">Client Details</h4>
         </div>
-        <form>
+        <form class="clientDetailsBox">
             <div class="form-group row">
                 <label for="clientName" class="col-6 col-sm-2 col-form-label">Client Name</label>
                 <div class="col-sm-4 col-6">
@@ -59,7 +59,7 @@
 
                 <label for="contactPerson" class="col-6 col-sm-2 col-form-label">Contact Person</label>
                 <div class="col-6 col-sm-4">
-                  <input type="email" class="form-control" id="contactPerson" placeholder="Contact Person">
+                  <input type="text" class="form-control" id="contactPerson" placeholder="Contact Person">
                 </div>
             </div>
             <div class="form-group row">
@@ -70,15 +70,14 @@
 
                 <label for="rating" class="col-6 col-sm-2 col-form-label">Rating</label>
                 <div class="col-6 col-sm-4">
-                  <input type="email" class="form-control" id="rating" placeholder="Rating">
+                  <input type="text" class="form-control" id="rating" placeholder="Rating">
                 </div>
             </div>
         </form>
-        <hr>
-        <div class="row mb-2 card-headerNewProject">
+        <div class="row mt-3 mb-2 card-headerNewProject">
             <h5>Project Details</h4>
         </div>
-        <form>
+        <form class="clientDetailsBox">
             <div class="form-group row">
                 <label for="projectName" class="col-6 col-sm-2 col-form-label">Project Name</label>
                 <div class="col-sm-4 col-6">
@@ -118,7 +117,7 @@
                 </div>
                 <label for="expectedRevenue" class="col-6 col-sm-2 col-form-label">Expected Revenue</label>
                 <div class="col-6 col-sm-4">
-                  <input type="email" class="form-control" id="expectedRevenue" placeholder="Expected Revenue (INR)">
+                  <input type="text" class="form-control" id="expectedRevenue" placeholder="Expected Revenue (INR)">
                 </div>
             </div>
             <div class="form-group row">
@@ -127,9 +126,8 @@
                   <input type="text" class="form-control" id="dueDate" placeholder="Due Date">
                 </div>
             </div>
-            <hr>
-            <button class="btn newProjectSaveManage" onclick="">Save & Manage</button>
-            <button class="btn newProjectSaveButton" onclick="">Save</button>
+            <button class="mt-2 btn newProjectSaveManage" onclick="">Save & Manage</button>
+            <button class="mt-2 btn newProjectSaveButton" onclick="">Save</button>
         </form>
     </div>
 

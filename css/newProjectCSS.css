@@ -1,7 +1,7 @@
 body {
     background: url(../images/landing_1.png);
     background-size: 250px;
-    background-position-y: 530px;
+    background-position-y: 543px;
     background-position-x: 10px;
     background-repeat: no-repeat;
     background-blend-mode: saturation;
@@ -40,5 +40,9 @@ body {
 }
 
 .newProjectTitle {
+    border-bottom: 1px solid black;
+}
+
+.clientDetailsBox {
     border-bottom: 1px solid black;
 }

@@ -1,25 +1,3 @@
-.manageProjectTitle {
-    margin-top: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid black;
-}
-
-.manageProjectSaveButton {
-    background-color: #007bff;
-    color: white;
-    width: 80px;
-    float: right;
-}
-
-.manageProjectContainer {
-    display: flex;
-    justify-content: center;
-}
-
-.manageProjectCard {
-    width: 100%;
-}
-
 .switch {
     position: relative;
     display: inline-block;
@@ -79,35 +57,25 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
+.payoutsTitle {
+    margin-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.payoutsContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.payoutsCard {
+    width: 100%;
+}
+
 .title {
     cursor: pointer;
 }
 
-.manageProjectAddTaskButton {
-    background-color: #007bff;
-    color: white;
-    width: 250px;
+.displayInline {
+    display: inline;
 }
-
-.cardIconManageProject {
-    font-size: 20px;
-}
-
-.deleteButton {
-    width: 25px; 
-    display: flex; 
-    justify-content: center; 
-    height: 35px; 
-    align-items: center; 
-    background-color: white;
-}
-
-.form-control {
-    border: 2px solid black;
-    z-index: 10;
-}
-
-.custom-select {
-    border: 2px solid black;
-}
-

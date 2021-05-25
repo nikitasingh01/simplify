@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/revenue.css">
+    <title>SB® | Revenues</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand mr-5" href="../index.html">
+            <h3 class="title-head1">Sukalpi Brainworks<strong class="dot">.</strong><sup>®</sup></h3>
+        </a>
+        <div class="collapse navbar-collapse navbarList" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="./newProject.html">New Project</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./manageProjects.html">Manage Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./team.html">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./payouts.html">Payouts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./reports.html">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Revenues</a>
+                </li>
+            </ul>
+            <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mt-5 revenueTitle">
+            <h4>Revenues</h4>
+        </div>
+
+        <div class="form-group row revenueForm">
+            <label for="date" class="col-form-label">Date</label>
+            <div class="">
+              <input type="text" class="form-control" id="date" placeholder="Date">
+            </div>
+            <label for="dollarPayment" class="ml-5 col-form-label">Payment Received ($)</label>
+            <div class="">
+              <input type="text" class="form-control" id="dollarPayment" placeholder="$">
+            </div>
+            <label for="inrPayment" class="ml-5 col-form-label">Payment Received (₹)</label>
+            <div class="">
+              <input type="text" class="form-control" id="inrPayment" placeholder="₹">
+            </div>
+            <div class="ml-5">
+                <button class="btn btn-primary revenueSaveButton" onclick="">Save</button>
+            </div>
+        </div>
+        
+
+        <div class="">
+            <table class="table table-bordered table-hover">
+                <thead class="table-active">
+                  <tr>
+                    <th scope="col" class="">Date</th>
+                    <th scope="col">Payment Received ($)</th>
+                    <th scope="col">Payment Received (₹)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">20 June 2020</th>
+                        <td>100</td>
+                        <td>7000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="">20 August 2020</th>
+                        <td>200</td>
+                        <td>14000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="">21 August 2020</th>
+                        <td>250</td>
+                        <td>17500</td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -27,16 +27,16 @@
                     <a class="nav-link active" href="#">Manage Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Team</a>
+                    <a class="nav-link" href="./team.html">Team</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Payouts</a>
+                    <a class="nav-link" href="./payouts.html">Payouts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Reports</a>
+                    <a class="nav-link" href="./reports.html">Reports</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Revenues</a>
+                    <a class="nav-link" href="./revenues.html">Revenues</a>
                 </li>
             </ul>
             <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
@@ -61,15 +61,14 @@
                             SB001 : Project 1  
                         </h5>
                     </a>
-                    <div class="col-2">
-                         
+                    <div class="col-2">   
                     </div>
                     <div class="col-3 manageProjectsToggle d-flex">
                         <h6 class="ml-4 ongoingText">
                             Ongoing
                         </h6>
                         <label class="ml-2 mr-2 switch toggleButton">
-                            <input type="checkbox" id="openingToggle" checked>
+                            <input type="checkbox" id="Toggle1" checked>
                             <span class="slider round"></span>
                         </label>
                         <h6 class="completedText">
@@ -78,30 +77,183 @@
                     </div>
                 </div>
           
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
                     <div class="card-body">
                         <div class="row ml-3">
                             <button class="btn manageProjectAddTaskButton" onclick="">Add New Task</button>
                         </div>
-                        <div class="row ml-1 mt-3">
+                        <div class="row ml-1 mt-4">
                             <div class="col-2">
                                 <h6>Task Name</h6>
                             </div>
                             <div class="col-2">
-                                <h6>Task Name</h6>
+                                <h6>Due Date</h6>
                             </div>
+                            <div class="col-2">
+                                <h6>Team Member</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Fixed Payout</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Variable Payout</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Task Status</h6>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-2">
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="taskName" placeholder="Task Name" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="dueDate" placeholder="Due Date" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <select class="custom-select" id="teamMemberSelect">
+                                    <option>Team Member 2</option>
+                                    <option>Team Member 3</option>
+                                    <option>Team Member 4</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="fixedPayout" placeholder="Fixed Payout" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="variablePayout" placeholder="Variable Payout" style="display: inline;">
+                            </div>
+                            <div class="col-2 row align-items-center">
+                                <label class="ml-2 mr-2 switch toggleButton">
+                                    <input type="checkbox" id="Toggle1" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <h6 class="completedText">
+                                    Completed
+                                </h6>
+                            </div>
+                            <button class="btn deleteButton" onclick="">
+                                <i class="bi bi-trash cardIconManageProject"></i>
+                            </button>
+                        </div>
+                        <div class="row ml-1 mt-2">
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="taskName" placeholder="Task Name" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="dueDate" placeholder="Due Date" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <select class="custom-select" id="teamMemberSelect">
+                                    <option>Team Member 2</option>
+                                    <option>Team Member 3</option>
+                                    <option>Team Member 4</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="fixedPayout" placeholder="Fixed Payout" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="variablePayout" placeholder="Variable Payout" style="display: inline;">
+                            </div>
+                            <div class="col-2 row align-items-center">
+                                <label class="ml-2 mr-2 switch toggleButton">
+                                    <input type="checkbox" id="Toggle1" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <h6 class="completedText">
+                                    Completed
+                                </h6>
+                            </div>
+                            <button class="btn deleteButton" onclick="">
+                                <i class="bi bi-trash cardIconManageProject"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="accordion2" class="manageProjectContainer">
+            <div class="card manageProjectCard">
+                <div class="card-header d-flex" id="project2">
+                    <a class="title col-7">
+                        <h5 class="mb-0" data-toggle="collapse" data-target="#collapseTwo">
+                            SB002 : Project 2  
+                        </h5>
+                    </a>
+                    <div class="col-2">   
+                    </div>
+                    <div class="col-3 manageProjectsToggle d-flex">
+                        <h6 class="ml-4 ongoingText">
+                            Ongoing
+                        </h6>
+                        <label class="ml-2 mr-2 switch toggleButton">
+                            <input type="checkbox" id="Toggle2" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <h6 class="completedText">
+                            Completed
+                        </h6>
+                    </div>
+                </div>
+          
+                <div id="collapseTwo" class="collapse" aria-labelledby="project2" data-parent="#accordion2">
+                    <div class="card-body">
+                        <div class="row ml-3">
+                            <button class="btn manageProjectAddTaskButton" onclick="">Add New Task</button>
+                        </div>
+                        <div class="row ml-1 mt-4">
                             <div class="col-2">
                                 <h6>Task Name</h6>
                             </div>
                             <div class="col-2">
-                                <h6>Task Name</h6>
+                                <h6>Due Date</h6>
                             </div>
                             <div class="col-2">
-                                <h6>Task Name</h6>
+                                <h6>Team Member</h6>
                             </div>
                             <div class="col-2">
-                                <h6>Task Name</h6>
+                                <h6>Fixed Payout</h6>
                             </div>
+                            <div class="col-2">
+                                <h6>Variable Payout</h6>
+                            </div>
+                            <div class="col-2">
+                                <h6>Task Status</h6>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-2">
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="taskName2" placeholder="Task Name" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="dueDate2" placeholder="Due Date" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <select class="custom-select" id="teamMemberSelect2">
+                                    <option>Team Member 2</option>
+                                    <option>Team Member 3</option>
+                                    <option>Team Member 4</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="fixedPayout2" placeholder="Fixed Payout" style="display: inline;">
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="variablePayout2" placeholder="Variable Payout" style="display: inline;">
+                            </div>
+                            <div class="col-2 row align-items-center">
+                                <label class="ml-2 mr-2 switch toggleButton">
+                                    <input type="checkbox" id="Toggle1" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <h6 class="completedText">
+                                    Completed
+                                </h6>
+                            </div>
+                            <button class="btn deleteButton" onclick="">
+                                <i class="bi bi-trash cardIconManageProject"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
