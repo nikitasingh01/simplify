@@ -46,3 +46,23 @@ body {
 .clientDetailsBox {
     border-bottom: 1px solid black;
 }
+ 
+.datepicker table tr td.active.active, 
+.datepicker table tr td.active.highlighted.active {
+   background-color: #007bff;
+}
+
+.datepicker table tr td.today {
+    color: black;
+    background-color: #f1f1f1;
+}
+
+.calendarIconSpan {
+    display: flex;
+    justify-content: center;
+}
+
+.calendarIcon {
+    font-size: 25px;
+    margin-left: 10px;
+}
