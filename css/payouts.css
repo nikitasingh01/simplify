@@ -58,9 +58,15 @@ input:checked + .slider:before {
 }
 
 .payoutsTitle {
+    padding-left: 30px;
     margin-top: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid black;
+}
+
+.payoutsDetails {
+    padding-left: 30px;
+    margin-top: 10px;
 }
 
 .payoutsContainer {
@@ -76,6 +82,17 @@ input:checked + .slider:before {
     cursor: pointer;
 }
 
-.displayInline {
+.taskId {
+    margin-right: -30px;
+}
+
+.calculatorButton {
     display: inline;
+    font-size: 20px;
+    color: black;
+}
+
+.form-control {
+    width: 150px;
+    border: 2px solid black;
 }

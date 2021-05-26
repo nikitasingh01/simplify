@@ -1,7 +1,7 @@
 body {
     background: url(../images/landing_1.png);
     background-size: 250px;
-    background-position-y: 543px;
+    background-position-y: 545px;
     background-position-x: 10px;
     background-repeat: no-repeat;
     background-blend-mode: saturation;
@@ -63,13 +63,8 @@ body {
     margin-left: -51px;
     background-color: white;
     z-index: 10;
-    height: 25px;
+    height: 40px;
     color: black;
-}
-
-.calculatorButton:active {
-    box-shadow: none;
-    color: #007bff;
 }
 
 #dueDate {
