@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/manageProjects.css">
@@ -43,7 +44,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="">
         <div class="row manageProjectTitle">
             <div class="col-8">
                 <h4>Manage Ongoing Projects</h4>
@@ -83,6 +84,9 @@
                             <button class="btn manageProjectAddTaskButton" onclick="">Add New Task</button>
                         </div>
                         <div class="row ml-1 mt-4">
+                            <div class="col-1 taskId">
+                                <h6>Task ID</h6>
+                            </div>
                             <div class="col-2">
                                 <h6>Task Name</h6>
                             </div>
@@ -95,19 +99,24 @@
                             <div class="col-2">
                                 <h6>Fixed Payout</h6>
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 <h6>Variable Payout</h6>
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 <h6>Task Status</h6>
                             </div>
                         </div>
                         <div class="row ml-1 mt-2">
+                            <div class="col-1 taskId">
+                                <h6>1</h6>
+                            </div>
                             <div class="col-2">
                                 <input type="text" class="form-control" id="taskName" placeholder="Task Name" style="display: inline;">
                             </div>
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="dueDate" placeholder="Due Date" style="display: inline;">
+                            <div class='col-2 input-group date datepicker' id='datepicker' data-date-format="dd-mm-yyyy">
+                                <input type='text' placeholder="dd-mm-yyyy" class="form-control" id="dueDate">
+                                <span class="input-group-addon">
+                                </span>
                             </div>
                             <div class="col-2">
                                 <select class="custom-select" id="teamMemberSelect">
@@ -119,10 +128,10 @@
                             <div class="col-2">
                                 <input type="text" class="form-control" id="fixedPayout" placeholder="Fixed Payout" style="display: inline;">
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 <input type="text" class="form-control" id="variablePayout" placeholder="Variable Payout" style="display: inline;">
                             </div>
-                            <div class="col-2 row align-items-center">
+                            <div class="col row align-items-center">
                                 <label class="ml-2 mr-2 switch toggleButton">
                                     <input type="checkbox" id="Toggle1" checked>
                                     <span class="slider round"></span>
@@ -136,11 +145,16 @@
                             </button>
                         </div>
                         <div class="row ml-1 mt-2">
+                            <div class="col-1 taskId">
+                                <h6>2</h6>
+                            </div>
                             <div class="col-2">
                                 <input type="text" class="form-control" id="taskName" placeholder="Task Name" style="display: inline;">
                             </div>
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="dueDate" placeholder="Due Date" style="display: inline;">
+                            <div class='col-2 input-group date datepicker' id='datepicker' data-date-format="dd-mm-yyyy">
+                                <input type='text' placeholder="dd-mm-yyyy" class="form-control" id="dueDate">
+                                <span class="input-group-addon">
+                                </span>
                             </div>
                             <div class="col-2">
                                 <select class="custom-select" id="teamMemberSelect">
@@ -152,10 +166,10 @@
                             <div class="col-2">
                                 <input type="text" class="form-control" id="fixedPayout" placeholder="Fixed Payout" style="display: inline;">
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 <input type="text" class="form-control" id="variablePayout" placeholder="Variable Payout" style="display: inline;">
                             </div>
-                            <div class="col-2 row align-items-center">
+                            <div class="col row align-items-center">
                                 <label class="ml-2 mr-2 switch toggleButton">
                                     <input type="checkbox" id="Toggle1" checked>
                                     <span class="slider round"></span>
@@ -203,6 +217,9 @@
                             <button class="btn manageProjectAddTaskButton" onclick="">Add New Task</button>
                         </div>
                         <div class="row ml-1 mt-4">
+                            <div class="col-1 taskId">
+                                <h6>Task ID</h6>
+                            </div>
                             <div class="col-2">
                                 <h6>Task Name</h6>
                             </div>
@@ -215,34 +232,39 @@
                             <div class="col-2">
                                 <h6>Fixed Payout</h6>
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 <h6>Variable Payout</h6>
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 <h6>Task Status</h6>
                             </div>
                         </div>
                         <div class="row ml-1 mt-2">
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="taskName2" placeholder="Task Name" style="display: inline;">
+                            <div class="col-1 taskId">
+                                <h6>1</h6>
                             </div>
                             <div class="col-2">
-                                <input type="text" class="form-control" id="dueDate2" placeholder="Due Date" style="display: inline;">
+                                <input type="text" class="form-control" id="taskName" placeholder="Task Name" style="display: inline;">
+                            </div>
+                            <div class='col-2 input-group date datepicker' id='datepicker' data-date-format="dd-mm-yyyy">
+                                <input type='text' placeholder="dd-mm-yyyy" class="form-control" id="dueDate">
+                                <span class="input-group-addon">
+                                </span>
                             </div>
                             <div class="col-2">
-                                <select class="custom-select" id="teamMemberSelect2">
+                                <select class="custom-select" id="teamMemberSelect">
                                     <option>Team Member 2</option>
                                     <option>Team Member 3</option>
                                     <option>Team Member 4</option>
                                 </select>
                             </div>
                             <div class="col-2">
-                                <input type="text" class="form-control" id="fixedPayout2" placeholder="Fixed Payout" style="display: inline;">
+                                <input type="text" class="form-control" id="fixedPayout" placeholder="Fixed Payout" style="display: inline;">
                             </div>
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="variablePayout2" placeholder="Variable Payout" style="display: inline;">
+                            <div class="col">
+                                <input type="text" class="form-control" id="variablePayout" placeholder="Variable Payout" style="display: inline;">
                             </div>
-                            <div class="col-2 row align-items-center">
+                            <div class="col row align-items-center">
                                 <label class="ml-2 mr-2 switch toggleButton">
                                     <input type="checkbox" id="Toggle1" checked>
                                     <span class="slider round"></span>
@@ -267,5 +289,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="../scripts/script.js"></script>
 </body>
 </html>

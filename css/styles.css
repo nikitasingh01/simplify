@@ -129,3 +129,25 @@ nav .navbar-nav li a.active{
 nav .navbar-nav li a:hover{
     color: #007bff !important;
 }
+
+.datepicker table tr td.active.active, 
+.datepicker table tr td.active.highlighted.active {
+   background-color: #007bff;
+}
+
+.datepicker table tr td.today {
+    color: black;
+    background-color: #f1f1f1;
+}
+
+.dateClass {
+    background-color: transparent;
+    cursor: pointer;
+    width: 200px !important;
+}
+
+.calendarIcon {
+    font-size: 20px;
+    margin-left: -45px;
+    margin-top: 5px;
+}

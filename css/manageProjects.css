@@ -1,5 +1,10 @@
+/* .container {
+    width: 90vw;
+} */
+
 .manageProjectTitle {
     margin-top: 20px;
+    padding-left: 30px;
     padding-bottom: 10px;
     border-bottom: 1px solid black;
 }
@@ -7,8 +12,9 @@
 .manageProjectSaveButton {
     background-color: #007bff;
     color: white;
-    width: 80px;
+    width: 150px;
     float: right;
+    margin-right: 30px;
 }
 
 .manageProjectContainer {
@@ -94,10 +100,8 @@ input:checked + .slider:before {
 }
 
 .deleteButton {
-    width: 25px; 
     display: flex; 
     justify-content: center; 
-    height: 35px; 
     align-items: center; 
     background-color: white;
 }
@@ -109,5 +113,9 @@ input:checked + .slider:before {
 
 .custom-select {
     border: 2px solid black;
+}
+
+.taskId {
+    margin-right: -45px;
 }
 
