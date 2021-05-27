@@ -82,17 +82,52 @@ input:checked + .slider:before {
     cursor: pointer;
 }
 
-.taskId {
-    margin-right: -30px;
-}
-
 .calculatorButton {
-    display: inline;
     font-size: 20px;
     color: black;
 }
 
 .form-control {
-    width: 150px;
     border: 2px solid black;
+}
+
+.taskId {
+    width: 80px;
+    margin-left: 15px;
+}
+
+.completedTask {
+    width: 170px;
+}
+
+.fixedPayMax {
+    width: 160px;
+}
+
+.variablePayMax {
+    width: 160px;
+}
+
+.fixedPayActual {
+    width: 160px;
+    margin-right: 20px;
+}
+
+.variablePayActual {
+    width: 160px;
+    margin-right: 20px;
+}
+
+.totalPay {
+    width: 120px;
+    margin-right: 10px;
+}
+
+.feedback {
+    width: 300px;
+    margin-right: 20px;
+}
+
+.tracker {
+    width: 100px;
 }
