@@ -92,42 +92,43 @@ input:checked + .slider:before {
 }
 
 .taskId {
-    width: 80px;
+    width: 5vw;
     margin-left: 15px;
 }
 
 .completedTask {
-    width: 170px;
+    width: 10vw;
 }
 
 .fixedPayMax {
-    width: 160px;
+    width: 8vw;
+    margin-right: 5px;
 }
 
 .variablePayMax {
-    width: 160px;
+    width: 10vw;
 }
 
 .fixedPayActual {
-    width: 160px;
+    width: 10vw;
     margin-right: 20px;
 }
 
 .variablePayActual {
-    width: 160px;
+    width: 11vw;
     margin-right: 20px;
 }
 
 .totalPay {
-    width: 120px;
+    width: 9vw;
     margin-right: 10px;
 }
 
 .feedback {
-    width: 300px;
+    width: 20vw;
     margin-right: 20px;
 }
 
 .tracker {
-    width: 100px;
+    width: 5vw;
 }
