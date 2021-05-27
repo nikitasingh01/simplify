@@ -12,3 +12,8 @@ $(function () {
         todayBtn: "linked"
     }); 
 });
+
+$(function () {
+    $('input[type = "text"]').attr("autocomplete","off");
+});
+

@@ -4,13 +4,11 @@ body {
 }
 
 .homeBody {
-    background: url(../images/undraw_metrics_gtu7.svg);
-    background-size: 280px;
-    background-position-y: 250px;
-    background-position-x: 5px;
-    background-repeat: no-repeat;
-    background-blend-mode: saturation;
-    z-index: 1;
+    background: url(../images/undraw_gift_card_6ekc.svg), url(../images/undraw_bookmarks_r6up.svg), url(../images/undraw_hologram_fjwp.svg), url(../images/undraw_Scrum_board_re_wk7v.svg), url(../images/undraw_Walking_outside_re_56xo.svg), url(../images/undraw_By_the_road_re_vvs7.svg), url(../images/undraw_Maintenance_re_59vn.svg);
+    background-size: 130px, 180px, 200px, 200px, 380px, 250px, 200px;
+    background-position-y: 80px, 570px, 100px, 10px, 430px, 550px, 270px;
+    background-position-x: 600px, 900px, 200px, 1000px, 15px, 1288px, 1288px;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
 }
 
 .debug {

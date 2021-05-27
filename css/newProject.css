@@ -1,11 +1,10 @@
 body {
-    background: url(../images/landing_1.png);
+    background-image: url(../images/landing_1.png);
     background-size: 250px;
     background-position-y: 545px;
     background-position-x: 10px;
     background-repeat: no-repeat;
-    background-blend-mode: saturation;
-    z-index: 1;
+    z-index: 2;
 }
 
 .form-control {
@@ -61,7 +60,7 @@ body {
     display: inline;
     font-size: 25px;
     margin-left: -51px;
-    background-color: white;
+    background-color: transparent;
     z-index: 10;
     height: 40px;
     color: black;
