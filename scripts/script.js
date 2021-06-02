@@ -81,7 +81,7 @@ function makeApiCallRevenue() {
         for(var i=0; i<revenueArray.length; i++) {
             displayRevenue(revenueArray[i]);
         }
-        // console.log(revenueArray);
+        console.log(revenueArray);
     }, function(reason) {
     console.error('error: ' + reason.result.error.message);
     });
@@ -111,11 +111,15 @@ function handleClientLoad() {
 
 function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
-        document.getElementById("signin-button").style.backgroundColor = "#f1f1f1";
-        document.getElementById("signin-button").style.borderColor = "black";
-        document.getElementById("signin-button").style.borderWidth = "2px";
-        document.getElementById("signin-button").style.color = "black";
-        document.getElementById("signin-button").innerHTML = "<b>Signed In</b>";
+        let signInButton = document.getElementsByClassName("signinButton");
+
+        for(let i=0; i<signInButton.length; i++) {
+            signInButton[i].style.backgroundColor = "#f1f1f1";
+            signInButton[i].style.borderColor = "black";
+            signInButton[i].style.borderWidth = "2px";
+            signInButton[i].style.color = "black";
+            signInButton[i].innerHTML = "<b>Signed In</b>";
+        }
         
         makeApiCallRevenue();
     }
