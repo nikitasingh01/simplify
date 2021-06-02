@@ -51,10 +51,10 @@
 
         <div class="form-group row revenueForm">
             <div class="form-group d-flex">
-                <label for="date" class="col-form-label">Date</label>
+                <label for="revenueDate" class="col-form-label">Date</label>
                 <div class="form-group">
                     <div class='input-group date datepicker' id='datepicker1' data-date-format="dd-mm-yyyy">
-                        <input type='text' placeholder="dd-mm-yyyy" class="form-control dateClass" id="date">
+                        <input type='text' placeholder="dd-mm-yyyy" class="form-control dateClass" id="revenueDate">
                         <span class="input-group-addon">
                         </span>
                     </div>
@@ -70,12 +70,12 @@
               <input type="text" class="form-control" id="inrPayment" placeholder="₹">
             </div>
             <div class="ml-5">
-                <button class="btn btn-primary revenueSaveButton" onclick="">Save</button>
+                <button class="btn btn-primary revenueSaveButton" onclick="saveRevenue()" id="revenueSaveButton">Save</button>
             </div>
         </div>
         
 
-        <div class="">
+        <div>
             <table class="table table-bordered table-hover">
                 <thead class="table-active">
                   <tr>
@@ -84,33 +84,26 @@
                     <th scope="col">Payment Received (₹)</th>
                   </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">20 June 2020</th>
+                <tbody id="revenueTableBody">
+                    <!-- <tr>
+                        <th>20 June 2020</th>
                         <td>100</td>
                         <td>7000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="">20 August 2020</th>
-                        <td>200</td>
-                        <td>14000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="">21 August 2020</th>
-                        <td>250</td>
-                        <td>17500</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
               </table>
         </div>
     </div>
 
-    
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+    onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
     <script src="../scripts/script.js"></script>
+    <script src="../scripts/datepicker.js"></script>
 </body>
 </html>

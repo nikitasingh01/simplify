@@ -93,7 +93,7 @@ input:checked + .slider:before {
 
 .taskId {
     width: 5vw;
-    margin-left: 15px;
+    margin-left: 1vw;
 }
 
 .completedTask {
@@ -102,7 +102,7 @@ input:checked + .slider:before {
 
 .fixedPayMax {
     width: 8vw;
-    margin-right: 5px;
+    margin-right: 1vw;
 }
 
 .variablePayMax {
@@ -111,22 +111,22 @@ input:checked + .slider:before {
 
 .fixedPayActual {
     width: 10vw;
-    margin-right: 20px;
+    margin-right: 1vw;
 }
 
 .variablePayActual {
-    width: 11vw;
-    margin-right: 20px;
+    width: 12vw;
+    margin-right: 1vw;
 }
 
 .totalPay {
     width: 9vw;
-    margin-right: 10px;
+    margin-right: 1vw;
 }
 
 .feedback {
     width: 20vw;
-    margin-right: 20px;
+    margin-right: 1vw;
 }
 
 .tracker {
