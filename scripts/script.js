@@ -111,7 +111,13 @@ function handleClientLoad() {
 
 function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
-    makeApiCallRevenue();
+        document.getElementById("signin-button").style.backgroundColor = "#f1f1f1";
+        document.getElementById("signin-button").style.borderColor = "black";
+        document.getElementById("signin-button").style.borderWidth = "2px";
+        document.getElementById("signin-button").style.color = "black";
+        document.getElementById("signin-button").innerHTML = "<b>Signed In</b>";
+        
+        makeApiCallRevenue();
     }
 }
 
