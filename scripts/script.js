@@ -17,10 +17,31 @@ function displayRevenue(arr) {
     tableBody.appendChild(tableRow);
 }
 
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
 function saveRevenue() {
     var revenueDate = document.getElementById("revenueDate").value;
     var dollarPayment = document.getElementById("dollarPayment").value;
     var inrPayment = document.getElementById("inrPayment").value;
+
+    for(let i=0; i<revenueArray.length; i++) {
+        if(revenueArray[i][0] === revenueDate) {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+            return;
+        }
+    }
 
     var params = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -52,6 +73,7 @@ function saveRevenue() {
         }, 4000);
 
         let array = [revenueDate, dollarPayment, inrPayment];
+        makeApiCallRevenue();
         console.log(array); 
         displayRevenue(array);
     }, function(reason) {
@@ -69,6 +91,7 @@ function saveRevenue() {
     });
 }
 
+let revenueArray = [];
 function makeApiCallRevenue() {
     var params = {
     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -77,17 +100,33 @@ function makeApiCallRevenue() {
 
     var request = gapi.client.sheets.spreadsheets.values.get(params);
     request.then(function(response) {
-        var revenueArray = response.result.values;
+
+        revenueArray = response.result.values;
+        revenueArray.sort(function (a, b) {
+            a = a[0].split('/');
+            b = b[0].split('/');
+            return a[2] - b[2] || a[1] - b[1] || a[0] - b[0];
+        });
+        revenueArray.reverse();
+
+        var tableBody = document.getElementById("revenueTableBody");
+        tableBody.innerHTML = "";
         for(var i=0; i<revenueArray.length; i++) {
             displayRevenue(revenueArray[i]);
         }
-        console.log(revenueArray);
+        // console.log(revenueArray);
     }, function(reason) {
     console.error('error: ' + reason.result.error.message);
     });
 }
 
 //Authentication functions used for this app
+
+$(document).ready(function() {
+    $('.signoutButton').click(function() {
+        location.reload();
+    });
+});
 
 function initClient() {
     var API_KEY = 'AIzaSyA5iKpQ3DJ66zFJGsQCaNV8lF7dv0alyAw';  

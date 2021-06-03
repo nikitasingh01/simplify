@@ -12,6 +12,17 @@
     <title>SB® | Revenues</title>
 </head>
 <body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="mt-2 mb-2">Error!</h4>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h5 class="mt-2">Revenue entry for this date already exists</h5>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -54,8 +65,8 @@
             <div class="form-group d-flex">
                 <label for="revenueDate" class="col-form-label">Date</label>
                 <div class="form-group">
-                    <div class='input-group date datepicker' id='datepicker1' data-date-format="dd-mm-yyyy">
-                        <input type='text' placeholder="dd-mm-yyyy" class="form-control dateClass" id="revenueDate">
+                    <div class='input-group date datepicker' id='revenueDatepicker' data-date-format="dd-mm-yyyy">
+                        <input type='text' placeholder="dd-mm-yyyy" class="form-control dateClass" id="revenueDate" required>
                         <span class="input-group-addon">
                         </span>
                     </div>
@@ -64,17 +75,16 @@
             </div>
             <label for="dollarPayment" class="ml-5 col-form-label">Payment Received ($)</label>
             <div class="">
-              <input type="text" class="form-control" id="dollarPayment" placeholder="$">
+              <input type="text" class="form-control" id="dollarPayment" placeholder="$" required>
             </div>
             <label for="inrPayment" class="ml-5 col-form-label">Payment Received (₹)</label>
             <div class="">
-              <input type="text" class="form-control" id="inrPayment" placeholder="₹">
+              <input type="text" class="form-control" id="inrPayment" placeholder="₹" required>
             </div>
             <div class="ml-5">
                 <button class="btn btn-primary revenueSaveButton" onclick="saveRevenue()" id="revenueSaveButton">Save</button>
             </div>
         </div>
-        
 
         <div>
             <table class="table table-bordered table-hover">
