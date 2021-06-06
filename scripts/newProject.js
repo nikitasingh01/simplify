@@ -58,7 +58,6 @@ async function makeApiCallTotalProjectValue() {
     if(request1.result.values != undefined) {
         clientArray = request1.result.values;
         clientArrayAutoFill = clientArray;
-        console.log(clientArrayAutoFill);
     }
 
     var params2 = {
@@ -97,7 +96,6 @@ async function makeApiCallTotalProjectValue() {
 
     var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
     request.then(function(response) {
-    console.log(response.result);
     }, function(reason) {
     console.error('error: ' + reason.result.error.message);
     });
@@ -186,8 +184,6 @@ async function saveNewProject() {
     if(request.result.values != undefined) 
         clientArray = request.result.values;
 
-    // console.log(clientArray);
-
     var params2 = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
         range: 'Projects!A2:Z1000',
@@ -197,8 +193,6 @@ async function saveNewProject() {
     var projectArray = [];
     if(request1.result.values != undefined) 
         projectArray = request1.result.values;
-
-    // console.log(projectArray);
 
     var projectId = projectArray[projectArray.length-1][0];
     var clientName = document.getElementById("clientName").value;
@@ -382,6 +376,7 @@ function autocomplete(inp, arr) {
         a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
+        a.setAttribute("onclick", "autoFill()");
         this.parentNode.appendChild(a);
         for (i = 0; i < arr.length; i++) {
           if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
@@ -439,17 +434,6 @@ function autocomplete(inp, arr) {
 }
 
 function autoFill() {
-    
-    // var params1 = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-    //     range: 'Clients!A2:Z1000',
-    // };
-
-    // var request = await gapi.client.sheets.spreadsheets.values.get(params1);
-
-    // if(request.result.values != undefined) 
-    //     clientArrayAutoFill = request.result.values;
-
     var clientName = document.getElementById("clientName").value;
     var flag = true;
 
