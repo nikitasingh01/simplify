@@ -136,22 +136,33 @@ async function feesRateCalculation() {
             totalProjectValue += parseInt(projectArray[i][7]);
         }
     }
+    var totalProjectValueBofore = 0;
+    totalProjectValueBofore += totalProjectValue;
     totalProjectValue += parseInt(projectValue);
-    console.log(totalProjectValue);
     var totalProjectSum = 0.0;
-    
+    var first = 0;
+    var last = 0;
     if(contractTypeSelect === "Regular Contract") {
         var i=0;
-        while(totalProjectValue > regularContractFeesRate[i][1]) {
-            totalProjectSum += (parseInt(regularContractFeesRate[i][1]) - parseInt(regularContractFeesRate[i][0]))*parseInt(regularContractFeesRate[i][2])/(100.0);
-            console.log(totalProjectSum);
+        while(totalProjectValueBofore >= parseInt(regularContractFeesRate[i][1])) {
             i++;
         }
-        totalProjectSum += (totalProjectValue - parseInt(regularContractFeesRate[i][0]))*parseInt(regularContractFeesRate[i][2])/(100.0);
+        first = i;
+        regularContractFeesRate[i][0] = totalProjectValueBofore;
+
+        while(totalProjectValue > regularContractFeesRate[i][1]) {
+            i++;
+        }
+        regularContractFeesRate[i][1] = totalProjectValue;
+        last = i;
+
+        while(first <= last) {
+            totalProjectSum += (parseInt(regularContractFeesRate[first][1]) - parseInt(regularContractFeesRate[first][0]))*parseInt(regularContractFeesRate[first][2])/100.0;
+            first++;
+        }
         console.log(totalProjectSum);
         
-        var val = (totalProjectSum/totalProjectValue)*100.0;
-
+        var val = (totalProjectSum/(projectValue))*100.0;
         document.getElementById("feesRate").value = val.toFixed(1) + "%";
     } else if(contractTypeSelect === "Direct Contract") {
         document.getElementById("feesRate").value = directContractFeesRate[0];
