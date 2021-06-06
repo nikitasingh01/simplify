@@ -73,7 +73,8 @@ async function makeApiCallTotalProjectValue() {
             }
         }
 
-        clientArray[i][4] = totalValue;
+        if(totalValue != "0")
+            clientArray[i][4] = totalValue;
     }
 
     var params = {
