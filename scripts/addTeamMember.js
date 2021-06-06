@@ -39,6 +39,18 @@ function addTeamMember() {
     var earnings = "10000";
     var projects = "1";
 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+        dd='0'+dd;
+
+    if(mm<10) 
+        mm='0'+mm;
+        
+    var date = dd+'/'+mm+'/'+yyyy;
+
     var params = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
         range: 'Team!A2:Z1000',
@@ -63,7 +75,8 @@ function addTeamMember() {
             bankName,
             ifsc,
             payoutTracker,
-            remarks]
+            remarks,
+            date]
         ]
     };
 

@@ -27,7 +27,7 @@
                     <a class="nav-link" href="./manageProjects.html">Manage Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Team</a>
+                    <a class="nav-link active" href="./team.html">Team</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./payouts.html">Payouts</a>
@@ -44,7 +44,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="containerTeam">
         <div class="row mt-5 teamTitle">
             <h4>Team</h4>
         </div>
@@ -64,46 +64,19 @@
                     <th scope="col-1">Performance</th>
                     <th scope="col">Earnings</th>
                     <th scope="col">Projects</th>
-                    <th scope="col"></th>
+                    <th scope="col">More Details</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Steve Rogers</th>
-                    <td>skill 1</td>
-                    <td>Free</td>
-                    <td>4/5</td>
-                    <td>1234</td>
-                    <td>10</td>
-                    <td><button class="btn btn-primary" onclick="">More Details</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="">Tony Stark</th>
-                    <td>skill 2</td>
-                    <td>Unavailable</td>
-                    <td>5/5</td>
-                    <td>123400</td>
-                    <td>10</td>
-                    <td><button class="btn btn-primary" onclick="">More Details</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Bruce Banner</th>
-                    <td>skill 12</td>
-                    <td>In project 1</td>
-                    <td>3/5</td>
-                    <td>123</td>
-                    <td>4</td>
-                    <td><button class="btn btn-primary" onclick="">More Details</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Bucky Barnes</th>
-                    <td>skill 10</td>
-                    <td>In Project2</td>
-                    <td>5/5</td>
-                    <td>12340</td>
-                    <td>8</td>
-                    <td><button class="btn btn-primary" onclick="">More Details</button></td>
-                  </tr>
+                <tbody id="teamTableBody">
+                    <!-- <tr>
+                        <th scope="row">Steve Rogers</th>
+                        <td>skill 1</td>
+                        <td>Free</td>
+                        <td>4/5</td>
+                        <td>1234</td>
+                        <td>10</td>
+                        <td><button class="btn btn-primary" onclick="">More Details</button></td>
+                    </tr> -->
                 </tbody>
               </table>
         </div>
@@ -118,6 +91,6 @@
     onload="this.onload=function(){};handleClientLoad()"
     onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/team.js"></script>
 </body>
 </html>

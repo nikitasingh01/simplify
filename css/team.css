@@ -5,3 +5,27 @@
 .borderClass {
     border: 2px solid black;
 }
+
+.backButton {
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: white;
+    font-size: 30px;
+}
+
+.backButton:hover {
+    margin-right: 15px;
+    margin-left: -5px;
+    transition: 0.3s;
+}
+
+.backButton:active {
+    box-shadow: none;
+}
+
+p {
+    border: 2px solid #b8b7b6;
+    border-radius: 5px;
+    padding: 5px;
+    /* box-shadow: 0px 3px 5px #b8b7b6; */
+}
