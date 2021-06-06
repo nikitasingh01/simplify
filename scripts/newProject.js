@@ -423,6 +423,38 @@ function autocomplete(inp, arr) {
     });
 }
 
+async function autoFill() {
+    let clientArray = [];
+
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Clients!A2:Z1000',
+    };
+
+    var request = await gapi.client.sheets.spreadsheets.values.get(params1);
+
+    if(request.result.values != undefined) 
+        clientArray = request.result.values;
+
+    var clientName = document.getElementById("clientName").value;
+    var flag = true;
+
+    for(var i=0; i<clientArray.length; i++) {
+        if(clientArray[i][1] == clientName) {
+            flag = false;
+            document.getElementById("contactPerson").value = clientArray[i][2];
+            document.getElementById("clientCountry").value = clientArray[i][0];
+            document.getElementById("rating").value = clientArray[i][3];
+        }
+    }
+
+    if(flag == true) {
+        document.getElementById("contactPerson").value = "";
+        document.getElementById("clientCountry").value = "";
+        document.getElementById("rating").value = "";   
+    }
+}
+
 //Authentication functions used for this app
 
 $(document).ready(function() {
