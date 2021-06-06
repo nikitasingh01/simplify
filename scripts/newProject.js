@@ -44,6 +44,8 @@ async function makeApiCallHelperSheet() {
     }
 }
 
+var clientArrayForSuggestions = [];
+
 async function makeApiCallTotalProjectValue() {
     let clientArray = [];
     var params1 = {
@@ -73,6 +75,7 @@ async function makeApiCallTotalProjectValue() {
             }
         }
 
+        clientArrayForSuggestions.push(clientArray[i][1]);
         if(totalValue != "0")
             clientArray[i][4] = totalValue;
     }
@@ -101,32 +104,55 @@ async function feesRateCalculation() {
         spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
         range: 'Fees Rate!A4:Z1000',
     };
-
     var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
-    console.log(request1.result.values);
     var regularContractFeesRate = request1.result.values;
 
     var params2 = {
         spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
         range: 'Fees Rate!E3',
     };
-
     var request2 = await gapi.client.sheets.spreadsheets.values.get(params2);
-    console.log(request2.result.values);
     var directContractFeesRate = request2.result.values;
 
+    var clientName = document.getElementById("clientName").value;
     var projectValue = document.getElementById("projectValue").value;
     if(projectValue === "")
         projectValue = "0";
     var contractTypeSelect = document.getElementById("contractTypeSelect").value;
+
+    var totalProjectValue = 0;
+    var params3 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Projects!A2:Z1000',
+    };
+
+    var request3 = await gapi.client.sheets.spreadsheets.values.get(params3);
+    var projectArray = [];
+    if(request3.result.values != undefined) 
+        projectArray = request3.result.values;
+
+    for(var i=0; i<projectArray.length; i++) {
+        if(projectArray[i][2] == clientName) {
+            totalProjectValue += parseInt(projectArray[i][7]);
+        }
+    }
+    totalProjectValue += parseInt(projectValue);
+    console.log(totalProjectValue);
+    var totalProjectSum = 0.0;
     
     if(contractTypeSelect === "Regular Contract") {
-        for(let i=0; i<regularContractFeesRate.length; i++) {
-            if(parseInt(projectValue) >= parseInt(regularContractFeesRate[i][0]) && parseInt(projectValue) < parseInt(regularContractFeesRate[i][1])) {
-                document.getElementById("feesRate").value = regularContractFeesRate[i][2];
-            }
+        var i=0;
+        while(totalProjectValue > regularContractFeesRate[i][1]) {
+            totalProjectSum += (parseInt(regularContractFeesRate[i][1]) - parseInt(regularContractFeesRate[i][0]))*parseInt(regularContractFeesRate[i][2])/(100.0);
+            console.log(totalProjectSum);
+            i++;
         }
+        totalProjectSum += (totalProjectValue - parseInt(regularContractFeesRate[i][0]))*parseInt(regularContractFeesRate[i][2])/(100.0);
+        console.log(totalProjectSum);
+        
+        var val = (totalProjectSum/totalProjectValue)*100.0;
 
+        document.getElementById("feesRate").value = val.toFixed(1) + "%";
     } else if(contractTypeSelect === "Direct Contract") {
         document.getElementById("feesRate").value = directContractFeesRate[0];
     }
@@ -331,6 +357,72 @@ async function saveNewProject() {
     });
 }
 
+function autocomplete(inp, arr) {
+    var currentFocus;
+    inp.addEventListener("input", function(e) {
+        var a, b, i, val = this.value;
+        closeAllLists();
+        if (!val) { return false;}
+        currentFocus = -1;
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        this.parentNode.appendChild(a);
+        for (i = 0; i < arr.length; i++) {
+          if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            b = document.createElement("DIV");
+            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML += arr[i].substr(val.length);
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            b.addEventListener("click", function(e) {
+                inp.value = this.getElementsByTagName("input")[0].value;
+                closeAllLists();
+            });
+            a.appendChild(b);
+          }
+        }
+    });
+    inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+          currentFocus++;
+          addActive(x);
+        } else if (e.keyCode == 38) {
+          currentFocus--;
+          addActive(x);
+        } else if (e.keyCode == 13) {
+          e.preventDefault();
+          if (currentFocus > -1) {
+            if (x) x[currentFocus].click();
+          }
+        }
+    });
+    function addActive(x) {
+      if (!x) return false;
+      removeActive(x);
+      if (currentFocus >= x.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = (x.length - 1);
+      x[currentFocus].classList.add("autocomplete-active");
+    }
+    function removeActive(x) {
+      for (var i = 0; i < x.length; i++) {
+        x[i].classList.remove("autocomplete-active");
+      }
+    }
+    function closeAllLists(elmnt) {
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+    document.addEventListener("click", function (e) {
+        closeAllLists(e.target);
+    });
+}
+
 //Authentication functions used for this app
 
 $(document).ready(function() {
@@ -383,3 +475,5 @@ function handleSignInClick(event) {
 function handleSignOutClick(event) {
     gapi.auth2.getAuthInstance().signOut();
 }
+
+autocomplete(document.getElementById("clientName"), clientArrayForSuggestions);
