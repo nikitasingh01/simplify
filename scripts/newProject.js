@@ -45,6 +45,7 @@ async function makeApiCallHelperSheet() {
 }
 
 var clientArrayForSuggestions = [];
+let clientArrayAutoFill = [];
 
 async function makeApiCallTotalProjectValue() {
     let clientArray = [];
@@ -54,8 +55,11 @@ async function makeApiCallTotalProjectValue() {
     };
 
     var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
-    if(request1.result.values != undefined) 
+    if(request1.result.values != undefined) {
         clientArray = request1.result.values;
+        clientArrayAutoFill = clientArray;
+        console.log(clientArrayAutoFill);
+    }
 
     var params2 = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -434,28 +438,27 @@ function autocomplete(inp, arr) {
     });
 }
 
-async function autoFill() {
-    let clientArray = [];
+function autoFill() {
+    
+    // var params1 = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Clients!A2:Z1000',
+    // };
 
-    var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Clients!A2:Z1000',
-    };
+    // var request = await gapi.client.sheets.spreadsheets.values.get(params1);
 
-    var request = await gapi.client.sheets.spreadsheets.values.get(params1);
-
-    if(request.result.values != undefined) 
-        clientArray = request.result.values;
+    // if(request.result.values != undefined) 
+    //     clientArrayAutoFill = request.result.values;
 
     var clientName = document.getElementById("clientName").value;
     var flag = true;
 
-    for(var i=0; i<clientArray.length; i++) {
-        if(clientArray[i][1] == clientName) {
+    for(var i=0; i<clientArrayAutoFill.length; i++) {
+        if(clientArrayAutoFill[i][1] == clientName) {
             flag = false;
-            document.getElementById("contactPerson").value = clientArray[i][2];
-            document.getElementById("clientCountry").value = clientArray[i][0];
-            document.getElementById("rating").value = clientArray[i][3];
+            document.getElementById("contactPerson").value = clientArrayAutoFill[i][2];
+            document.getElementById("clientCountry").value = clientArrayAutoFill[i][0];
+            document.getElementById("rating").value = clientArrayAutoFill[i][3];
         }
     }
 
