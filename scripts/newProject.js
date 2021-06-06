@@ -1,3 +1,136 @@
+async function makeApiCallHelperSheet() {
+    var params1 = {
+        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        range: 'Project Type!A2:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+
+    let projectType = [];
+
+    if(request1.result.values != undefined) 
+        projectType = request1.result.values;
+
+    var params2 = {
+        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        range: 'Contract Type!A2:Z1000',
+    };
+
+    var request2 = await gapi.client.sheets.spreadsheets.values.get(params2);
+
+    let contractType = [];
+
+    if(request2.result.values != undefined) 
+        contractType = request2.result.values;
+
+    let projectTypeDiv = document.getElementById("projectTypeSelect");
+    for(let i=0; i<projectType.length; i++) {
+        if(projectType[i] !== "") {
+            let options = document.createElement("option");
+            options.innerHTML = projectType[i];
+
+            projectTypeDiv.appendChild(options);
+        }
+    }
+
+    let contractTypeDiv = document.getElementById("contractTypeSelect");
+    for(let i=0; i<contractType.length; i++) {
+        if(contractType[i] !== "") {
+            let options = document.createElement("option");
+            options.innerHTML = contractType[i];
+
+            contractTypeDiv.appendChild(options);
+        }
+    }
+}
+
+async function makeApiCallTotalProjectValue() {
+    let clientArray = [];
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Clients!A2:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    if(request1.result.values != undefined) 
+        clientArray = request1.result.values;
+
+    var params2 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Projects!A2:Z1000',
+    };
+
+    var request2 = await gapi.client.sheets.spreadsheets.values.get(params2);
+    var projectArray = [];
+    if(request2.result.values != undefined) 
+        projectArray = request2.result.values;
+
+    for(let i=0; i<clientArray.length; i++) {
+        let totalValue = 0;
+        for(let j=0; j<projectArray.length; j++) {
+            if(clientArray[i][1] === projectArray[j][2]) {
+                totalValue += parseInt(projectArray[j][7]);
+            }
+        }
+
+        clientArray[i][4] = totalValue;
+    }
+
+    var params = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Clients!A2',
+        valueInputOption: "USER_ENTERED",
+    };
+
+    var valueRangeBody = {
+        "majorDimension": "ROWS",
+        "values": clientArray,
+    };
+
+    var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+    request.then(function(response) {
+    console.log(response.result);
+    }, function(reason) {
+    console.error('error: ' + reason.result.error.message);
+    });
+}
+
+async function feesRateCalculation() {
+    var params1 = {
+        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        range: 'Fees Rate!A4:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    console.log(request1.result.values);
+    var regularContractFeesRate = request1.result.values;
+
+    var params2 = {
+        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        range: 'Fees Rate!E3',
+    };
+
+    var request2 = await gapi.client.sheets.spreadsheets.values.get(params2);
+    console.log(request2.result.values);
+    var directContractFeesRate = request2.result.values;
+
+    var projectValue = document.getElementById("projectValue").value;
+    if(projectValue === "")
+        projectValue = "0";
+    var contractTypeSelect = document.getElementById("contractTypeSelect").value;
+    
+    if(contractTypeSelect === "Regular Contract") {
+        for(let i=0; i<regularContractFeesRate.length; i++) {
+            if(parseInt(projectValue) >= parseInt(regularContractFeesRate[i][0]) && parseInt(projectValue) < parseInt(regularContractFeesRate[i][1])) {
+                document.getElementById("feesRate").value = regularContractFeesRate[i][2];
+            }
+        }
+
+    } else if(contractTypeSelect === "Direct Contract") {
+        document.getElementById("feesRate").value = directContractFeesRate[0];
+    }
+}
+
 async function saveNewProject() {
     let clientArray = [];
 
@@ -23,18 +156,18 @@ async function saveNewProject() {
     if(request1.result.values != undefined) 
         projectArray = request1.result.values;
 
-    console.log(projectArray);
+    // console.log(projectArray);
 
     var projectId = projectArray[projectArray.length-1][0];
-    console.log(projectId);
-    
     var clientName = document.getElementById("clientName").value;
     var contactPerson = document.getElementById("contactPerson").value;
     var clientCountry = document.getElementById("clientCountry").value;
-    var rating = document.getElementById("rating").value;
+
+    var rating = "";
+    if(document.getElementById("rating").value !== "")
+        rating = document.getElementById("rating").value;
 
     projectId = parseInt(projectId) + parseInt("1");
-    console.log(projectId);
     var projectName = document.getElementById("projectName").value;
     var projectTypeSelect = document.getElementById("projectTypeSelect").value;
     var projectValue = document.getElementById("projectValue").value;
@@ -49,8 +182,20 @@ async function saveNewProject() {
     for(let i=0; i<clientArray.length; i++) {
         if(clientArray[i][1] === clientName) {
             flag = true;
-            let temp = parseInt(clientArray[i][4]) + parseInt(projectValue);
-            clientArray[i][4] = temp;
+            let totalSum = 0;
+
+            for(let j=0; j<projectArray.length; j++) {
+                if(projectArray[j][2] === clientName) {
+                    totalSum += parseInt(projectArray[j][7]);
+                }
+            }
+
+            totalSum += parseInt(projectValue);
+            clientArray[i][4] = totalSum;
+
+            if(rating !== "") {
+                clientArray[i][3] = rating;
+            }
 
             var params = {
                 spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -120,8 +265,6 @@ async function saveNewProject() {
             }, 4000);
         });
     }
-
-    
 
     var today = new Date();
     var dd = today.getDate();
@@ -217,6 +360,9 @@ function handleClientLoad() {
 
 function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
+        makeApiCallHelperSheet();
+        makeApiCallTotalProjectValue();
+
         let signInButton = document.getElementsByClassName("signinButton");
 
         for(let i=0; i<signInButton.length; i++) {
