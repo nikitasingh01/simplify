@@ -102,7 +102,7 @@ function moreDetails(memberId) {
     console.log(memberDetail);
 
     var containerTeam = document.getElementById("containerTeam");
-    containerTeam.innerHTML = `<div class="mt-4 teamTitle d-flex align-items-center">
+    containerTeam.innerHTML = `<div class="mt-3 teamTitle d-flex align-items-center">
     <a href="./team.html">
         <button type="button" class="btn backButton" id="backButton"><i class="bi bi-arrow-left"></i></button>
     </a>
@@ -110,16 +110,23 @@ function moreDetails(memberId) {
     </div>`;
 
     var memberNameDiv = document.createElement("div");
-    memberNameDiv.setAttribute("class","mt-3");
-    var memberName = document.createElement("h5");
+    memberNameDiv.setAttribute("class","row mt-2");
+    var memberNameDiv1 = document.createElement("div");
+    memberNameDiv1.setAttribute("class","col-12");
+    var memberName = document.createElement("h4");
     memberName.innerHTML = memberDetail[0];
-    memberNameDiv.appendChild(memberName);
+    memberNameDiv1.appendChild(memberName);
+    memberNameDiv.appendChild(memberNameDiv1);
 
     var memberJoinDate = document.createElement("div");
-    memberJoinDate.setAttribute("class","mt-2");
-    var joinDate = document.createElement("h5");
+    memberJoinDate.setAttribute("class","row");
+    var memberJoinDate1 = document.createElement("div");
+    memberJoinDate1.setAttribute("class","col-12");
+    var joinDate = document.createElement("h6");
     joinDate.innerHTML = "Team Member Since: " + memberDetail[16];
-    memberJoinDate.appendChild(joinDate);
+    memberJoinDate1.appendChild(joinDate);
+    memberJoinDate.appendChild(memberJoinDate1);
+
 
     containerTeam.appendChild(memberNameDiv);
     containerTeam.appendChild(memberJoinDate);

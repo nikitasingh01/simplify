@@ -40,12 +40,12 @@
                     <a class="nav-link" href="./revenues.html">Revenues</a>
                 </li>
             </ul>
-            <button class="btn signinButton mr-2" onclick="handleSignInClick()">Sign in</button>
+            <button class="btn signinButton mr-2" onclick="handleSignInClick()" id="manageProjectsSignIn">Sign in</button>
             <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
         </div>
     </nav>
 
-    <div class="">
+    <div id="outerDiv">
         <div class="row manageProjectTitle">
             <div class="col-8">
                 <h4>Manage Ongoing Projects</h4>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div id="accordion1" class="manageProjectContainer">
+        <!-- <div id="accordion1" class="manageProjectContainer">
             <div class="card manageProjectCard">
                 <div class="card-header d-flex" id="headingOne">
                     <a class="title col-7">
@@ -107,140 +107,7 @@
                                 <h6>Task Status</h6>
                             </div>
                         </div>
-                        <div class="row ml-1 mt-2">
-                            <div class="col-1 taskId">
-                                <h6>1</h6>
-                            </div>
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="taskName" placeholder="Task Name" style="display: inline;">
-                            </div>
-                            <div class='col-2 input-group date datepicker' id='datepicker' data-date-format="dd-mm-yyyy">
-                                <input type='text' placeholder="dd-mm-yyyy" class="form-control" id="dueDate">
-                                <span class="input-group-addon">
-                                </span>
-                            </div>
-                            <div class="col-2">
-                                <select class="custom-select" id="teamMemberSelect">
-                                    <option>Team Member 2</option>
-                                    <option>Team Member 3</option>
-                                    <option>Team Member 4</option>
-                                </select>
-                            </div>
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="fixedPayout" placeholder="Fixed Payout" style="display: inline;">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" id="variablePayout" placeholder="Variable Payout" style="display: inline;">
-                            </div>
-                            <div class="col row align-items-center">
-                                <label class="ml-2 mr-2 switch toggleButton">
-                                    <input type="checkbox" id="Toggle1" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                                <h6 class="completedText">
-                                    Completed
-                                </h6>
-                            </div>
-                            <button class="btn deleteButton" onclick="">
-                                <i class="bi bi-trash cardIconManageProject"></i>
-                            </button>
-                        </div>
-                        <div class="row ml-1 mt-2">
-                            <div class="col-1 taskId">
-                                <h6>2</h6>
-                            </div>
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="taskName" placeholder="Task Name" style="display: inline;">
-                            </div>
-                            <div class='col-2 input-group date datepicker' id='datepicker' data-date-format="dd-mm-yyyy">
-                                <input type='text' placeholder="dd-mm-yyyy" class="form-control" id="dueDate">
-                                <span class="input-group-addon">
-                                </span>
-                            </div>
-                            <div class="col-2">
-                                <select class="custom-select" id="teamMemberSelect">
-                                    <option>Team Member 2</option>
-                                    <option>Team Member 3</option>
-                                    <option>Team Member 4</option>
-                                </select>
-                            </div>
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="fixedPayout" placeholder="Fixed Payout" style="display: inline;">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" id="variablePayout" placeholder="Variable Payout" style="display: inline;">
-                            </div>
-                            <div class="col row align-items-center">
-                                <label class="ml-2 mr-2 switch toggleButton">
-                                    <input type="checkbox" id="Toggle1" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                                <h6 class="completedText">
-                                    Completed
-                                </h6>
-                            </div>
-                            <button class="btn deleteButton" onclick="">
-                                <i class="bi bi-trash cardIconManageProject"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="accordion2" class="manageProjectContainer">
-            <div class="card manageProjectCard">
-                <div class="card-header d-flex" id="project2">
-                    <a class="title col-7">
-                        <h5 class="mb-0" data-toggle="collapse" data-target="#collapseTwo">
-                            SB002 : Project 2  
-                        </h5>
-                    </a>
-                    <div class="col-2">   
-                    </div>
-                    <div class="col-3 manageProjectsToggle d-flex">
-                        <h6 class="ml-4 ongoingText">
-                            Ongoing
-                        </h6>
-                        <label class="ml-2 mr-2 switch toggleButton">
-                            <input type="checkbox" id="Toggle2" checked>
-                            <span class="slider round"></span>
-                        </label>
-                        <h6 class="completedText">
-                            Completed
-                        </h6>
-                    </div>
-                </div>
-          
-                <div id="collapseTwo" class="collapse" aria-labelledby="project2" data-parent="#accordion2">
-                    <div class="card-body">
-                        <div class="row ml-3">
-                            <button class="btn manageProjectAddTaskButton" onclick="">Add New Task</button>
-                        </div>
-                        <div class="row ml-1 mt-4">
-                            <div class="col-1 taskId">
-                                <h6>Task ID</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6>Task Name</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6>Due Date</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6>Team Member</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6>Fixed Payout</h6>
-                            </div>
-                            <div class="col">
-                                <h6>Variable Payout</h6>
-                            </div>
-                            <div class="col">
-                                <h6>Task Status</h6>
-                            </div>
-                        </div>
-                        <div class="row ml-1 mt-2">
+                        <div class="row ml-1 mt-2 Row">
                             <div class="col-1 taskId">
                                 <h6>1</h6>
                             </div>
@@ -281,12 +148,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
-
-    
-
-    
+ 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -295,7 +159,7 @@
     onload="this.onload=function(){};handleClientLoad()"
     onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/manageProjects.js"></script>
     <script src="../scripts/datepicker.js"></script>
 </body>
 </html>
