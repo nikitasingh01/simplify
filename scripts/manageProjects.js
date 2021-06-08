@@ -1,4 +1,6 @@
 let teamArray = [];
+let projectArray = [];
+let deliveryArray = [];
 async function getTeamArray() {
     var params = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -13,14 +15,17 @@ async function getTeamArray() {
     }
 }
 
-async function addNewTask(id) {
-    
+let idArray = [];
+function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay = "", variablePay = "", taskStatus = "") {
+    idArray[id-1]++;
+
     let accordion = document.getElementById("collapse"+id);
     let cardbody = accordion.getElementsByClassName("card-body");
 
     let outerDiv = document.createElement("div");
     outerDiv.setAttribute("class", "row ml-1 mt-2 Row");
-    
+    outerDiv.setAttribute("id", idArray[id-1]);
+
     let taskIdDiv = document.createElement("div");
     taskIdDiv.setAttribute("class", "col-1 taskId");
     let taskIdNumber = document.createElement("h6");
@@ -90,7 +95,7 @@ async function addNewTask(id) {
     
     let deleteButton = document.createElement("button");
     deleteButton.setAttribute("class","btn deleteButton");
-    deleteButton.setAttribute("onclick","deleteTask()");
+    deleteButton.setAttribute("onclick","deleteTask(id)");
     let deleteLogo = document.createElement("i");
     deleteLogo.setAttribute("class","bi bi-trash cardIconManageProject");
     deleteButton.appendChild(deleteLogo);
@@ -116,10 +121,24 @@ async function addNewTask(id) {
     let selectOption = cardbody[0].getElementsByTagName("select");
     for(let i=0; i<teamArray.length; i++) {
         let option1 = document.createElement("option");
+        option1.setAttribute("value", teamArray[i]);
         option1.innerHTML = teamArray[i];
+
+        if(teamMember == teamArray[i]) {
+            option1.setAttribute("selected", "selected");
+        }
 
         selectOption[countTask-1].appendChild(option1);
     }
+
+    taskNameInput.setAttribute("value", taskName);
+    datepickerInput.setAttribute("value", dueDate);
+    fixedPayInput.setAttribute("value", fixedPay);
+    variablePayInput.setAttribute("value", variablePay);
+    if(taskStatus === "Completed") {
+        checkBoxinput.setAttribute("checked", true);    
+    }
+    selectOption[countTask-1].setAttribute("value", teamMember);
 
     $('.datepicker').datepicker({
         format: "dd/mm/yyyy",
@@ -132,10 +151,11 @@ async function addNewTask(id) {
         orientation: "button",
         clearBtn: true,
         todayBtn: "linked"
-    }); 
+    });
 }
 
-function makeProject(projectId, projectName, count) {
+function makeProject(projectId, projectName, count, deliveryArray) {
+    idArray.push(0);
     let outerDiv = document.getElementById("outerDiv");
 
     outerDiv.innerHTML += `<div id="accordion`+ count +`" class="manageProjectContainer">
@@ -194,23 +214,52 @@ function makeProject(projectId, projectName, count) {
             </div>
         </div>
     </div>`;
+
+    if(projectName == "ProjectBlank") {
+        let elem = document.getElementById("accordion"+count);
+        addNewTask(count,"","","","","","","");
+        elem.style.visibility = "hidden";
+    }
+    
+
+    for(let i=0; i<deliveryArray.length; i++) {
+        if(deliveryArray[i][0] == projectId) {
+            addNewTask(count, deliveryArray[i][3], deliveryArray[i][5], deliveryArray[i][4], deliveryArray[i][6], deliveryArray[i][7], deliveryArray[i][8]);
+        }
+    }
 }
 
-let projectArray = [];
+async function saveProjectTasks() {
+
+}
+
 async function makeApiCallManageProjects() {
     var params = {
-    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-    range: 'Projects!A2:Z1000',
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Projects!A2:Z1000',
     };
 
     var request = await gapi.client.sheets.spreadsheets.values.get(params);
     projectArray = request.result.values;
 
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    deliveryArray = request1.result.values;
+
+    idArray = [];
     let count = 0;
-    for(let i=0; i<projectArray.length; i++) {
-        if(projectArray[i][10] == "Ongoing") {
+    for(let i=0; i<projectArray.length+1; i++) {
+        if(i == projectArray.length) {
             count++;
-            makeProject(projectArray[i][0], projectArray[i][3], count);
+            makeProject(0, "ProjectBlank", count, deliveryArray);
+        }
+        else if(projectArray[i][10] == "Ongoing") {
+            count++;
+            makeProject(projectArray[i][0], projectArray[i][3], count, deliveryArray);
         }
     }
 }
