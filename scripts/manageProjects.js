@@ -36,7 +36,7 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
     taskNameDiv.setAttribute("class", "col-2");
     let taskNameInput = document.createElement("input");
     taskNameInput.setAttribute("type","text");
-    taskNameInput.setAttribute("class","form-control");
+    taskNameInput.setAttribute("class","form-control taskNameClass");
     taskNameInput.setAttribute("placeholder","Task Name");
     taskNameInput.setAttribute("style","display: inline;");
     taskNameDiv.appendChild(taskNameInput);
@@ -47,7 +47,7 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
     let datepickerInput = document.createElement("input");
     datepickerInput.setAttribute("type", "text");
     datepickerInput.setAttribute("placeholder", "dd-mm-yyyy");
-    datepickerInput.setAttribute("class", "form-control");
+    datepickerInput.setAttribute("class", "form-control datePickerClass");
     let datepickerSpan = document.createElement("span");
     datepickerSpan.setAttribute("class","input-group-addon");
     datepickerDiv.appendChild(datepickerInput);
@@ -56,14 +56,14 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
     let selectDiv = document.createElement("div");
     selectDiv.setAttribute("class", "col-2");
     let selectElement = document.createElement("select");
-    selectElement.setAttribute("class","custom-select");
+    selectElement.setAttribute("class","custom-select selectClass");
     selectDiv.appendChild(selectElement);
 
     let fixedPayDiv = document.createElement("div");
     fixedPayDiv.setAttribute("class", "col-2");
     let fixedPayInput = document.createElement("input");
     fixedPayInput.setAttribute("type","text");
-    fixedPayInput.setAttribute("class","form-control");
+    fixedPayInput.setAttribute("class","form-control fixedPayoutClass");
     fixedPayInput.setAttribute("placeholder","Fixed Payout");
     fixedPayInput.setAttribute("style","display: inline;");
     fixedPayDiv.appendChild(fixedPayInput);
@@ -72,7 +72,7 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
     variablePayDiv.setAttribute("class", "col");
     let variablePayInput = document.createElement("input");
     variablePayInput.setAttribute("type","text");
-    variablePayInput.setAttribute("class","form-control");
+    variablePayInput.setAttribute("class","form-control variablePayoutClass");
     variablePayInput.setAttribute("placeholder","Variable Payout");
     variablePayInput.setAttribute("style","display: inline;");
     variablePayDiv.appendChild(variablePayInput);
@@ -83,6 +83,7 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
     checkBoxLabel.setAttribute("class","ml-2 mr-2 switch toggleButton");
     let checkBoxinput = document.createElement("input");
     checkBoxinput.setAttribute("type","checkbox");
+    checkBoxinput.setAttribute("class","checkboxClass");
     let checkBoxSpan = document.createElement("span");
     checkBoxSpan.setAttribute("class","slider round");
     checkBoxLabel.appendChild(checkBoxinput);
@@ -229,8 +230,88 @@ function makeProject(projectId, projectName, count, deliveryArray) {
     }
 }
 
-async function saveProjectTasks() {
+function saveProjectTasks() {
+    obj = document.getElementById("manageProjectSaveButton");
+    obj.style.backgroundColor = "#f1f1f1";
+    obj.style.borderColor = "black";
+    obj.style.color = "black";
+    obj.innerHTML = "Saved <b>&#10003;</b>";
+    setTimeout(function() {
+        obj.style.backgroundColor = "#007bff";
+        obj.innerHTML = "Save";
+        obj.style.color = "white";
+    }, 4000);
 
+    let outerDiv = document.getElementById("outerDiv");
+    let projects = outerDiv.getElementsByClassName("manageProjectContainer");
+    
+    let data = [];
+
+    for(let i=0; i<projects.length-1; i++) {
+        let idName = projects[i].getElementsByTagName("h5");
+        idName = idName[0].innerText;
+
+        let id = "";
+        let name = "";
+
+        let iterator = 0;
+        while(idName[iterator] != " ") {
+            id += idName[iterator];
+            iterator++;
+        }
+        iterator+=3;
+        while(iterator < idName.length) {
+            name += idName[iterator];
+            iterator++;
+        }
+
+        let taskData = projects[i].getElementsByClassName("Row");
+
+        for(let j=0; j<taskData.length; j++) {
+            let taskIdNum = taskData[j].getElementsByClassName("taskId");
+            let taskNameClass = taskData[j].getElementsByClassName("taskNameClass");
+            let datePickerClass = taskData[j].getElementsByClassName("datePickerClass");
+            let selectClass = taskData[j].getElementsByClassName("selectClass");
+            let fixedPayoutClass = taskData[j].getElementsByClassName("fixedPayoutClass");
+            let variablePayoutClass = taskData[j].getElementsByClassName("variablePayoutClass");
+            let checkboxClass = taskData[j].getElementsByClassName("checkboxClass");
+        
+            for(let k=0; k<taskIdNum.length; k++) {
+                let temp = [];
+                temp.push(id);
+                temp.push(name);
+                temp.push(taskIdNum[k].innerText);
+                temp.push(taskNameClass[k].value);
+                temp.push(selectClass[k].value);
+                temp.push(datePickerClass[k].value);
+                temp.push(fixedPayoutClass[k].value);
+                temp.push(variablePayoutClass[k].value);
+                if(checkboxClass[k].checked == true)
+                    temp.push("Completed"); 
+                else
+                    temp.push("Ongoing");
+
+                data.push(temp);
+            }
+        }
+    }
+
+    var params = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2',
+        valueInputOption: "USER_ENTERED",
+    };
+
+    var valueRangeBody = {
+        "majorDimension": "ROWS",
+        "values": data,
+    };
+
+    var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+    request.then(function(response) {
+    }, function(reason) {
+    console.error('error: ' + reason.result.error.message);
+    });
 }
 
 async function makeApiCallManageProjects() {
