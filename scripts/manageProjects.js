@@ -163,7 +163,7 @@ function makeProject(projectId, projectName, count, deliveryArray) {
         <div class="card manageProjectCard">
             <div class="card-header d-flex" id="heading`+count+`">
                 <a class="title col-7">
-                    <h5 class="mb-0" data-toggle="collapse" data-target="#collapse`+count+`">
+                    <h5 class="mb-0 projectTitle" data-toggle="collapse" data-target="#collapse`+count+`">
                     `+projectId+` : `+projectName+`  
                     </h5>
                 </a>
@@ -174,7 +174,7 @@ function makeProject(projectId, projectName, count, deliveryArray) {
                         Ongoing
                     </h6>
                     <label class="ml-2 mr-2 switch toggleButton">
-                        <input type="checkbox" id="Toggle`+count+`">
+                        <input type="checkbox" id="Toggle`+count+`" class="projectStatus">
                         <span class="slider round"></span>
                     </label>
                     <h6 class="completedText">
@@ -230,7 +230,7 @@ function makeProject(projectId, projectName, count, deliveryArray) {
     }
 }
 
-function saveProjectTasks() {
+async function saveProjectTasks() {
     obj = document.getElementById("manageProjectSaveButton");
     obj.style.backgroundColor = "#f1f1f1";
     obj.style.borderColor = "black";
@@ -241,6 +241,14 @@ function saveProjectTasks() {
         obj.innerHTML = "Save";
         obj.style.color = "white";
     }, 4000);
+
+    var paramsDelivery = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2:Z1000',
+    };
+
+    var requestDelivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    requestDelivery = requestDelivery.result.values;
 
     let outerDiv = document.getElementById("outerDiv");
     let projects = outerDiv.getElementsByClassName("manageProjectContainer");
@@ -278,6 +286,7 @@ function saveProjectTasks() {
         
             for(let k=0; k<taskIdNum.length; k++) {
                 let temp = [];
+                let data = [];
                 temp.push(id);
                 temp.push(name);
                 temp.push(taskIdNum[k].innerText);
@@ -292,6 +301,47 @@ function saveProjectTasks() {
                     temp.push("Ongoing");
 
                 data.push(temp);
+
+                var flag = false;
+
+                for(let l=0; l<requestDelivery.length; l++) {
+                    if(requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) {
+
+                        flag = true;
+                        let num = l+2;
+                        let str = "Delivery!A"+num;
+                        var params = {
+                            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                            range: str,
+                            valueInputOption: "USER_ENTERED",
+                        };
+                    
+                        var valueRangeBody = {
+                            "majorDimension": "ROWS",
+                            "values": data,
+                        };
+                    
+                        var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+                    }
+                }
+
+                if(flag == false) {
+
+                    console.log("hitesh");
+
+                    var params = {
+                        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                        range: 'Delivery!A2:Z1000',
+                        valueInputOption: "USER_ENTERED",
+                    };
+                
+                    var valueRangeBody = {
+                        "majorDimension": "ROWS",
+                        "values": data
+                    };
+                
+                    var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
+                }
             }
         }
     }
@@ -312,6 +362,73 @@ function saveProjectTasks() {
     }, function(reason) {
     console.error('error: ' + reason.result.error.message);
     });
+
+    // Project Toggle Button
+
+    var paramsProjects = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Projects!A2:Z1000',
+    };
+
+    var requestProjects = await gapi.client.sheets.spreadsheets.values.get(paramsProjects);
+    requestProjects = requestProjects.result.values;
+
+    for(let i=0; i<projects.length-1; i++) {
+        let temp = projects[i].getElementsByClassName("projectStatus");
+        
+        let idName = projects[i].getElementsByTagName("h5");
+        idName = idName[0].innerText;
+
+        let id = "";
+        let name = "";
+
+        let iterator = 0;
+        while(idName[iterator] != " ") {
+            id += idName[iterator];
+            iterator++;
+        }
+        iterator+=3;
+        while(iterator < idName.length) {
+            name += idName[iterator];
+            iterator++;
+        }
+
+        let arr=[];
+        let projectStatusArray=[];
+            
+        if(temp[0].checked == true) {
+            arr.push("Completed");
+            projectStatusArray.push(arr);
+        } else {
+            arr.push("Ongoing");
+            projectStatusArray.push(arr);
+        }
+
+        for(let j=0; j<requestProjects.length; j++) {
+            if(id == requestProjects[j][0]) {
+
+                var num = j+2;
+                var str = "Projects!K"+num; 
+
+                var params1 = {
+                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    range: str,
+                    valueInputOption: "USER_ENTERED",
+                };
+            
+                var valueRangeBody1 = {
+                    "majorDimension": "COLUMNS",
+                    "values": projectStatusArray,
+                };
+            
+                var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
+            }
+        }
+    }
+    
+    setTimeout(function() {
+        location.reload();
+    }, 500);
 }
 
 async function makeApiCallManageProjects() {
