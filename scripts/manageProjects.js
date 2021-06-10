@@ -99,7 +99,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     let deleteButton = document.createElement("button");
     deleteButton.setAttribute("class","btn deleteButton");
     deleteButton.setAttribute("id", "delete"+string);
-    deleteButton.setAttribute("onclick","deleteTask(id)");
+    deleteButton.setAttribute("onclick","confirmDelete(id)");
     let deleteLogo = document.createElement("i");
     deleteLogo.setAttribute("class","bi bi-trash cardIconManageProject");
     deleteButton.appendChild(deleteLogo);
@@ -508,9 +508,9 @@ async function updateSheet() {
         }
     }
 
-    console.log(count);
-    console.log(count2);
-    console.log(arr);
+    // console.log(count);
+    // console.log(count2);
+    // console.log(arr);
 
     var params1 = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -556,8 +556,8 @@ async function updateSheet() {
 }
 
 async function deleteTask(id) {
-    let elem = document.getElementById(id);
-    let divElement = elem.parentElement;
+    let divElement = id.parentElement;
+    console.log(divElement);
 
     let taskId = divElement.getElementsByTagName("h6");
     let taskName = divElement.getElementsByClassName("taskNameClass");
@@ -603,6 +603,74 @@ async function deleteTask(id) {
     }
 
     updateSheet();
+
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+
+function confirmDelete(id) {
+
+    console.log(id);
+
+    let elem = document.getElementById(id);
+    let divElement = elem.parentElement;
+
+    let taskName = divElement.getElementsByTagName("input");
+    taskName = taskName[0].value;
+
+    let projectElem = divElement.parentElement.parentElement.parentElement;
+
+    projectElem = projectElem.getElementsByClassName("title");
+    projectElem = projectElem[0].getElementsByTagName("h5");
+
+    projectElem = projectElem[0].innerText;
+
+    let flag = document.getElementById("modalContent");
+    flag.innerHTML = "";
+    let content = document.createElement("h5");
+    content.setAttribute("style","display: inline");
+    content.setAttribute("class","mt-2");
+    content.setAttribute("class","mb-2");
+    content.innerHTML = "Are you sure you want to delete '" + taskName + "' from '" + projectElem + "' ?"; 
+    
+    let deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class","btn btn-primary ml-5 mt-2 mb-2");
+    deleteButton.setAttribute("onclick","deleteTask("+id+")");
+    deleteButton.setAttribute("style","display: inline");
+    deleteButton.innerHTML = "Yes";
+
+    let cancelButton = document.createElement("button");
+    cancelButton.setAttribute("class","btn btn-primary ml-2 mt-2 mb-2");
+    cancelButton.setAttribute("onclick","closeModal()");
+    cancelButton.setAttribute("style","display: inline");
+    cancelButton.innerHTML = "Cancel";
+
+    flag.appendChild(content);
+    flag.appendChild(deleteButton);
+    flag.appendChild(cancelButton);
+
+    // content.innerHTML += `<button class="btn btn-primary ml-5" onclick="deleteTask(`+id+`)">YES</button>`;
+    // content.innerHTML += `<button class="btn btn-primary ml-4" onclick="closeModal()">Cancel</button>`;
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
 }
 
 //Authentication functions used for this app

@@ -171,7 +171,7 @@ async function feesRateCalculation() {
     }
 }
 
-async function saveNewProject() {
+async function saveNewProject(id) {
     let clientArray = [];
 
     var params1 = {
@@ -341,7 +341,7 @@ async function saveNewProject() {
     var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
     request.then(function(response) {
         console.log(response.result);
-        obj = document.getElementById("newProjectSaveButton");
+        obj = document.getElementById(id);
         obj.style.backgroundColor = "#f1f1f1";
         obj.style.borderColor = "black";
         obj.style.color = "black";
@@ -353,7 +353,7 @@ async function saveNewProject() {
         }, 4000);
     }, function(reason) {
         console.error('error: ' + reason.result.error.message);
-        obj = document.getElementById("newProjectSaveButton");
+        obj = document.getElementById(id);
         obj.style.backgroundColor = "#f1f1f1";
         obj.style.borderColor = "black";
         obj.style.color = "black";
@@ -364,6 +364,10 @@ async function saveNewProject() {
             obj.style.color = "white";
         }, 4000);
     });
+
+   if(id=="newProjectSaveManage") {
+        window.location.href='./manageProjects.html';
+   }
 }
 
 function autocomplete(inp, arr) {
