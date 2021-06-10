@@ -16,7 +16,7 @@ async function getTeamArray() {
 }
 
 let idArray = [];
-function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay = "", variablePay = "", taskStatus = "") {
+function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fixedPay = "", variablePay = "", taskStatus = "") {
     idArray[id-1]++;
 
     let accordion = document.getElementById("collapse"+id);
@@ -24,12 +24,14 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
 
     let outerDiv = document.createElement("div");
     outerDiv.setAttribute("class", "row ml-1 mt-2 Row");
-    outerDiv.setAttribute("id", idArray[id-1]);
+    let string = "";
+    string += idArray.length;
+    string += idArray[id-1];
+    outerDiv.setAttribute("id", string);
 
     let taskIdDiv = document.createElement("div");
     taskIdDiv.setAttribute("class", "col-1 taskId");
     let taskIdNumber = document.createElement("h6");
-    taskIdNumber.innerHTML = 1;
     taskIdDiv.appendChild(taskIdNumber);
 
     let taskNameDiv = document.createElement("div");
@@ -96,6 +98,7 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
     
     let deleteButton = document.createElement("button");
     deleteButton.setAttribute("class","btn deleteButton");
+    deleteButton.setAttribute("id", "delete"+string);
     deleteButton.setAttribute("onclick","deleteTask(id)");
     let deleteLogo = document.createElement("i");
     deleteLogo.setAttribute("class","bi bi-trash cardIconManageProject");
@@ -115,9 +118,24 @@ function addNewTask(id, taskName = "", dueDate = "", teamMember = "", fixedPay =
     let arrList = cardbody[0].getElementsByClassName("Row");
     let countTask = arrList.length;
 
-    let taskId = arrList[countTask-1].getElementsByClassName("taskId");
-    let num = taskId[0].getElementsByTagName("h6");
-    num[0].innerHTML = countTask;
+    if(countTask == 1) {
+        let taskId = arrList[countTask-1].getElementsByClassName("taskId");
+        let num = taskId[0].getElementsByTagName("h6");
+        num[0].innerHTML = "1";
+    } else {
+        let taskId = arrList[countTask-2].getElementsByClassName("taskId");
+        let num = taskId[0].getElementsByTagName("h6");
+        let x = num[0].innerHTML;
+
+        taskId = arrList[countTask-1].getElementsByClassName("taskId");
+        num = taskId[0].getElementsByTagName("h6");
+        num[0].innerHTML = parseInt(x)+1;
+    }
+
+    
+    if(Id != "") {
+        taskIdNumber.innerHTML = Id;
+    }
 
     let selectOption = cardbody[0].getElementsByTagName("select");
     for(let i=0; i<teamArray.length; i++) {
@@ -221,11 +239,13 @@ function makeProject(projectId, projectName, count, deliveryArray) {
         addNewTask(count,"","","","","","","");
         elem.style.visibility = "hidden";
     }
-    
 
-    for(let i=0; i<deliveryArray.length; i++) {
-        if(deliveryArray[i][0] == projectId) {
-            addNewTask(count, deliveryArray[i][3], deliveryArray[i][5], deliveryArray[i][4], deliveryArray[i][6], deliveryArray[i][7], deliveryArray[i][8]);
+    if(deliveryArray != undefined) {
+
+        for(let i=0; i<deliveryArray.length; i++) {
+            if(deliveryArray[i][0] == projectId) {
+                addNewTask(count, deliveryArray[i][2], deliveryArray[i][3], deliveryArray[i][5], deliveryArray[i][4], deliveryArray[i][6], deliveryArray[i][7], deliveryArray[i][8]);
+            }
         }
     }
 }
@@ -304,30 +324,30 @@ async function saveProjectTasks() {
 
                 var flag = false;
 
-                for(let l=0; l<requestDelivery.length; l++) {
-                    if(requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) {
+                if(requestDelivery != undefined) {
 
-                        flag = true;
-                        let num = l+2;
-                        let str = "Delivery!A"+num;
-                        var params = {
-                            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                            range: str,
-                            valueInputOption: "USER_ENTERED",
-                        };
-                    
-                        var valueRangeBody = {
-                            "majorDimension": "ROWS",
-                            "values": data,
-                        };
-                    
-                        var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+                    for(let l=0; l<requestDelivery.length; l++) {
+                        if(requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) {
+
+                            flag = true;
+                            let num = l+2;
+                            let str = "Delivery!A"+num;
+                            var params = {
+                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                range: str,
+                                valueInputOption: "USER_ENTERED",
+                            };
+                        
+                            var valueRangeBody = {
+                                "majorDimension": "ROWS",
+                                "values": data,
+                            };
+                        
+                            var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+                        }
                     }
                 }
-
                 if(flag == false) {
-
-                    console.log("hitesh");
 
                     var params = {
                         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -460,6 +480,113 @@ async function makeApiCallManageProjects() {
             makeProject(projectArray[i][0], projectArray[i][3], count, deliveryArray);
         }
     }
+}
+
+async function updateSheet() {
+
+    console.log("hitesh");
+
+    var batchUpdateRequest = {
+        "requests": [
+            {
+                "moveDimension": {
+                    "source": {
+                    "sheetId": 1,
+                    "dimension": "ROWS",
+                    "startIndex": 2,
+                    "endIndex": 3
+                    },
+                    "destinationIndex": 1
+                }
+            },
+        ]
+      }
+      gapi.client.sheets.spreadsheets.batchUpdate({
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo',
+        resource: batchUpdateRequest
+    })
+    // var params = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo',
+    // };
+
+    // var batchUpdateSpreadsheetRequestBody = {
+    //     requests: [
+    //         {
+    //             "moveDimension": {
+    //               "source": {
+    //                 "sheetId": 1,
+    //                 "dimension": "ROWS",
+    //                 "startIndex": 2,
+    //                 "endIndex": 3
+    //               },
+    //               "destinationIndex": 1
+    //             }
+    //         },
+    //     ],
+    // };
+
+    // var request = await gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
+}
+
+async function deleteTask(id) {
+    let elem = document.getElementById(id);
+    let divElement = elem.parentElement;
+
+    let taskId = divElement.getElementsByTagName("h6");
+    let taskName = divElement.getElementsByClassName("taskNameClass");
+
+    taskId = taskId[0].innerText;
+    taskName = taskName[0].value;
+
+    console.log(taskId);
+    console.log(taskName);
+    
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    let deliveryArray = request1.result.values;
+    console.log(deliveryArray);
+
+    for(let i=0; i<deliveryArray.length; i++) {
+        if(deliveryArray[i]!=="" && deliveryArray[i][2]==taskId && deliveryArray[i][3]==taskName) {
+
+            let num = i+2;
+            var a = 65;
+            var str1 =String.fromCharCode(a);
+            let str = "Delivery!";
+            str += str1;
+            str += num;
+            str += ":";
+            a+=11;
+            var str1 =String.fromCharCode(a);
+            str += str1;
+            str += num;
+
+            console.log(str);
+            
+            var params1 = {
+                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                range: str,
+            };
+        
+            var clearValuesRequestBody = {
+            };
+        
+            var request = await gapi.client.sheets.spreadsheets.values.clear(params1, clearValuesRequestBody);
+        }
+    }
+
+    updateSheet();
+
+    // location.reload();
+    // setTimeout(function() {
+    //     location.reload();
+    // }, 500);
+
+    // let x = await saveProjectTasks();
 }
 
 //Authentication functions used for this app
