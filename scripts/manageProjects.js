@@ -483,49 +483,76 @@ async function makeApiCallManageProjects() {
 }
 
 async function updateSheet() {
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2:Z1000',
+    };
 
-    console.log("hitesh");
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    deliveryArray = request1.result.values;
 
-    var batchUpdateRequest = {
-        "requests": [
-            {
-                "moveDimension": {
-                    "source": {
-                    "sheetId": 1,
-                    "dimension": "ROWS",
-                    "startIndex": 2,
-                    "endIndex": 3
-                    },
-                    "destinationIndex": 1
-                }
-            },
-        ]
-      }
-      gapi.client.sheets.spreadsheets.batchUpdate({
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo',
-        resource: batchUpdateRequest
-    })
-    // var params = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo',
-    // };
+    console.log(deliveryArray);
+    let count2 = deliveryArray.length;
 
-    // var batchUpdateSpreadsheetRequestBody = {
-    //     requests: [
-    //         {
-    //             "moveDimension": {
-    //               "source": {
-    //                 "sheetId": 1,
-    //                 "dimension": "ROWS",
-    //                 "startIndex": 2,
-    //                 "endIndex": 3
-    //               },
-    //               "destinationIndex": 1
-    //             }
-    //         },
-    //     ],
-    // };
+    let count = 0;
+    for(let i=0; i<deliveryArray.length; i++) {
+        if(deliveryArray[i]!="") {
+            count++;
+        }
+    }
 
-    // var request = await gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
+    let arr = [];
+    for(let i=0; i<deliveryArray.length; i++) {
+        if(deliveryArray[i]!="") {
+            arr.push(deliveryArray[i]);
+        }
+    }
+
+    console.log(count);
+    console.log(count2);
+    console.log(arr);
+
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2',
+        valueInputOption: "USER_ENTERED",
+    };
+
+    var valueRangeBody1 = {
+        "majorDimension": "ROWS",
+        "values": arr,
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
+
+    for(let j=count+2; j<count+2+(count2-count); j++) {
+
+        let num = j;
+        var a = 65;
+        var str1 =String.fromCharCode(a);
+        let str = "Delivery!";
+        str += str1;
+        str += num;
+        str += ":";
+        a+=11;
+        var str1 =String.fromCharCode(a);
+        str += str1;
+        str += num;
+
+        console.log(str);
+
+        var params1 = {
+            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            range: str,
+        };
+    
+        var clearValuesRequestBody = {
+        };
+    
+        var request = await gapi.client.sheets.spreadsheets.values.clear(params1, clearValuesRequestBody);
+    }
+
+    location.reload();
 }
 
 async function deleteTask(id) {
@@ -537,9 +564,6 @@ async function deleteTask(id) {
 
     taskId = taskId[0].innerText;
     taskName = taskName[0].value;
-
-    console.log(taskId);
-    console.log(taskName);
     
     var params1 = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -548,8 +572,7 @@ async function deleteTask(id) {
 
     var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
     let deliveryArray = request1.result.values;
-    console.log(deliveryArray);
-
+    
     for(let i=0; i<deliveryArray.length; i++) {
         if(deliveryArray[i]!=="" && deliveryArray[i][2]==taskId && deliveryArray[i][3]==taskName) {
 
@@ -580,13 +603,6 @@ async function deleteTask(id) {
     }
 
     updateSheet();
-
-    // location.reload();
-    // setTimeout(function() {
-    //     location.reload();
-    // }, 500);
-
-    // let x = await saveProjectTasks();
 }
 
 //Authentication functions used for this app
