@@ -13,7 +13,7 @@ function totalPayCalculation(id) {
     let totalPayouts = document.getElementById("totalPayout");
     let totalPayoutsDiv = document.getElementsByClassName("totalPay");
 
-    let x = 0;
+    let x = 0.0;
     for(let i=0; i<totalPayoutsDiv.length; i++) {
         let num = totalPayoutsDiv[i].getElementsByTagName("h6");
         if(num[0].innerText != "Total Payout") {
@@ -22,6 +22,25 @@ function totalPayCalculation(id) {
     }
 
     totalPayouts.innerText = "Total Payouts: Rs. " + x;
+
+    let elem = totalPay.parentElement.parentElement.parentElement.parentElement;
+    let totalDue = totalPay.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+    totalPayoutsDiv = elem.getElementsByClassName("totalPay");
+
+    x = 0.0;
+    for(let i=0; i<totalPayoutsDiv.length; i++) {
+        let num = totalPayoutsDiv[i].getElementsByTagName("h6");
+        if(num[0].innerText != "Total Payout") {
+            x += parseInt(num[0].innerText);
+        }
+    }
+    totalDue = totalDue.getElementsByTagName("h6");
+    totalDue[0].innerText = "Total Due : Rs. " + x;
+}
+
+function updateTracker() {
+
 }
 
 function createPayouts(arr, projectsArray, deliveryArray, count) {
@@ -36,17 +55,19 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     cardHead.setAttribute("id","heading"+count);
 
     let title = document.createElement("a");
-    title.setAttribute("class","title col-7");
+    title.setAttribute("class","title col-5");
+    title.setAttribute("data-toggle","collapse");
+    title.setAttribute("data-target","#collapse"+count);
     let titleContent = document.createElement("h5");
     titleContent.setAttribute("class","mb-0");
-    titleContent.setAttribute("data-toggle","collapse");
-    titleContent.setAttribute("data-target","#collapse"+count);
     titleContent.setAttribute("id","title"+count);
     titleContent.innerText = arr[0];
     title.appendChild(titleContent);
 
     let totalDueDiv = document.createElement("div");
-    totalDueDiv.setAttribute("class","col-2 d-flex align-items-center");
+    totalDueDiv.setAttribute("class","col-3 d-flex align-items-center pointerClass");
+    totalDueDiv.setAttribute("data-toggle","collapse");
+    totalDueDiv.setAttribute("data-target","#collapse"+count);
     let totalDueContent = document.createElement("h6");
     totalDueContent.setAttribute("class","d-flex align-items-center");
     totalDueContent.setAttribute("id","totalDue"+count);
@@ -54,7 +75,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     totalDueDiv.appendChild(totalDueContent);
 
     let paidStatusDiv = document.createElement("div");
-    paidStatusDiv.setAttribute("class","col-3 manageProjectsToggle d-flex");
+    paidStatusDiv.setAttribute("class","col-2 manageProjectsToggle d-flex");
     let paidLabel = document.createElement("label");
     paidLabel.setAttribute("class","ml-2 mr-2 switch toggleButton");
     let paidInput = document.createElement("input");
@@ -70,9 +91,20 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     paidStatusDiv.appendChild(paidLabel);
     paidStatusDiv.appendChild(paidStatus);
 
+    let trackerDiv = document.createElement("div");
+    trackerDiv.setAttribute("class","col-2");
+    let trackerContent = document.createElement("button");
+    trackerContent.setAttribute("class","btn btn-primary trackerButton");
+    trackerContent.setAttribute("onclick","updateTracker()");
+    trackerContent.setAttribute("id","trackerButton"+count);
+    trackerContent.innerHTML += "Update";
+    trackerDiv.appendChild(trackerContent);
+
+
     cardHead.appendChild(title);
     cardHead.appendChild(totalDueDiv);
     cardHead.appendChild(paidStatusDiv);
+    cardHead.appendChild(trackerDiv);
     
     let cardbodyDiv = document.createElement("div");
     cardbodyDiv.setAttribute("id","collapse"+count);
@@ -175,11 +207,11 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
             feedbackContent.innerHTML += "Feedback";
             feedbackDiv.appendChild(feedbackContent);
 
-            let trackerDiv = document.createElement("div");
-            trackerDiv.setAttribute("class","tracker");
-            let trackerContent = document.createElement("h6");
-            trackerContent.innerHTML += "Tracker";
-            trackerDiv.appendChild(trackerContent);
+            // let trackerDiv = document.createElement("div");
+            // trackerDiv.setAttribute("class","tracker");
+            // let trackerContent = document.createElement("h6");
+            // trackerContent.innerHTML += "Tracker";
+            // trackerDiv.appendChild(trackerContent);
 
             headingsDiv.appendChild(taskIdDiv);
             headingsDiv.appendChild(completedTaskDiv);
@@ -189,7 +221,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
             headingsDiv.appendChild(variablePayDiv);
             headingsDiv.appendChild(totalPayDiv);
             headingsDiv.appendChild(feedbackDiv);
-            headingsDiv.appendChild(trackerDiv);
+            // headingsDiv.appendChild(trackerDiv);
 
             outerDiv1.appendChild(projectDiv);
             outerDiv1.appendChild(headingsDiv);
@@ -287,14 +319,6 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 feedbackContent.setAttribute("id","feedback"+count+projectsCount+tasksCount);
                 feedbackDiv.appendChild(feedbackContent);
 
-                let trackerDiv = document.createElement("div");
-                trackerDiv.setAttribute("class","tracker");
-                let trackerContent = document.createElement("button");
-                trackerContent.setAttribute("class","btn btn-primary");
-                trackerContent.setAttribute("onclick","updateTracker()")
-                trackerContent.innerHTML += "Update";
-                trackerDiv.appendChild(trackerContent);
-
                 taskDiv.appendChild(taskIdDiv);
                 taskDiv.appendChild(completedTaskDiv);
                 taskDiv.appendChild(fixedPayMaxDiv);
@@ -303,8 +327,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 taskDiv.appendChild(variablePayDiv);
                 taskDiv.appendChild(totalPayDiv);
                 taskDiv.appendChild(feedbackDiv);
-                taskDiv.appendChild(trackerDiv);
-
+                
                 outerDiv1.appendChild(taskDiv);
             }
         }
@@ -447,12 +470,7 @@ async function savePayouts() {
                     "values": ArrayTwo,
                 };
             
-                var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
-                request.then(function(response) {
-                }, function(reason) {
-                console.error('error: ' + reason.result.error.message);
-                });
-
+                var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
             }
         }
     }

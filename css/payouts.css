@@ -79,6 +79,9 @@ input:checked + .slider:before {
 
 .title {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    /* border: 2px solid black; */
 }
 
 .calculatorButton {
@@ -119,12 +122,12 @@ input:checked + .slider:before {
 }
 
 .totalPay {
-    width: 9vw;
+    width: 10vw;
     margin-right: 1vw;
 }
 
 .feedback {
-    width: 20vw;
+    width: 25vw;
     margin-right: 1vw;
 }
 
@@ -134,4 +137,17 @@ input:checked + .slider:before {
 
 .savePayoutsButton {
     width: 100px;
+}
+
+.manageProjectsToggle {
+    display: flex;
+    align-items: center;
+}
+
+.trackerButton {
+    float: right;
+}
+
+.pointerClass {
+    cursor: pointer;
 }
