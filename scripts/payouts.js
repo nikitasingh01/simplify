@@ -261,7 +261,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     let trackerContent = document.createElement("button");
     trackerContent.setAttribute("class","btn btn-primary trackerButton");
     trackerContent.setAttribute("id","trackerButton"+count);
-    trackerContent.setAttribute("onclick","updateTracker(id)");
+    // trackerContent.setAttribute("onclick","updateTracker(id)");
     trackerContent.innerHTML += "Update";
     trackerDiv.appendChild(trackerContent);
 
@@ -741,6 +741,12 @@ async function updatePayoutsSheet(id) {
     
         var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
     }
+
+    let update = toggleButton.parentElement.parentElement.parentElement;
+    update = update.getElementsByTagName("button");
+    update = update[0];
+
+    update.setAttribute("onclick","updateTracker(id)");
 }
 
 //Authentication functions used for this app
