@@ -39,8 +39,172 @@ function totalPayCalculation(id) {
     totalDue[0].innerText = "Total Due : Rs. " + x;
 }
 
-function updateTracker() {
+async function updateTracker(id) {
+    let updateButton = document.getElementById(id);
 
+    updateButton.style.backgroundColor = "#f1f1f1";
+    updateButton.style.borderColor = "black";
+    updateButton.style.color = "black";
+    updateButton.innerHTML = "Updating <b>&#10003;</b>";
+    setTimeout(function() {
+        updateButton.style.backgroundColor = "#007bff";
+        updateButton.innerHTML = "Update";
+        updateButton.style.color = "white";
+    }, 4000);
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+        dd='0'+dd;
+
+    if(mm<10) 
+        mm='0'+mm;
+        
+    var date = dd+'/'+mm+'/'+yyyy;
+
+    let teamMemberName = updateButton.parentElement.parentElement;
+    teamMemberName = teamMemberName.getElementsByTagName("h5");
+    teamMemberName = teamMemberName[0].innerText;
+
+    var params = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Team!A2:Z1000',
+    };
+
+    var request = await gapi.client.sheets.spreadsheets.values.get(params);
+    request = request.result.values;
+
+    let link = "";
+
+    for(let i=0; i<request.length; i++) {
+        if(request[i][0] == teamMemberName) {
+            link = request[i][14];
+        }
+    } 
+
+    let spreadsheetIdExtracted = "";
+    let iterator = 0;
+    while(link[iterator] != "d" || link[iterator+1]!="/") {
+        iterator++;
+    }
+    iterator+=2;
+
+    while(iterator < link.length && link[iterator] != "/") {
+        spreadsheetIdExtracted += link[iterator];
+        iterator++;
+    }
+
+    let updateArray = [];
+    
+    let card = updateButton.parentElement.parentElement.parentElement;
+    let project = card.getElementsByClassName("project");
+
+    for(let i=0; i<project.length; i++) {
+        let projectIdName = project[i].getElementsByTagName("h6");
+        projectIdName = projectIdName[0].innerText;
+
+        let id = "";
+        let name = "";
+
+        let iterator = 0;
+        while(projectIdName[iterator] != " ") {
+            id += projectIdName[iterator];
+            iterator++;
+        }
+        iterator+=4;
+        while(iterator < projectIdName.length) {
+            name += projectIdName[iterator];
+            iterator++;
+        }
+
+        let tasks = project[i].getElementsByClassName("Row");
+        for(let j=0; j<tasks.length; j++) {
+            let task = tasks[j].getElementsByTagName("h6");
+            let arr = [];
+            arr.push(id);
+            arr.push(name);
+            arr.push(task[0].innerText);
+            arr.push(task[1].innerText);
+            arr.push(task[2].innerText);
+            arr.push(task[3].innerText);
+            arr.push(date);
+
+            let task1 = tasks[j].getElementsByTagName("input");
+            arr.push(task1[0].value);
+            arr.push(task1[1].value);
+            arr.push(task[4].innerText);
+            arr.push(task1[2].value);
+            
+            updateArray.push(arr);
+        }
+    }
+
+    console.log(updateArray);
+    var params = {
+        spreadsheetId: spreadsheetIdExtracted, 
+        range: 'Sheet1!A2:Z1000',
+        valueInputOption: "USER_ENTERED",
+    };
+
+    var valueRangeBody = {
+        "majorDimension": "ROWS",
+        "values": updateArray
+    };
+
+    var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
+
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Payouts!A2:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    let payoutsArray = request1.result.values;
+    console.log(payoutsArray);
+
+    let totalPayoutMade = updateButton.parentElement.parentElement;
+    totalPayoutMade = totalPayoutMade.getElementsByTagName("h6");
+    totalPayoutMade = totalPayoutMade[0].innerText;
+
+    iterator = 0;
+    while(totalPayoutMade[iterator] != "s") {
+        iterator++;
+    }
+    iterator+=3;
+    let num = "";
+    while(iterator < totalPayoutMade.length) {
+        num += totalPayoutMade[iterator];
+        iterator++;
+    }
+
+    console.log(teamMemberName);
+    console.log(date);
+    console.log(num);
+
+    for(let k=0; k<payoutsArray.length; k++) {
+        if(payoutsArray[k][0] == date && payoutsArray[k][1]==teamMemberName && payoutsArray[k][2]==num) {
+            let arr = [["Updated"]];
+
+            let temp = k+2;
+            let str = "Payouts!D"+temp;
+            console.log(str);
+
+            var params2 = {
+                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                range: str,
+                valueInputOption: "USER_ENTERED",
+            };
+        
+            var valueRangeBody2 = {
+                "majorDimension": "ROWS",
+                "values": arr,
+            };
+        
+            var request = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
+        }
+    }
 }
 
 function createPayouts(arr, projectsArray, deliveryArray, count) {
@@ -81,6 +245,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     let paidInput = document.createElement("input");
     paidInput.setAttribute("type","checkbox");
     paidInput.setAttribute("id","Toggle"+count);
+    paidInput.setAttribute("onclick","updatePayoutsSheet(id)");
     let paidSpan = document.createElement("span");
     paidSpan.setAttribute("class","slider round");
     paidLabel.appendChild(paidInput);
@@ -95,11 +260,10 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     trackerDiv.setAttribute("class","col-2");
     let trackerContent = document.createElement("button");
     trackerContent.setAttribute("class","btn btn-primary trackerButton");
-    trackerContent.setAttribute("onclick","updateTracker()");
     trackerContent.setAttribute("id","trackerButton"+count);
+    trackerContent.setAttribute("onclick","updateTracker(id)");
     trackerContent.innerHTML += "Update";
     trackerDiv.appendChild(trackerContent);
-
 
     cardHead.appendChild(title);
     cardHead.appendChild(totalDueDiv);
@@ -520,6 +684,63 @@ function todayDate() {
     var date = dd+'/'+mm+'/'+yyyy;
 
     dateElem.innerText += " " + date;
+}
+
+async function updatePayoutsSheet(id) {
+    let toggleButton = document.getElementById(id);
+    if(toggleButton.checked == true) {
+        let elem = toggleButton.parentElement.parentElement.parentElement;
+
+        let teamMember = elem.getElementsByTagName("h5");
+        teamMember = teamMember[0].innerText;
+
+        let pay = elem.getElementsByTagName("h6");
+        pay = pay[0].innerText;
+
+        let iterator = 0;
+        while(pay[iterator] != "s") {
+            iterator++;
+        }
+        let num = "";
+        iterator+=3;
+        while(iterator < pay.length) {
+            num += pay[iterator];
+            iterator++;
+        }
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();
+        if(dd<10) 
+            dd='0'+dd;
+
+        if(mm<10) 
+            mm='0'+mm;
+            
+        var date = dd+'/'+mm+'/'+yyyy;
+
+        let arrayOne = [];
+        let arrayTwo = [];
+        arrayOne.push(date);
+        arrayOne.push(teamMember);
+        arrayOne.push(num);
+        arrayOne.push("Yet to update");
+        arrayTwo.push(arrayOne);
+
+        var params = {
+            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            range: 'Payouts!A2:Z1000',
+            valueInputOption: "USER_ENTERED",
+        };
+    
+        var valueRangeBody = {
+            "majorDimension": "ROWS",
+            "values": arrayTwo
+        };
+    
+        var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
+    }
 }
 
 //Authentication functions used for this app
