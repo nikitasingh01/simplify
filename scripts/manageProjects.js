@@ -177,7 +177,8 @@ function makeProject(projectId, projectName, count, deliveryArray) {
     idArray.push(0);
     let outerDiv = document.getElementById("outerDiv");
 
-    outerDiv.innerHTML += `<div id="accordion`+ count +`" class="manageProjectContainer">
+    outerDiv.innerHTML += 
+    `<div id="accordion`+ count +`" class="manageProjectContainer">
         <div class="card manageProjectCard">
             <div class="card-header d-flex" id="heading`+count+`">
                 <a class="title col-7">
@@ -319,6 +320,11 @@ async function saveProjectTasks() {
                     temp.push("Completed"); 
                 else
                     temp.push("Ongoing");
+
+                temp.push("");
+                temp.push("");
+                temp.push("");
+                temp.push("Due");
 
                 data.push(temp);
 
@@ -508,10 +514,6 @@ async function updateSheet() {
         }
     }
 
-    // console.log(count);
-    // console.log(count2);
-    // console.log(arr);
-
     var params1 = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
         range: 'Delivery!A2',
@@ -667,8 +669,6 @@ function confirmDelete(id) {
     flag.appendChild(deleteButton);
     flag.appendChild(cancelButton);
 
-    // content.innerHTML += `<button class="btn btn-primary ml-5" onclick="deleteTask(`+id+`)">YES</button>`;
-    // content.innerHTML += `<button class="btn btn-primary ml-4" onclick="closeModal()">Cancel</button>`;
     var modal = document.getElementById("myModal");
     modal.style.display = "block";
 }

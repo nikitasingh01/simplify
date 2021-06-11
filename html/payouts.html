@@ -40,7 +40,7 @@
                     <a class="nav-link" href="./revenues.html">Revenues</a>
                 </li>
             </ul>
-            <button class="btn signinButton mr-2" onclick="handleSignInClick()">Sign in</button>
+            <button class="btn signinButton mr-2" id="singinPayouts" onclick="handleSignInClick()">Sign in</button>
             <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
         </div>
     </nav>
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div id="accordion1" class="payoutsContainer">
+        <div id="accordion" class="payoutsContainer">
             <div class="card payoutsCard">
                 <div class="card-header d-flex" id="headingOne">
                     <a class="title col-7">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-3 manageProjectsToggle d-flex">
                         <label class="ml-2 mr-2 switch toggleButton">
-                            <input type="checkbox" id="Toggle1" checked>
+                            <input type="checkbox" id="Toggle1">
                             <span class="slider round"></span>
                         </label>
                         <h6 class="completedText">
@@ -92,7 +92,7 @@
                     </div>
                 </div>
           
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-12">
@@ -142,47 +142,17 @@
                                 <h6>20%</h6>
                             </div>
                             <div class="fixedPayActual">
-                                <input type="text" class="form-control" id="" placeholder="Fixed Payout">
+                                <input type="text" class="form-control" placeholder="Fixed Payout">
                             </div>
                             <div class="variablePayActual">
-                                <input type="text" class="form-control" id="" placeholder="Variable Payout">
+                                <input type="text" class="form-control" placeholder="Variable Payout">
                             </div>
                             <div class="totalPay">
                                 <button class="btn calculatorButton" onclick="" ><i class="bi bi-calculator"></i></button>
                                 <h6 style="display: inline;">0</h6>
                             </div>
                             <div class="feedback">
-                                <input type="text" class="form-control" id="" placeholder="Feedback">
-                            </div>
-                            <div class="tracker">
-                                <button class="btn btn-primary" onclick="" >Update</button>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-1">
-                            <div class="taskId">
-                                <h6>1</h6>
-                            </div>
-                            <div class="completedTask">
-                                <h6>Task Name 1</h6>
-                            </div>
-                            <div class="fixedPayMax">
-                                <h6>5000</h6>
-                            </div>
-                            <div class="variablePayMax">
-                                <h6>20%</h6>
-                            </div>
-                            <div class="fixedPayActual">
-                                <input type="text" class="form-control" id="" placeholder="Fixed Payout">
-                            </div>
-                            <div class="variablePayActual">
-                                <input type="text" class="form-control" id="" placeholder="Variable Payout">
-                            </div>
-                            <div class="totalPay">
-                                <button class="btn calculatorButton" onclick="" ><i class="bi bi-calculator"></i></button>
-                                <h6 style="display: inline;">100000</h6>
-                            </div>
-                            <div class="feedback">
-                                <input type="text" class="form-control" id="" placeholder="Feedback">
+                                <input type="text" class="form-control" placeholder="Feedback">
                             </div>
                             <div class="tracker">
                                 <button class="btn btn-primary" onclick="" >Update</button>

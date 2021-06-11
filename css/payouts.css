@@ -70,8 +70,7 @@ input:checked + .slider:before {
 }
 
 .payoutsContainer {
-    display: flex;
-    justify-content: center;
+    width: 99%;
 }
 
 .payoutsCard {
