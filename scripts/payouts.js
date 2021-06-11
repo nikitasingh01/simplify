@@ -71,7 +71,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     let totalDueContent = document.createElement("h6");
     totalDueContent.setAttribute("class","d-flex align-items-center");
     totalDueContent.setAttribute("id","totalDue"+count);
-    totalDueContent.innerHTML += "Total Due : Rs. ";
+    totalDueContent.innerHTML += "Total Due : Rs. 0";
     totalDueDiv.appendChild(totalDueContent);
 
     let paidStatusDiv = document.createElement("div");
@@ -207,12 +207,6 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
             feedbackContent.innerHTML += "Feedback";
             feedbackDiv.appendChild(feedbackContent);
 
-            // let trackerDiv = document.createElement("div");
-            // trackerDiv.setAttribute("class","tracker");
-            // let trackerContent = document.createElement("h6");
-            // trackerContent.innerHTML += "Tracker";
-            // trackerDiv.appendChild(trackerContent);
-
             headingsDiv.appendChild(taskIdDiv);
             headingsDiv.appendChild(completedTaskDiv);
             headingsDiv.appendChild(fixedPayMaxDiv);
@@ -221,8 +215,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
             headingsDiv.appendChild(variablePayDiv);
             headingsDiv.appendChild(totalPayDiv);
             headingsDiv.appendChild(feedbackDiv);
-            // headingsDiv.appendChild(trackerDiv);
-
+            
             outerDiv1.appendChild(projectDiv);
             outerDiv1.appendChild(headingsDiv);
 
@@ -245,8 +238,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                     tasksCount += "0" + taskCount;
                 }
                 taskDiv.setAttribute("id","task"+count+projectsCount+tasksCount);
-                // console.log("task"+count+projectsCount+tasksCount);
-
+                
                 let taskIdDiv = document.createElement("div");
                 taskIdDiv.setAttribute("class","taskId");
                 let taskIdContent = document.createElement("h6");
@@ -456,9 +448,6 @@ async function savePayouts() {
                 rangeStr += ":M";
                 rangeStr += num;
 
-                // console.log(ArrayTwo);
-                // console.log(rangeStr);
-
                 var params = {
                     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
                     range: rangeStr,
@@ -503,7 +492,15 @@ async function makeApiCallPayouts() {
     let projectsArray = request3.result.values;
 
     for(let i=0; i<teamArray.length; i++) {
-        createPayouts(teamArray[i], projectsArray, deliveryArray, i+1);
+        let flag = false;
+        for(let j=0; j<deliveryArray.length; j++) {
+            if(deliveryArray[j][4] == teamArray[i][0] && deliveryArray[j][8]=="Completed" && deliveryArray[j][12]=="Due") {
+                flag = true;
+            }
+        }
+
+        if(flag == true)
+            createPayouts(teamArray[i], projectsArray, deliveryArray, i+1);
     }
 }
 
