@@ -536,7 +536,7 @@ async function updateSheet() {
         str += str1;
         str += num;
         str += ":";
-        a+=11;
+        a+=12;
         var str1 =String.fromCharCode(a);
         str += str1;
         str += num;
@@ -585,7 +585,7 @@ async function deleteTask(id) {
             str += str1;
             str += num;
             str += ":";
-            a+=11;
+            a+=12;
             var str1 =String.fromCharCode(a);
             str += str1;
             str += num;

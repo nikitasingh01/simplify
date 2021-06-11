@@ -47,29 +47,32 @@
 
     <div>
         <div class="row payoutsTitle">
-            <div class="col-12">
+            <div class="col-10">
                 <h5>Manage Payouts</h5>
             </div>
+            <div class="col-2">
+                <button class="btn btn-primary savePayoutsButton mr-2" id="savePayouts" onclick="savePayouts()">Save</button>    
+            </div>
         </div>
         <div class="row payoutsDetails">
             <div class="col-12">
-                <h6>Date: 26/05/2021</h6>
+                <h6 id="todayDate">Date:</h6>
             </div>
         </div>
         <div class="row payoutsDetails">
             <div class="col-4">
-                <h6>Total Payouts: Rs. 13800</h6>
+                <h6 id="totalPayout">Total Payouts: Rs.</h6>
             </div>
             <div class="col-4">
-                <h6>Payouts Made: Rs. 13800</h6>
+                <h6 id="payoutsMade">Payouts Made: Rs.</h6>
             </div>
             <div class="col-4">
-                <h6>Payouts Due: Rs. 0</h6>
+                <h6 id="payoutsDue">Payouts Due: Rs.</h6>
             </div>
         </div>
 
         <div id="accordion" class="payoutsContainer">
-            <div class="card payoutsCard">
+            <!-- <div class="card payoutsCard">
                 <div class="card-header d-flex" id="headingOne">
                     <a class="title col-7">
                         <h5 class="mb-0" data-toggle="collapse" data-target="#collapseOne">
@@ -94,73 +97,75 @@
           
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-12">
-                                <h6>Project Code :: Project Name 1</h6>
+                        <div class="project">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h6>Project Code :: Project Name 1</h6>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row align-items-center mt-1">
-                            <div class="taskId">
-                                <h6>Task ID</h6>
+                            <div class="row align-items-center mt-1">
+                                <div class="taskId">
+                                    <h6>Task ID</h6>
+                                </div>
+                                <div class="completedTask">
+                                    <h6>Completed Task</h6>
+                                </div>
+                                <div class="fixedPayMax">
+                                    <h6>Fixed Pay (Max)</h6>
+                                </div>
+                                <div class="variablePayMax">
+                                    <h6>Variable Pay (Max)</h6>
+                                </div>
+                                <div class="fixedPayActual">
+                                    <h6>Fixed Pay (Actual)</h6>
+                                </div>
+                                <div class="variablePayActual">
+                                    <h6>Variable Pay (Actual)</h6>
+                                </div>
+                                <div class="totalPay">
+                                    <h6>Total Payout</h6>
+                                </div>
+                                <div class="feedback">
+                                    <h6>Feedback</h6>
+                                </div>
+                                <div class="tracker">
+                                    <h6>Tracker</h6>
+                                </div>
                             </div>
-                            <div class="completedTask">
-                                <h6>Completed Task</h6>
-                            </div>
-                            <div class="fixedPayMax">
-                                <h6>Fixed Pay (Max)</h6>
-                            </div>
-                            <div class="variablePayMax">
-                                <h6>Variable Pay (Max)</h6>
-                            </div>
-                            <div class="fixedPayActual">
-                                <h6>Fixed Pay (Actual)</h6>
-                            </div>
-                            <div class="variablePayActual">
-                                <h6>Variable Pay (Actual)</h6>
-                            </div>
-                            <div class="totalPay">
-                                <h6>Total Payout</h6>
-                            </div>
-                            <div class="feedback">
-                                <h6>Feedback</h6>
-                            </div>
-                            <div class="tracker">
-                                <h6>Tracker</h6>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-1">
-                            <div class="taskId">
-                                <h6>1</h6>
-                            </div>
-                            <div class="completedTask">
-                                <h6>Task Name 1</h6>
-                            </div>
-                            <div class="fixedPayMax">
-                                <h6>5000</h6>
-                            </div>
-                            <div class="variablePayMax">
-                                <h6>20%</h6>
-                            </div>
-                            <div class="fixedPayActual">
-                                <input type="text" class="form-control" placeholder="Fixed Payout">
-                            </div>
-                            <div class="variablePayActual">
-                                <input type="text" class="form-control" placeholder="Variable Payout">
-                            </div>
-                            <div class="totalPay">
-                                <button class="btn calculatorButton" onclick="" ><i class="bi bi-calculator"></i></button>
-                                <h6 style="display: inline;">0</h6>
-                            </div>
-                            <div class="feedback">
-                                <input type="text" class="form-control" placeholder="Feedback">
-                            </div>
-                            <div class="tracker">
-                                <button class="btn btn-primary" onclick="" >Update</button>
+                            <div class="row align-items-center mt-1 Row">
+                                <div class="taskId">
+                                    <h6>1</h6>
+                                </div>
+                                <div class="completedTask">
+                                    <h6>Task Name 1</h6>
+                                </div>
+                                <div class="fixedPayMax">
+                                    <h6>5000</h6>
+                                </div>
+                                <div class="variablePayMax">
+                                    <h6>20%</h6>
+                                </div>
+                                <div class="fixedPayActual">
+                                    <input type="text" class="form-control" placeholder="Fixed Payout">
+                                </div>
+                                <div class="variablePayActual">
+                                    <input type="text" class="form-control" placeholder="Variable Payout">
+                                </div>
+                                <div class="totalPay">
+                                    <button class="btn calculatorButton" onclick="" ><i class="bi bi-calculator"></i></button>
+                                    <h6 style="display: inline;">0</h6>
+                                </div>
+                                <div class="feedback">
+                                    <input type="text" class="form-control" placeholder="Feedback">
+                                </div>
+                                <div class="tracker">
+                                    <button class="btn btn-primary" onclick="" >Update</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     
