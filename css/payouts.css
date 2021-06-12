@@ -151,3 +151,13 @@ input:checked + .slider:before {
 .pointerClass {
     cursor: pointer;
 }
+
+.projectIdandTitle {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

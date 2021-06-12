@@ -47,9 +47,9 @@ async function updateTracker(id) {
     updateButton.style.color = "black";
     updateButton.innerHTML = "Updating <b>&#10003;</b>";
     setTimeout(function() {
-        updateButton.style.backgroundColor = "#007bff";
-        updateButton.innerHTML = "Update";
-        updateButton.style.color = "white";
+        updateButton.style.backgroundColor = "#f1f1f1";
+        updateButton.innerHTML = "Updated";
+        updateButton.style.color = "black";
     }, 4000);
 
     var today = new Date();
@@ -199,6 +199,8 @@ async function updateTracker(id) {
             var request = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
         }
     }
+
+    updateButton.removeAttribute("onclick","updateTracker(id)");
 }
 
 function createPayouts(arr, projectsArray, deliveryArray, count) {
@@ -307,7 +309,8 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
             let projectTitleDiv = document.createElement("div");
             projectTitleDiv.setAttribute("class","col-12");
             let projectTitle = document.createElement("h6");
-            projectTitle.setAttribute("class","projectIdandTitle");
+            projectTitle.setAttribute("class","mt-2 projectIdandTitle");
+            projectTitle.style.backgroundColor = "#f1f1f1";
             projectTitle.innerHTML += projectsArray[i][0];
             projectTitle.innerHTML += " :: ";
             projectTitle.innerHTML += projectsArray[i][3];
@@ -741,6 +744,7 @@ async function updatePayoutsSheet(id) {
     update = update[0];
 
     update.setAttribute("onclick","updateTracker(id)");
+    toggleButton.removeAttribute("onclick","updatePayoutsSheet(id)");
 }
 
 //Authentication functions used for this app
