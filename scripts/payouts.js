@@ -141,7 +141,6 @@ async function updateTracker(id) {
         }
     }
 
-    console.log(updateArray);
     var params = {
         spreadsheetId: spreadsheetIdExtracted, 
         range: 'Sheet1!A2:Z1000',
@@ -162,8 +161,7 @@ async function updateTracker(id) {
 
     var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
     let payoutsArray = request1.result.values;
-    console.log(payoutsArray);
-
+    
     let totalPayoutMade = updateButton.parentElement.parentElement;
     totalPayoutMade = totalPayoutMade.getElementsByTagName("h6");
     totalPayoutMade = totalPayoutMade[0].innerText;
@@ -178,10 +176,6 @@ async function updateTracker(id) {
         num += totalPayoutMade[iterator];
         iterator++;
     }
-
-    console.log(teamMemberName);
-    console.log(date);
-    console.log(num);
 
     for(let k=0; k<payoutsArray.length; k++) {
         if(payoutsArray[k][0] == date && payoutsArray[k][1]==teamMemberName && payoutsArray[k][2]==num) {
