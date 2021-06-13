@@ -9,9 +9,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/payouts.css">
-    <title>SB® | Manage Projects</title>
+    <title>SB® | Manage Payouts</title>
 </head>
 <body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="mt-2 mb-2">Confirmation</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="modalContent">
+                <h5 class="mt-2">Please register the total payout</h5>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -47,11 +58,8 @@
 
     <div>
         <div class="row payoutsTitle">
-            <div class="col-10">
+            <div class="col-12">
                 <h5>Manage Payouts</h5>
-            </div>
-            <div class="col-2">
-                <button class="btn btn-primary savePayoutsButton mr-2" id="savePayouts" onclick="savePayouts()">Save</button>    
             </div>
         </div>
         <div class="row payoutsDetails">
@@ -92,6 +100,9 @@
                         <h6 class="completedText">
                             Paid
                         </h6>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary savePayoutsButton mr-2" id="savePayouts" onclick="savePayouts()">Save</button>    
                     </div>
                 </div>
           

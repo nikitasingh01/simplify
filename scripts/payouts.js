@@ -16,7 +16,7 @@ function totalPayCalculation(id) {
     let x = 0.0;
     for(let i=0; i<totalPayoutsDiv.length; i++) {
         let num = totalPayoutsDiv[i].getElementsByTagName("h6");
-        if(num[0].innerText != "Total Payout") {
+        if(num[0].innerText != "Total Payout" && num[0].innerText != "") {
             x += parseInt(num[0].innerText);
         }
     }
@@ -31,7 +31,7 @@ function totalPayCalculation(id) {
     x = 0.0;
     for(let i=0; i<totalPayoutsDiv.length; i++) {
         let num = totalPayoutsDiv[i].getElementsByTagName("h6");
-        if(num[0].innerText != "Total Payout") {
+        if(num[0].innerText != "Total Payout" && num[0].innerText != "") {
             x += parseInt(num[0].innerText);
         }
     }
@@ -201,6 +201,12 @@ async function updateTracker(id) {
     }
 
     updateButton.removeAttribute("onclick","updateTracker(id)");
+    updateButton.style.backgroundColor = "#f1f1f1";
+    updateButton.style.borderColor = "black";
+    updateButton.style.color = "black";
+    updateButton.style.cursor = "default";
+    updateButton.style.boxShadow = "none";
+    updateButton.innerHTML = "Updating <b>&#10003;</b>";
 }
 
 function createPayouts(arr, projectsArray, deliveryArray, count) {
@@ -215,7 +221,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     cardHead.setAttribute("id","heading"+count);
 
     let title = document.createElement("a");
-    title.setAttribute("class","title col-5");
+    title.setAttribute("class","title col-4");
     title.setAttribute("data-toggle","collapse");
     title.setAttribute("data-target","#collapse"+count);
     let titleContent = document.createElement("h5");
@@ -252,18 +258,27 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     paidStatusDiv.appendChild(paidLabel);
     paidStatusDiv.appendChild(paidStatus);
 
+    let saveDiv = document.createElement("div");
+    saveDiv.setAttribute("class","col-1");
+    let saveButton = document.createElement("button");
+    saveButton.setAttribute("class","btn btn-primary savePayoutsButton mr-2");
+    saveButton.setAttribute("id","saveButton"+count);
+    saveButton.setAttribute("onclick","savePayouts(id,"+count+")");
+    saveButton.innerHTML = "Save"; 
+    saveDiv.appendChild(saveButton);
+
     let trackerDiv = document.createElement("div");
     trackerDiv.setAttribute("class","col-2");
     let trackerContent = document.createElement("button");
     trackerContent.setAttribute("class","btn btn-primary trackerButton");
     trackerContent.setAttribute("id","trackerButton"+count);
-    // trackerContent.setAttribute("onclick","updateTracker(id)");
-    trackerContent.innerHTML += "Update";
+    trackerContent.innerHTML += "Update Tracker";
     trackerDiv.appendChild(trackerContent);
 
     cardHead.appendChild(title);
     cardHead.appendChild(totalDueDiv);
     cardHead.appendChild(paidStatusDiv);
+    cardHead.appendChild(saveDiv);
     cardHead.appendChild(trackerDiv);
     
     let cardbodyDiv = document.createElement("div");
@@ -293,6 +308,9 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 dummyArray.push(deliveryArray[j][3]);
                 dummyArray.push(deliveryArray[j][6]);
                 dummyArray.push(deliveryArray[j][7]);
+                dummyArray.push(deliveryArray[j][9]);
+                dummyArray.push(deliveryArray[j][10]);
+                dummyArray.push(deliveryArray[j][11]);
 
                 addTaskArray.push(dummyArray);
             }
@@ -435,6 +453,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 fixedPayContent.setAttribute("class","form-control");
                 fixedPayContent.setAttribute("placeholder","Fixed Payout");
                 fixedPayContent.setAttribute("id","fixedPayActual"+count+projectsCount+tasksCount);
+                fixedPayContent.value = addTaskArray[j][4];
                 fixedPayDiv.appendChild(fixedPayContent);
 
                 let variablePayDiv = document.createElement("div");
@@ -444,6 +463,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 variablePayContent.setAttribute("class","form-control");
                 variablePayContent.setAttribute("placeholder","Variable Payout");
                 variablePayContent.setAttribute("id","variablePayActual"+count+projectsCount+tasksCount);
+                variablePayContent.value = addTaskArray[j][5];
                 variablePayDiv.appendChild(variablePayContent);
 
                 let totalPayDiv = document.createElement("div");
@@ -459,7 +479,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 totalPayContent.setAttribute("style","display: inline;")
                 totalPayContent.setAttribute("class","ml-1")
                 totalPayContent.setAttribute("id","totalPayContent"+count+projectsCount+tasksCount);
-                totalPayContent.innerText = "0";
+                totalPayContent.innerText = addTaskArray[j][6];
                 totalPayDiv.appendChild(totalPayButton);
                 totalPayDiv.appendChild(totalPayContent);
 
@@ -487,9 +507,9 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     }
 }
 
-async function savePayouts() {
+async function savePayouts(id, count) {
 
-    obj = document.getElementById("savePayouts");
+    obj = document.getElementById(id);
     obj.style.backgroundColor = "#f1f1f1";
     obj.style.borderColor = "black";
     obj.style.color = "black";
@@ -508,82 +528,68 @@ async function savePayouts() {
     var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
     let deliveryArray = request1.result.values;
 
-    let card = document.getElementsByClassName("card");
+    let card = obj.parentElement.parentElement.parentElement;
     let array = [];
         
-    for(let i=0; i<card.length; i++) {
-        let project = card[i].getElementsByClassName("project");
+    let project = card.getElementsByClassName("project");
 
-        if(project == undefined) {
-            continue;
+    for(let k=0; k<project.length; k++) {
+
+        let projectIdandTitle = project[k].getElementsByClassName("projectIdandTitle");
+        projectIdandTitle = projectIdandTitle[0].innerHTML;
+        
+        let id = "";
+        let name = "";
+
+        let iterator = 0;
+        while(projectIdandTitle[iterator] != " ") {
+            id += projectIdandTitle[iterator];
+            iterator++;
+        }
+        iterator+=4;
+        while(iterator < projectIdandTitle.length) {
+            name += projectIdandTitle[iterator];
+            iterator++;
         }
 
-        for(let k=0; k<project.length; k++) {
+        let task = project[k].getElementsByClassName("Row");
 
-            let projectIdandTitle = project[k].getElementsByClassName("projectIdandTitle");
-            projectIdandTitle = projectIdandTitle[0].innerHTML;
+        for(let j=0; j<task.length; j++) {
+            let temp=[];
+            temp.push(id);
             
-            let id = "";
-            let name = "";
+            let t = task[j].getElementsByTagName("h6");
+            let status = task[j].parentElement.parentElement.parentElement.parentElement;
 
-            let iterator = 0;
-            while(projectIdandTitle[iterator] != " ") {
-                id += projectIdandTitle[iterator];
-                iterator++;
+            let paidStatusToggle = status.getElementsByTagName("input");
+            
+            if(paidStatusToggle[0].checked == true) {
+                paidStatusToggle = "Paid";
+            } else {
+                paidStatusToggle = "Due";
             }
-            iterator+=4;
-            while(iterator < projectIdandTitle.length) {
-                name += projectIdandTitle[iterator];
-                iterator++;
-            }
+            temp.push(t[0].innerText);
+            temp.push(t[1].innerText);
+            temp.push(t[2].innerText);
+            temp.push(t[3].innerText);
 
-            let task = project[k].getElementsByClassName("Row");
+            let i = task[j].getElementsByTagName("input");
+            if(i[0]!=undefined)
+                temp.push(i[0].value);
+            
+            if(i[1]!=undefined)
+                temp.push(i[1].value);
+            
+            temp.push(t[4].innerText);
+            
+            if(i[2]!=undefined)
+                temp.push(i[2].value);
 
-            for(let j=0; j<task.length; j++) {
-                let temp=[];
-                temp.push(id);
-                
-                let t = task[j].getElementsByTagName("h6");
-                let status = task[j].parentElement.parentElement.parentElement.parentElement;
-
-                let paidStatusToggle = status.getElementsByTagName("input");
-                
-                if(paidStatusToggle[0].checked == true) {
-                    paidStatusToggle = "Paid";
-                } else {
-                    paidStatusToggle = "Due";
-                }
-                temp.push(t[0].innerText);
-                temp.push(t[1].innerText);
-                temp.push(t[2].innerText);
-                temp.push(t[3].innerText);
-
-                let i = task[j].getElementsByTagName("input");
-                if(i[0]!=undefined)
-                    temp.push(i[0].value);
-                else
-                    temp.push("");
-                
-                if(i[1]!=undefined)
-                    temp.push(i[1].value);
-                else
-                    temp.push("");
-                
-                temp.push(t[4].innerText);
-                
-                if(i[2]!=undefined)
-                    temp.push(i[2].value);
-                else
-                    temp.push("");
-
-                temp.push(paidStatusToggle);
-                
-                array.push(temp);
-            }
+            temp.push(paidStatusToggle);
+            
+            array.push(temp);
         }
     }
-
-    // console.log(array);
 
     for(let i=0; i<array.length; i++) {
         for(let j=0; j<deliveryArray.length; j++) {
@@ -683,6 +689,19 @@ function todayDate() {
     dateElem.innerText += " " + date;
 }
 
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 async function updatePayoutsSheet(id) {
     let toggleButton = document.getElementById(id);
     if(toggleButton.checked == true) {
@@ -703,6 +722,11 @@ async function updatePayoutsSheet(id) {
         while(iterator < pay.length) {
             num += pay[iterator];
             iterator++;
+        }
+
+        if(num == "0") {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
         }
 
         var today = new Date();
@@ -741,10 +765,12 @@ async function updatePayoutsSheet(id) {
 
     let update = toggleButton.parentElement.parentElement.parentElement;
     update = update.getElementsByTagName("button");
-    update = update[0];
+    update = update[1];
 
     update.setAttribute("onclick","updateTracker(id)");
     toggleButton.removeAttribute("onclick","updatePayoutsSheet(id)");
+    toggleButton.setAttribute("disabled",true);
+    toggleButton.setAttribute("style","cursor: context-menu !important;")
 }
 
 //Authentication functions used for this app

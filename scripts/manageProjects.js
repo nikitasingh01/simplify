@@ -274,7 +274,7 @@ async function saveProjectTasks() {
     let outerDiv = document.getElementById("outerDiv");
     let projects = outerDiv.getElementsByClassName("manageProjectContainer");
     
-    let data = [];
+    // let data = [];
 
     for(let i=0; i<projects.length-1; i++) {
         let idName = projects[i].getElementsByTagName("h5");
@@ -307,7 +307,9 @@ async function saveProjectTasks() {
         
             for(let k=0; k<taskIdNum.length; k++) {
                 let temp = [];
+                let temp1 = [];
                 let data = [];
+                let data1 = [];
                 temp.push(id);
                 temp.push(name);
                 temp.push(taskIdNum[k].innerText);
@@ -321,13 +323,28 @@ async function saveProjectTasks() {
                 else
                     temp.push("Ongoing");
 
-                temp.push("");
-                temp.push("");
-                temp.push("");
-                temp.push("Due");
-
                 data.push(temp);
+                
+                temp1.push(id);
+                temp1.push(name);
+                temp1.push(taskIdNum[k].innerText);
+                temp1.push(taskNameClass[k].value);
+                temp1.push(selectClass[k].value);
+                temp1.push(datePickerClass[k].value);
+                temp1.push(fixedPayoutClass[k].value);
+                temp1.push(variablePayoutClass[k].value);
+                if(checkboxClass[k].checked == true)
+                    temp1.push("Completed"); 
+                else
+                    temp1.push("Ongoing");
 
+                temp1.push("");
+                temp1.push("");
+                temp1.push("");
+                temp1.push("Due");
+
+                data1.push(temp1);
+                
                 var flag = false;
 
                 if(requestDelivery != undefined) {
@@ -353,7 +370,10 @@ async function saveProjectTasks() {
                         }
                     }
                 }
+
                 if(flag == false) {
+
+                    console.log('false');
 
                     var params = {
                         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -363,7 +383,7 @@ async function saveProjectTasks() {
                 
                     var valueRangeBody = {
                         "majorDimension": "ROWS",
-                        "values": data
+                        "values": data1,
                     };
                 
                     var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
@@ -371,23 +391,6 @@ async function saveProjectTasks() {
             }
         }
     }
-
-    var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Delivery!A2',
-        valueInputOption: "USER_ENTERED",
-    };
-
-    var valueRangeBody = {
-        "majorDimension": "ROWS",
-        "values": data,
-    };
-
-    var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
-    request.then(function(response) {
-    }, function(reason) {
-    console.error('error: ' + reason.result.error.message);
-    });
 
     // Project Toggle Button
 
@@ -612,6 +615,19 @@ async function deleteTask(id) {
 
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+var modal = document.getElementById("myModal1");
+var span = document.getElementsByClassName("close")[1];
 
 span.onclick = function() {
     modal.style.display = "none";
