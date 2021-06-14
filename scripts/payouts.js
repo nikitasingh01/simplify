@@ -177,7 +177,7 @@ async function updateTracker(id) {
     while(totalPayoutMade[iterator] != "s") {
         iterator++;
     }
-    iterator+=3;
+    iterator+=2;
     let num = "";
     while(iterator < totalPayoutMade.length) {
         num += totalPayoutMade[iterator];
@@ -742,7 +742,7 @@ async function updatePayoutsSheet(id) {
         }
 
         if(parseInt(num) == 0) {
-            toggleButton.setAttribute("checked", false);
+            toggleButton.checked = true;
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
             return;
