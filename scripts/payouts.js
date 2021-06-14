@@ -10,7 +10,6 @@ function totalPayCalculation(id) {
     total = parseInt(fixedPay.value) + (0.01)*parseInt(fixedPay.value)*parseInt(variablePayStr);
     totalPay.innerText = total;
 
-    let totalPayouts = document.getElementById("totalPayout");
     let totalPayoutsDiv = document.getElementsByClassName("totalPay");
 
     let x = 0.0;
@@ -21,7 +20,12 @@ function totalPayCalculation(id) {
         }
     }
 
-    totalPayouts.innerText = "Total Payouts: Rs. " + x;
+    let totalpayNum = document.getElementById("totalpayNum");
+    totalpayNum.innerText = x;
+
+    let payoutsMadeNum = document.getElementById("payoutsMadeNum");
+    let payoutsDueNum = document.getElementById("payoutsDueNum");
+    payoutsDueNum.innerText = parseInt(totalpayNum.innerText) - parseInt(payoutsMadeNum.innerText);
 
     let elem = totalPay.parentElement.parentElement.parentElement.parentElement;
     let totalDue = totalPay.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -35,8 +39,11 @@ function totalPayCalculation(id) {
             x += parseInt(num[0].innerText);
         }
     }
+    
     totalDue = totalDue.getElementsByTagName("h6");
-    totalDue[0].innerText = "Total Due : Rs. " + x;
+    totalDue = totalDue[0];
+
+    totalDue.innerText = "Total Due: Rs " + x;
 }
 
 async function updateTracker(id) {
@@ -221,7 +228,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     cardHead.setAttribute("id","heading"+count);
 
     let title = document.createElement("a");
-    title.setAttribute("class","title col-4");
+    title.setAttribute("class","title col-3");
     title.setAttribute("data-toggle","collapse");
     title.setAttribute("data-target","#collapse"+count);
     let titleContent = document.createElement("h5");
@@ -240,6 +247,15 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     totalDueContent.innerHTML += "Total Due : Rs. 0";
     totalDueDiv.appendChild(totalDueContent);
 
+    let saveDiv = document.createElement("div");
+    saveDiv.setAttribute("class","col-2");
+    let saveButton = document.createElement("button");
+    saveButton.setAttribute("class","btn btn-primary savePayoutsButton");
+    saveButton.setAttribute("id","saveButton"+count);
+    saveButton.setAttribute("onclick","savePayouts(id,"+count+")");
+    saveButton.innerHTML = "Save"; 
+    saveDiv.appendChild(saveButton);
+
     let paidStatusDiv = document.createElement("div");
     paidStatusDiv.setAttribute("class","col-2 manageProjectsToggle d-flex");
     let paidLabel = document.createElement("label");
@@ -255,30 +271,26 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     let paidStatus = document.createElement("h6");
     paidStatus.setAttribute("class","completedText");
     paidStatus.innerText = "Paid";
+    let paidStatus1 = document.createElement("h6");
+    paidStatus1.setAttribute("class","completedText");
+    paidStatus1.innerText = "Payouts: Due";
+    paidStatusDiv.appendChild(paidStatus1);
     paidStatusDiv.appendChild(paidLabel);
     paidStatusDiv.appendChild(paidStatus);
-
-    let saveDiv = document.createElement("div");
-    saveDiv.setAttribute("class","col-1");
-    let saveButton = document.createElement("button");
-    saveButton.setAttribute("class","btn btn-primary savePayoutsButton mr-2");
-    saveButton.setAttribute("id","saveButton"+count);
-    saveButton.setAttribute("onclick","savePayouts(id,"+count+")");
-    saveButton.innerHTML = "Save"; 
-    saveDiv.appendChild(saveButton);
 
     let trackerDiv = document.createElement("div");
     trackerDiv.setAttribute("class","col-2");
     let trackerContent = document.createElement("button");
-    trackerContent.setAttribute("class","btn btn-primary trackerButton");
+    trackerContent.setAttribute("class","btn trackerButton");
     trackerContent.setAttribute("id","trackerButton"+count);
+    trackerContent.setAttribute("style","cursor: default; border: 1px solid black;")
     trackerContent.innerHTML += "Update Tracker";
     trackerDiv.appendChild(trackerContent);
 
     cardHead.appendChild(title);
     cardHead.appendChild(totalDueDiv);
-    cardHead.appendChild(paidStatusDiv);
     cardHead.appendChild(saveDiv);
+    cardHead.appendChild(paidStatusDiv);
     cardHead.appendChild(trackerDiv);
     
     let cardbodyDiv = document.createElement("div");
@@ -301,7 +313,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
         let addTaskArray = [];
         for(let j=0; j<deliveryArray.length; j++) {
 
-            if(deliveryArray[j][4]==arr[0] && deliveryArray[j][0] == projectsArray[i][0] && deliveryArray[j][8]=="Completed" && deliveryArray[j][12]=="Due") {
+            if(deliveryArray[j][4]==arr[0] && deliveryArray[j][0] == projectsArray[i][0] && deliveryArray[j][8]=="Completed" && deliveryArray[j][14]=="Yet to update") {
                 
                 let dummyArray = [];
                 dummyArray.push(deliveryArray[j][2]);
@@ -311,6 +323,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 dummyArray.push(deliveryArray[j][9]);
                 dummyArray.push(deliveryArray[j][10]);
                 dummyArray.push(deliveryArray[j][11]);
+                dummyArray.push(deliveryArray[j][13]);
 
                 addTaskArray.push(dummyArray);
             }
@@ -490,6 +503,10 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 feedbackContent.setAttribute("class","form-control");
                 feedbackContent.setAttribute("placeholder","Feedback");
                 feedbackContent.setAttribute("id","feedback"+count+projectsCount+tasksCount);
+                if(addTaskArray[j][7] != undefined)
+                    feedbackContent.value += addTaskArray[j][7];
+                else
+                    feedbackContent.value += "";
                 feedbackDiv.appendChild(feedbackContent);
 
                 taskDiv.appendChild(taskIdDiv);
@@ -661,7 +678,7 @@ async function makeApiCallPayouts() {
     for(let i=0; i<teamArray.length; i++) {
         let flag = false;
         for(let j=0; j<deliveryArray.length; j++) {
-            if(deliveryArray[j][4] == teamArray[i][0] && deliveryArray[j][8]=="Completed" && deliveryArray[j][12]=="Due") {
+            if(deliveryArray[j][4] == teamArray[i][0] && deliveryArray[j][8]=="Completed" && deliveryArray[j][12]=="Due" && deliveryArray[j][14]=="Yet to update") {
                 flag = true;
             }
         }
@@ -704,6 +721,7 @@ window.onclick = function(event) {
 
 async function updatePayoutsSheet(id) {
     let toggleButton = document.getElementById(id);
+    let num = "";
     if(toggleButton.checked == true) {
         let elem = toggleButton.parentElement.parentElement.parentElement;
 
@@ -717,16 +735,17 @@ async function updatePayoutsSheet(id) {
         while(pay[iterator] != "s") {
             iterator++;
         }
-        let num = "";
-        iterator+=3;
+        iterator+=2;
         while(iterator < pay.length) {
             num += pay[iterator];
             iterator++;
         }
 
-        if(num == "0") {
+        if(parseInt(num) == 0) {
+            toggleButton.setAttribute("checked", false);
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
+            return;
         }
 
         var today = new Date();
@@ -761,16 +780,25 @@ async function updatePayoutsSheet(id) {
         };
     
         var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
+
+        let update = toggleButton.parentElement.parentElement.parentElement;
+        update = update.getElementsByTagName("button");
+        update = update[1];
+
+        update.setAttribute("onclick","updateTracker(id)");
+        update.setAttribute("class","btn btn-primary trackerButton");
+        update.setAttribute("style","cursor: pointer");
+        toggleButton.removeAttribute("onclick","updatePayoutsSheet(id)");
+        toggleButton.setAttribute("disabled",true);
+        toggleButton.setAttribute("style","cursor: context-menu !important;");
+
+        let temp = document.getElementById("totalpayNum");
+        let temp1 = document.getElementById("payoutsMadeNum");
+        temp1.innerText = parseInt(temp1.innerText) + parseInt(num);
+
+        let temp2 = document.getElementById("payoutsDueNum");
+        temp2.innerText = parseInt(temp.innerText) - parseInt(temp1.innerText);
     }
-
-    let update = toggleButton.parentElement.parentElement.parentElement;
-    update = update.getElementsByTagName("button");
-    update = update[1];
-
-    update.setAttribute("onclick","updateTracker(id)");
-    toggleButton.removeAttribute("onclick","updatePayoutsSheet(id)");
-    toggleButton.setAttribute("disabled",true);
-    toggleButton.setAttribute("style","cursor: context-menu !important;")
 }
 
 //Authentication functions used for this app

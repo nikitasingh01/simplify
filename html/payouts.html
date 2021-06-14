@@ -69,13 +69,16 @@
         </div>
         <div class="row payoutsDetails">
             <div class="col-4">
-                <h6 id="totalPayout">Total Payouts: Rs.</h6>
+                <h6 id="totalPayout" style="display: inline;">Total Payouts: Rs.</h6>
+                <p id="totalpayNum" style="display: inline;">0</p>
             </div>
             <div class="col-4">
-                <h6 id="payoutsMade">Payouts Made: Rs.</h6>
+                <h6 id="payoutsMade" style="display: inline;">Payouts Made: Rs.</h6>
+                <p id="payoutsMadeNum" style="display: inline;">0</p>
             </div>
             <div class="col-4">
-                <h6 id="payoutsDue">Payouts Due: Rs.</h6>
+                <h6 id="payoutsDue" style="display: inline;">Payouts Due: Rs.</h6>
+                <p id="payoutsDueNum" style="display: inline;">0</p>
             </div>
         </div>
 
@@ -93,6 +96,9 @@
                         </h6>   
                     </div>
                     <div class="col-3 manageProjectsToggle d-flex">
+                        <h6 class="completedText">
+                            Paid
+                        </h6>
                         <label class="ml-2 mr-2 switch toggleButton">
                             <input type="checkbox" id="Toggle1">
                             <span class="slider round"></span>
