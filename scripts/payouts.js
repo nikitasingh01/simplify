@@ -190,8 +190,7 @@ async function updateTracker(id) {
 
             let temp = k+2;
             let str = "Payouts!D"+temp;
-            console.log(str);
-
+            
             var params2 = {
                 spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
                 range: str,
@@ -207,13 +206,84 @@ async function updateTracker(id) {
         }
     }
 
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    let deliveryArray = request1.result.values;
+
+    let array = [];
+    for(let k=0; k<project.length; k++) {
+
+        let projectIdandTitle = project[k].getElementsByClassName("projectIdandTitle");
+        projectIdandTitle = projectIdandTitle[0].innerHTML;
+        
+        let id = "";
+        let name = "";
+
+        let iterator = 0;
+        while(projectIdandTitle[iterator] != " ") {
+            id += projectIdandTitle[iterator];
+            iterator++;
+        }
+        iterator+=4;
+        while(iterator < projectIdandTitle.length) {
+            name += projectIdandTitle[iterator];
+            iterator++;
+        }
+
+        let task = project[k].getElementsByClassName("Row");
+
+        for(let j=0; j<task.length; j++) {
+            let temp=[];
+            temp.push(id);
+
+            let a = task[j].getElementsByClassName("taskId");
+            a = a[0].getElementsByTagName("h6");
+            a = a[0].innerText;
+            temp.push(a);
+            temp.push("Updated");
+            array.push(temp);
+        }
+    }
+    
+    for(let i=0; i<array.length; i++) {
+        for(let j=0; j<deliveryArray.length; j++) {
+            if(deliveryArray[j][0] == array[i][0] && deliveryArray[j][2] == array[i][1]) {
+
+                let ArrayOne = [];
+                let ArrayTwo = [];
+                ArrayOne.push(array[i][2]);
+                ArrayTwo.push(ArrayOne);
+
+                let rangeStr = "Delivery!O";
+                let num = j+2;
+                rangeStr += num;
+                var params = {
+                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    range: rangeStr,
+                    valueInputOption: "USER_ENTERED",
+                };
+            
+                var valueRangeBody = {
+                    "majorDimension": "ROWS",
+                    "values": ArrayTwo,
+                };
+            
+                var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+            }
+        }
+    }
+
     updateButton.removeAttribute("onclick","updateTracker(id)");
     updateButton.style.backgroundColor = "#f1f1f1";
     updateButton.style.borderColor = "black";
     updateButton.style.color = "black";
     updateButton.style.cursor = "default";
     updateButton.style.boxShadow = "none";
-    updateButton.innerHTML = "Updating <b>&#10003;</b>";
+    updateButton.innerHTML = "Updated <b>&#10003;</b>";
 }
 
 function createPayouts(arr, projectsArray, deliveryArray, count) {
@@ -504,9 +574,9 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 feedbackContent.setAttribute("placeholder","Feedback");
                 feedbackContent.setAttribute("id","feedback"+count+projectsCount+tasksCount);
                 if(addTaskArray[j][7] != undefined)
-                    feedbackContent.value += addTaskArray[j][7];
+                    feedbackContent.value = addTaskArray[j][7];
                 else
-                    feedbackContent.value += "";
+                    feedbackContent.value = "";
                 feedbackDiv.appendChild(feedbackContent);
 
                 taskDiv.appendChild(taskIdDiv);
@@ -624,12 +694,13 @@ async function savePayouts(id, count) {
                 }
                 ArrayOne.push(array[i][7]);
                 ArrayOne.push(array[i][9]);
+                ArrayOne.push(array[i][8]);
                 ArrayTwo.push(ArrayOne);
 
                 let rangeStr = "Delivery!J";
                 let num = j+2;
                 rangeStr += num;
-                rangeStr += ":M";
+                rangeStr += ":N";
                 rangeStr += num;
 
                 var params = {
@@ -678,7 +749,7 @@ async function makeApiCallPayouts() {
     for(let i=0; i<teamArray.length; i++) {
         let flag = false;
         for(let j=0; j<deliveryArray.length; j++) {
-            if(deliveryArray[j][4] == teamArray[i][0] && deliveryArray[j][8]=="Completed" && deliveryArray[j][12]=="Due" && deliveryArray[j][14]=="Yet to update") {
+            if(deliveryArray[j][4] == teamArray[i][0] && deliveryArray[j][14]=="Yet to update") {
                 flag = true;
             }
         }
@@ -789,7 +860,7 @@ async function updatePayoutsSheet(id) {
         update.setAttribute("class","btn btn-primary trackerButton");
         update.setAttribute("style","cursor: pointer");
         toggleButton.removeAttribute("onclick","updatePayoutsSheet(id)");
-        toggleButton.setAttribute("disabled",true);
+        toggleButton.setAttribute("disabled", true);
         toggleButton.setAttribute("style","cursor: context-menu !important;");
 
         let temp = document.getElementById("totalpayNum");
@@ -798,6 +869,81 @@ async function updatePayoutsSheet(id) {
 
         let temp2 = document.getElementById("payoutsDueNum");
         temp2.innerText = parseInt(temp.innerText) - parseInt(temp1.innerText);
+
+        var params1 = {
+            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            range: 'Delivery!A2:Z1000',
+        };
+    
+        var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+        let deliveryArray = request1.result.values;
+    
+        let card = toggleButton.parentElement.parentElement.parentElement.parentElement;
+        let array = [];
+            
+        let project = card.getElementsByClassName("project");
+    
+        for(let k=0; k<project.length; k++) {
+    
+            let projectIdandTitle = project[k].getElementsByClassName("projectIdandTitle");
+            projectIdandTitle = projectIdandTitle[0].innerHTML;
+            
+            let id = "";
+            let name = "";
+    
+            let iterator = 0;
+            while(projectIdandTitle[iterator] != " ") {
+                id += projectIdandTitle[iterator];
+                iterator++;
+            }
+            iterator+=4;
+            while(iterator < projectIdandTitle.length) {
+                name += projectIdandTitle[iterator];
+                iterator++;
+            }
+    
+            let task = project[k].getElementsByClassName("Row");
+    
+            for(let j=0; j<task.length; j++) {
+                let temp=[];
+                temp.push(id);
+
+                let a = task[j].getElementsByClassName("taskId");
+                a = a[0].getElementsByTagName("h6");
+                a = a[0].innerText;
+                temp.push(a);
+                temp.push("Paid");
+                array.push(temp);
+            }
+        }
+        
+        for(let i=0; i<array.length; i++) {
+            for(let j=0; j<deliveryArray.length; j++) {
+                if(deliveryArray[j][0] == array[i][0] && deliveryArray[j][2] == array[i][1]) {
+    
+                    let ArrayOne = [];
+                    let ArrayTwo = [];
+                    ArrayOne.push(array[i][2]);
+                    ArrayTwo.push(ArrayOne);
+    
+                    let rangeStr = "Delivery!M";
+                    let num = j+2;
+                    rangeStr += num;
+                    var params = {
+                        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                        range: rangeStr,
+                        valueInputOption: "USER_ENTERED",
+                    };
+                
+                    var valueRangeBody = {
+                        "majorDimension": "ROWS",
+                        "values": ArrayTwo,
+                    };
+                
+                    var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+                }
+            }
+        }
     }
 }
 
