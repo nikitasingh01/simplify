@@ -129,18 +129,38 @@ function moreDetails(memberId) {
     console.log(memberDetail);
 
     var containerTeam = document.getElementById("containerTeam");
-    containerTeam.innerHTML = `<div class="mt-2 teamTitle d-flex align-items-center">
-    <a href="./team.html">
-        <button type="button" class="btn backButton" id="backButton"><i class="bi bi-arrow-left"></i></button>
-    </a>
-    <h4>Team-Member Details</h4>
-    </div>`;
+    containerTeam.innerHTML = "";
+    // containerTeam.innerHTML = 
+    // `<div class="mt-1 teamTitle d-flex align-items-center">
+    //     <a href="./team.html">
+    //         <button type="button" class="btn backButton" id="backButton"><i class="bi bi-arrow-left"></i></button>
+    //     </a>
+    //     <h4>Team-Member Details</h4>
+    // </div>`;
+
+    let titleDiv = document.createElement("div");
+    titleDiv.setAttribute("class","mt-1 teamTitle d-flex align-items-center");
+    let backButtonLink = document.createElement("a");
+    backButtonLink.setAttribute("href","./team.html");
+    let backButton = document.createElement("button");
+    backButton.setAttribute("type","button");
+    backButton.setAttribute("class","btn backButton");
+    backButton.setAttribute("id","backButton");
+    let backButtonLogo = document.createElement("i");
+    backButtonLogo.setAttribute("class","bi bi-arrow-left");
+    let t = document.createElement("h5");
+    t.innerText = "Team-Member Details";
+    backButton.appendChild(backButtonLogo);
+    backButtonLink.appendChild(backButton);
+    backButtonLink.appendChild(t);
+    titleDiv.appendChild(backButtonLink);
+    containerTeam.appendChild(titleDiv);
 
     var memberNameDiv = document.createElement("div");
     memberNameDiv.setAttribute("class","row mt-2");
     var memberNameDiv1 = document.createElement("div");
     memberNameDiv1.setAttribute("class","col-12");
-    var memberName = document.createElement("h4");
+    var memberName = document.createElement("h5");
     memberName.innerHTML = memberDetail[0];
     memberNameDiv1.appendChild(memberName);
     memberNameDiv.appendChild(memberNameDiv1);
