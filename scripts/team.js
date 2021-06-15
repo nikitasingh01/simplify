@@ -71,7 +71,7 @@ function makeRow(a, b, c, d) {
     bankNameTagDiv.appendChild(bankNameTag);
 
     var bankNameContentDiv = document.createElement("div");
-    bankNameContentDiv.setAttribute("class","col-3 mt-3");
+    bankNameContentDiv.setAttribute("class","col-4 mt-3");
     var bankNameContent = document.createElement("input");
     bankNameContent.setAttribute("type","text");
     bankNameContent.setAttribute("class","form-control");
@@ -102,7 +102,7 @@ function makeRow(a, b, c, d) {
     accountNumberTagDiv.appendChild(accountNumberTag);
 
     var accountNumberContentDiv = document.createElement("div");
-    accountNumberContentDiv.setAttribute("class","col-5 mt-3");
+    accountNumberContentDiv.setAttribute("class","col-4 mt-3");
     if(c == "Skill Details" || c == "Address" || c == "Remarks") {
         var accountNumberContent = document.createElement("textarea");
         accountNumberContent.setAttribute("class","form-control");
@@ -125,6 +125,18 @@ function makeRow(a, b, c, d) {
 }
 
 async function updateMemberDetails(id) {
+
+    obj = document.getElementById(id);
+    obj.style.backgroundColor = "#f1f1f1";
+    obj.style.borderColor = "black";
+    obj.style.color = "black";
+    obj.innerHTML = "Updating <b>&#10003;</b>";
+    setTimeout(function() {
+        obj.style.backgroundColor = "#007bff";
+        obj.innerHTML = "Update";
+        obj.style.color = "white";
+    }, 4000);
+
     var params = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
         range: 'Team!A2:Z1000',
@@ -143,8 +155,8 @@ async function updateMemberDetails(id) {
     let arrOne = [];
     let arrTwo = [];
 
-    let memberId = container.getElementsByTagName("h5");
-    memberId = memberId[1].innerText;
+    let memberId = container.getElementsByTagName("h6");
+    memberId = memberId[0].innerText;
 
     let id1 = "";
     let name = "";
@@ -158,29 +170,25 @@ async function updateMemberDetails(id) {
         id1 += memberId[iterator];
         iterator++;
     }
-    let name1 = name.slice(0,-1);
-    console.log(id1);
-    console.log(name1);
-
+    
     for(let i=0; i<request.length; i++) {
-
         if(request[i][17] == id1) {
             
-            arrOne.push(name1);
-            arrOne.push(inputDetails[4].value);
-            arrOne.push(request[i][2]);
-            arrOne.push(request[i][3]);
-            arrOne.push(request[i][4]);
-            arrOne.push(request[i][5]);
-            arrOne.push(request[i][6]);
-            arrOne.push(request[i][7]);
-            arrOne.push(textDetails[1].value);
-            arrOne.push(textDetails[0].value);
+            arrOne.push(name);
+            arrOne.push(inputDetails[10].value);
+            arrOne.push(inputDetails[2].value);
             arrOne.push(inputDetails[3].value);
+            arrOne.push(inputDetails[4].value);
+            arrOne.push(inputDetails[5].value);
             arrOne.push(inputDetails[1].value);
             arrOne.push(inputDetails[0].value);
-            arrOne.push(inputDetails[2].value);
-            arrOne.push(inputDetails[5].value);
+            arrOne.push(textDetails[1].value);
+            arrOne.push(textDetails[0].value);
+            arrOne.push(inputDetails[9].value);
+            arrOne.push(inputDetails[7].value);
+            arrOne.push(inputDetails[6].value);
+            arrOne.push(inputDetails[8].value);
+            arrOne.push(inputDetails[11].value);
             arrOne.push(textDetails[2].value);
             arrOne.push(request[i][16]);
             arrOne.push(request[i][17]);
@@ -208,13 +216,14 @@ async function updateMemberDetails(id) {
 function moreDetails(memberId) {
     memberId = parseInt(memberId.substring(2));
     var memberDetail = teamArray[memberId-1];
-    console.log(memberDetail);
-
+    
     var containerTeam = document.getElementById("containerTeam");
     containerTeam.innerHTML = "";
 
     let titleDiv = document.createElement("div");
     titleDiv.setAttribute("class","mt-1 teamTitle d-flex align-items-center");
+    let backButtonDiv = document.createElement("div");
+    backButtonDiv.setAttribute("class","col-11");
     let backButtonLink = document.createElement("a");
     backButtonLink.setAttribute("href","./team.html");
     let backButton = document.createElement("button");
@@ -225,41 +234,50 @@ function moreDetails(memberId) {
     backButtonLogo.setAttribute("class","bi bi-arrow-left");
     let t = document.createElement("h5");
     t.innerText = "Team-Member Details";
-    backButton.appendChild(backButtonLogo);
-    backButtonLink.appendChild(backButton);
-    backButtonLink.appendChild(t);
-    titleDiv.appendChild(backButtonLink);
-    containerTeam.appendChild(titleDiv);
-
+    
     let saveButton = document.createElement("button");
     saveButton.setAttribute("class","btn btn-primary saveDetailsButton");
     saveButton.setAttribute("id","updateMemberButton");
     saveButton.setAttribute("onclick", "updateMemberDetails(id)");
     saveButton.innerText = "Update";
 
+    backButton.appendChild(backButtonLogo);
+    backButtonLink.appendChild(backButton);
+    backButtonLink.appendChild(t);
+    backButtonDiv.appendChild(backButtonLink);
+    titleDiv.appendChild(backButtonDiv);
     titleDiv.appendChild(saveButton);
+    containerTeam.appendChild(titleDiv);
+    
 
     var memberNameDiv = document.createElement("div");
     memberNameDiv.setAttribute("class","row mt-2");
     var memberNameDiv1 = document.createElement("div");
     memberNameDiv1.setAttribute("class","col-12");
-    var memberName = document.createElement("h5");
+    var memberName = document.createElement("h6");
+    memberName.setAttribute("style", "display: inline");
     memberName.innerHTML = memberDetail[0] + ": " + memberDetail[17];
+
+    // var memberJoinDate = document.createElement("div");
+    // memberJoinDate.setAttribute("class","row mt-2");
+    // var memberJoinDate1 = document.createElement("div");
+    // memberJoinDate1.setAttribute("class","col-12");
+    var joinDate = document.createElement("h6");
+    joinDate.setAttribute("style", "display: inline;")
+    joinDate.innerHTML = " | Team Member Since: " + memberDetail[16];
+    // memberJoinDate1.appendChild(joinDate);
+    // memberJoinDate.appendChild(memberJoinDate1);
+
     memberNameDiv1.appendChild(memberName);
+    memberNameDiv1.appendChild(joinDate);
     memberNameDiv.appendChild(memberNameDiv1);
 
-    var memberJoinDate = document.createElement("div");
-    memberJoinDate.setAttribute("class","row mt-2");
-    var memberJoinDate1 = document.createElement("div");
-    memberJoinDate1.setAttribute("class","col-12");
-    var joinDate = document.createElement("h6");
-    joinDate.innerHTML = "Team Member Since: " + memberDetail[16];
-    memberJoinDate1.appendChild(joinDate);
-    memberJoinDate.appendChild(memberJoinDate1);
-
     containerTeam.appendChild(memberNameDiv);
-    containerTeam.appendChild(memberJoinDate);
+    // containerTeam.appendChild(memberJoinDate);
     
+    makeRow("Phone", memberDetail[7], "Email", memberDetail[6]);
+    makeRow("Status", memberDetail[2], "Performance", memberDetail[3]);
+    makeRow("Earnings", memberDetail[4], "Projects", memberDetail[5]);
     makeRow("Bank Name", memberDetail[12], "Account Number", memberDetail[11]);
     makeRow("IFSC", memberDetail[13], "PAN", memberDetail[10]);
     makeRow("Primary Skills", memberDetail[1], "Skill Details", memberDetail[9]);
