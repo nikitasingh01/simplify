@@ -27,3 +27,8 @@ h5 {
     display: inline;
 }
 
+.saveDetailsButton {
+    float: right;
+    margin-left: 10px;
+}
+

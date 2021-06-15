@@ -49,11 +49,12 @@ async function makeApiCallTeam() {
 
     var request = await gapi.client.sheets.spreadsheets.values.get(params);
     teamArray = request.result.values;
-    console.log(teamArray);
     var tableBody = document.getElementById("teamTableBody");
     tableBody.innerHTML = "";
-    for(var i=0; i<teamArray.length; i++) {
-        displayTeam(teamArray[i]);
+    if(teamArray != undefined) {
+        for(var i=0; i<teamArray.length; i++) {
+            displayTeam(teamArray[i]);
+        }
     }
 }
 
@@ -75,18 +76,18 @@ function makeRow(a, b, c, d) {
     bankNameContent.setAttribute("type","text");
     bankNameContent.setAttribute("class","form-control");
     bankNameContent.setAttribute("placeholder",a);
-    bankNameContent.setAttribute("style","border: 1px solid black");
+    bankNameContent.setAttribute("style","border: 2px solid black");
     if(a == "Skill Details" || a == "Address" || a == "Remarks") {
         var bankNameContent = document.createElement("textarea");
         bankNameContent.setAttribute("class","form-control");
         bankNameContent.setAttribute("placeholder", a);
-        bankNameContent.setAttribute("style","border: 1px solid black; height: 150px;")
+        bankNameContent.setAttribute("style","border: 2px solid black; height: 150px;")
     } else {
         var bankNameContent = document.createElement("input");
         bankNameContent.setAttribute("type","text");
         bankNameContent.setAttribute("class","form-control");
         bankNameContent.setAttribute("placeholder",a);
-        bankNameContent.setAttribute("style","border: 1px solid black");
+        bankNameContent.setAttribute("style","border: 2px solid black");
     }
     bankNameContent.value = b;
     bankNameContentDiv.appendChild(bankNameContent);
@@ -106,13 +107,13 @@ function makeRow(a, b, c, d) {
         var accountNumberContent = document.createElement("textarea");
         accountNumberContent.setAttribute("class","form-control");
         accountNumberContent.setAttribute("placeholder", c);
-        accountNumberContent.setAttribute("style","border: 1px solid black; height: 150px;")
+        accountNumberContent.setAttribute("style","border: 2px solid black; height: 150px;")
     } else {
         var accountNumberContent = document.createElement("input");
         accountNumberContent.setAttribute("type","text");
         accountNumberContent.setAttribute("class","form-control");
         accountNumberContent.setAttribute("placeholder", c);
-        accountNumberContent.setAttribute("style","border: 1px solid black");
+        accountNumberContent.setAttribute("style","border: 2px solid black");
     }
     accountNumberContent.value = d;
     accountNumberContentDiv.appendChild(accountNumberContent);
@@ -123,6 +124,87 @@ function makeRow(a, b, c, d) {
     containerTeam.appendChild(firstRow);
 }
 
+async function updateMemberDetails(id) {
+    var params = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Team!A2:Z1000',
+    };
+
+    var request = await gapi.client.sheets.spreadsheets.values.get(params);
+    request = request.result.values;
+
+    let button = document.getElementById(id);
+    let container = button.parentElement.parentElement;
+
+    let inputDetails = container.getElementsByTagName("input");
+    let textDetails = container.getElementsByTagName("textarea");
+    // let selectDetails = container.getElementsByTagName("select");
+
+    let arrOne = [];
+    let arrTwo = [];
+
+    let memberId = container.getElementsByTagName("h5");
+    memberId = memberId[1].innerText;
+
+    let id1 = "";
+    let name = "";
+    let iterator = 0;
+    while(memberId[iterator] != ":") {
+        name += memberId[iterator];
+        iterator++;
+    }
+    iterator+=2;
+    while(iterator < memberId.length) {
+        id1 += memberId[iterator];
+        iterator++;
+    }
+    let name1 = name.slice(0,-1);
+    console.log(id1);
+    console.log(name1);
+
+    for(let i=0; i<request.length; i++) {
+
+        if(request[i][17] == id1) {
+            
+            arrOne.push(name1);
+            arrOne.push(inputDetails[4].value);
+            arrOne.push(request[i][2]);
+            arrOne.push(request[i][3]);
+            arrOne.push(request[i][4]);
+            arrOne.push(request[i][5]);
+            arrOne.push(request[i][6]);
+            arrOne.push(request[i][7]);
+            arrOne.push(textDetails[1].value);
+            arrOne.push(textDetails[0].value);
+            arrOne.push(inputDetails[3].value);
+            arrOne.push(inputDetails[1].value);
+            arrOne.push(inputDetails[0].value);
+            arrOne.push(inputDetails[2].value);
+            arrOne.push(inputDetails[5].value);
+            arrOne.push(textDetails[2].value);
+            arrOne.push(request[i][16]);
+            arrOne.push(request[i][17]);
+
+            arrTwo.push(arrOne);
+
+            let num = i+2;
+
+            var params2 = {
+                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                range: "Team!A"+num,
+                valueInputOption: "USER_ENTERED",
+            };
+        
+            var valueRangeBody2 = {
+                "majorDimension": "ROWS",
+                "values": arrTwo,
+            };
+        
+            var request = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
+        }
+    }
+}
+
 function moreDetails(memberId) {
     memberId = parseInt(memberId.substring(2));
     var memberDetail = teamArray[memberId-1];
@@ -130,13 +212,6 @@ function moreDetails(memberId) {
 
     var containerTeam = document.getElementById("containerTeam");
     containerTeam.innerHTML = "";
-    // containerTeam.innerHTML = 
-    // `<div class="mt-1 teamTitle d-flex align-items-center">
-    //     <a href="./team.html">
-    //         <button type="button" class="btn backButton" id="backButton"><i class="bi bi-arrow-left"></i></button>
-    //     </a>
-    //     <h4>Team-Member Details</h4>
-    // </div>`;
 
     let titleDiv = document.createElement("div");
     titleDiv.setAttribute("class","mt-1 teamTitle d-flex align-items-center");
@@ -156,12 +231,20 @@ function moreDetails(memberId) {
     titleDiv.appendChild(backButtonLink);
     containerTeam.appendChild(titleDiv);
 
+    let saveButton = document.createElement("button");
+    saveButton.setAttribute("class","btn btn-primary saveDetailsButton");
+    saveButton.setAttribute("id","updateMemberButton");
+    saveButton.setAttribute("onclick", "updateMemberDetails(id)");
+    saveButton.innerText = "Update";
+
+    titleDiv.appendChild(saveButton);
+
     var memberNameDiv = document.createElement("div");
     memberNameDiv.setAttribute("class","row mt-2");
     var memberNameDiv1 = document.createElement("div");
     memberNameDiv1.setAttribute("class","col-12");
     var memberName = document.createElement("h5");
-    memberName.innerHTML = memberDetail[0];
+    memberName.innerHTML = memberDetail[0] + ": " + memberDetail[17];
     memberNameDiv1.appendChild(memberName);
     memberNameDiv.appendChild(memberNameDiv1);
 
@@ -197,7 +280,7 @@ function moreDetails(memberId) {
     trackerContent.setAttribute("type","text");
     trackerContent.setAttribute("class","form-control");
     trackerContent.setAttribute("placeholder", "Tracker Link");
-    trackerContent.setAttribute("style","border: 1px solid black");
+    trackerContent.setAttribute("style","border: 2px solid black");
     trackerContent.value = memberDetail[14];
     trackerContentDiv.appendChild(trackerContent);
 

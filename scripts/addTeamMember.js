@@ -21,7 +21,19 @@ async function makeApiCallHelperSheet() {
     }
 }
 
-function addTeamMember() {
+async function addTeamMember() {
+
+    var params = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Team!A2:Z1000',
+    };
+
+    var request = await gapi.client.sheets.spreadsheets.values.get(params);
+    request = request.result.values;
+
+    var len = 1;
+    if(request != undefined)
+        var len = request.length + 1;
     var name = document.getElementById("name").value;
     var emailId = document.getElementById("emailId").value;
     var phoneNumber = document.getElementById("phoneNumber").value;
@@ -76,36 +88,22 @@ function addTeamMember() {
             ifsc,
             payoutTracker,
             remarks,
-            date]
+            date,
+            len]
         ]
     };
 
-    var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
-    request.then(function(response) {
-        console.log(response.result);
-        obj = document.getElementById("addMemberSaveButton");
-        obj.style.backgroundColor = "#f1f1f1";
-        obj.style.borderColor = "black";
-        obj.style.color = "black";
-        obj.innerHTML = "Saved <b>&#10003;</b>";
-        setTimeout(function() {
-            obj.style.backgroundColor = "#007bff";
-            obj.innerHTML = "Save";
-            obj.style.color = "white";
-        }, 4000);
-    }, function(reason) {
-        console.error('error: ' + reason.result.error.message);
-        obj = document.getElementById("addMemberSaveButton");
-        obj.style.backgroundColor = "#f1f1f1";
-        obj.style.borderColor = "black";
-        obj.style.color = "black";
-        obj.innerHTML = "Error!";
-        setTimeout(function() {
-            obj.style.backgroundColor = "#007bff";
-            obj.innerHTML = "Save";
-            obj.style.color = "white";
-        }, 4000);
-    });
+    var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
+    obj = document.getElementById("addMemberSaveButton");
+    obj.style.backgroundColor = "#f1f1f1";
+    obj.style.borderColor = "black";
+    obj.style.color = "black";
+    obj.innerHTML = "Saved <b>&#10003;</b>";
+    setTimeout(function() {
+        obj.style.backgroundColor = "#007bff";
+        obj.innerHTML = "Save";
+        obj.style.color = "white";
+    }, 4000);
 }
 
 //Authentication functions used for this app
