@@ -64,30 +64,57 @@ function makeRow(a, b, c, d) {
     firstRow.setAttribute("class","row");
 
     var bankNameTagDiv = document.createElement("div");
-    bankNameTagDiv.setAttribute("class","col-2");
+    bankNameTagDiv.setAttribute("class","col-2 mt-3");
     var bankNameTag = document.createElement("h6");
     bankNameTag.innerHTML = a + ": ";
     bankNameTagDiv.appendChild(bankNameTag);
 
     var bankNameContentDiv = document.createElement("div");
-    bankNameContentDiv.setAttribute("class","col-3");
-    var bankNameContent = document.createElement("p");
-    bankNameContent.innerHTML = b;
+    bankNameContentDiv.setAttribute("class","col-3 mt-3");
+    var bankNameContent = document.createElement("input");
+    bankNameContent.setAttribute("type","text");
+    bankNameContent.setAttribute("class","form-control");
+    bankNameContent.setAttribute("placeholder",a);
+    bankNameContent.setAttribute("style","border: 1px solid black");
+    if(a == "Skill Details" || a == "Address" || a == "Remarks") {
+        var bankNameContent = document.createElement("textarea");
+        bankNameContent.setAttribute("class","form-control");
+        bankNameContent.setAttribute("placeholder", a);
+        bankNameContent.setAttribute("style","border: 1px solid black; height: 150px;")
+    } else {
+        var bankNameContent = document.createElement("input");
+        bankNameContent.setAttribute("type","text");
+        bankNameContent.setAttribute("class","form-control");
+        bankNameContent.setAttribute("placeholder",a);
+        bankNameContent.setAttribute("style","border: 1px solid black");
+    }
+    bankNameContent.value = b;
     bankNameContentDiv.appendChild(bankNameContent);
 
     firstRow.appendChild(bankNameTagDiv);
     firstRow.appendChild(bankNameContentDiv);
 
     var accountNumberTagDiv = document.createElement("div");
-    accountNumberTagDiv.setAttribute("class","col-2");
+    accountNumberTagDiv.setAttribute("class","col-2 mt-3");
     var accountNumberTag = document.createElement("h6");
     accountNumberTag.innerHTML = c+": ";
     accountNumberTagDiv.appendChild(accountNumberTag);
 
     var accountNumberContentDiv = document.createElement("div");
-    accountNumberContentDiv.setAttribute("class","col-5");
-    var accountNumberContent = document.createElement("p");
-    accountNumberContent.innerHTML = d;
+    accountNumberContentDiv.setAttribute("class","col-5 mt-3");
+    if(c == "Skill Details" || c == "Address" || c == "Remarks") {
+        var accountNumberContent = document.createElement("textarea");
+        accountNumberContent.setAttribute("class","form-control");
+        accountNumberContent.setAttribute("placeholder", c);
+        accountNumberContent.setAttribute("style","border: 1px solid black; height: 150px;")
+    } else {
+        var accountNumberContent = document.createElement("input");
+        accountNumberContent.setAttribute("type","text");
+        accountNumberContent.setAttribute("class","form-control");
+        accountNumberContent.setAttribute("placeholder", c);
+        accountNumberContent.setAttribute("style","border: 1px solid black");
+    }
+    accountNumberContent.value = d;
     accountNumberContentDiv.appendChild(accountNumberContent);
 
     firstRow.appendChild(accountNumberTagDiv);
@@ -102,7 +129,7 @@ function moreDetails(memberId) {
     console.log(memberDetail);
 
     var containerTeam = document.getElementById("containerTeam");
-    containerTeam.innerHTML = `<div class="mt-3 teamTitle d-flex align-items-center">
+    containerTeam.innerHTML = `<div class="mt-2 teamTitle d-flex align-items-center">
     <a href="./team.html">
         <button type="button" class="btn backButton" id="backButton"><i class="bi bi-arrow-left"></i></button>
     </a>
@@ -119,7 +146,7 @@ function moreDetails(memberId) {
     memberNameDiv.appendChild(memberNameDiv1);
 
     var memberJoinDate = document.createElement("div");
-    memberJoinDate.setAttribute("class","row");
+    memberJoinDate.setAttribute("class","row mt-2");
     var memberJoinDate1 = document.createElement("div");
     memberJoinDate1.setAttribute("class","col-12");
     var joinDate = document.createElement("h6");
@@ -127,11 +154,10 @@ function moreDetails(memberId) {
     memberJoinDate1.appendChild(joinDate);
     memberJoinDate.appendChild(memberJoinDate1);
 
-
     containerTeam.appendChild(memberNameDiv);
     containerTeam.appendChild(memberJoinDate);
     
-    makeRow("<b>Bank Name</b>", memberDetail[12], "<b>Account Number</b>", memberDetail[11]);
+    makeRow("Bank Name", memberDetail[12], "Account Number", memberDetail[11]);
     makeRow("IFSC", memberDetail[13], "PAN", memberDetail[10]);
     makeRow("Primary Skills", memberDetail[1], "Skill Details", memberDetail[9]);
     makeRow("Address", memberDetail[8], "Remarks", memberDetail[15]);
@@ -140,15 +166,19 @@ function moreDetails(memberId) {
     firstRow.setAttribute("class","row");
 
     var trackerTagDiv = document.createElement("div");
-    trackerTagDiv.setAttribute("class","col-2");
+    trackerTagDiv.setAttribute("class","col-2 mt-3");
     var trackerTag = document.createElement("h6");
     trackerTag.innerHTML = "Payouts Tracker: ";
     trackerTagDiv.appendChild(trackerTag);
 
     var trackerContentDiv = document.createElement("div");
-    trackerContentDiv.setAttribute("class","col-10");
-    var trackerContent = document.createElement("p");
-    trackerContent.innerHTML = memberDetail[14];
+    trackerContentDiv.setAttribute("class","col-10 mt-3 mb-5");
+    var trackerContent = document.createElement("input");
+    trackerContent.setAttribute("type","text");
+    trackerContent.setAttribute("class","form-control");
+    trackerContent.setAttribute("placeholder", "Tracker Link");
+    trackerContent.setAttribute("style","border: 1px solid black");
+    trackerContent.value = memberDetail[14];
     trackerContentDiv.appendChild(trackerContent);
 
     firstRow.appendChild(trackerTagDiv);
