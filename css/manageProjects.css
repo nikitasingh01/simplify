@@ -175,3 +175,12 @@ input:checked + .slider:before {
   
 .modal-body {padding: 2px 16px;}
 
+/* .toggleClass {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.deleteButtonClass {
+    width: 20px;
+}

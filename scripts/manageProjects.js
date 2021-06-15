@@ -16,7 +16,7 @@ async function getTeamArray() {
 }
 
 let idArray = [];
-function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fixedPay = "", variablePay = "", taskStatus = "") {
+function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fixedPay = "", variablePay = "", taskStatus = "", payStatus = "") {
     idArray[id-1]++;
 
     let accordion = document.getElementById("collapse"+id);
@@ -30,12 +30,12 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     outerDiv.setAttribute("id", string);
 
     let taskIdDiv = document.createElement("div");
-    taskIdDiv.setAttribute("class", "col-1 taskId");
+    taskIdDiv.setAttribute("class", "col-1 taskId ");
     let taskIdNumber = document.createElement("h6");
     taskIdDiv.appendChild(taskIdNumber);
 
     let taskNameDiv = document.createElement("div");
-    taskNameDiv.setAttribute("class", "col-2");
+    taskNameDiv.setAttribute("class", "col-2 ");
     let taskNameInput = document.createElement("input");
     taskNameInput.setAttribute("type","text");
     taskNameInput.setAttribute("class","form-control taskNameClass");
@@ -44,7 +44,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     taskNameDiv.appendChild(taskNameInput);
 
     let datepickerDiv = document.createElement("div");
-    datepickerDiv.setAttribute("class", "col-2 input-group date datepicker form-group");
+    datepickerDiv.setAttribute("class", "col input-group date datepicker form-group ");
     datepickerDiv.setAttribute("data-date-format", "dd-mm-yyyy");
     let datepickerInput = document.createElement("input");
     datepickerInput.setAttribute("type", "text");
@@ -56,13 +56,13 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     datepickerDiv.appendChild(datepickerSpan);
 
     let selectDiv = document.createElement("div");
-    selectDiv.setAttribute("class", "col-2");
+    selectDiv.setAttribute("class", "col ");
     let selectElement = document.createElement("select");
     selectElement.setAttribute("class","custom-select selectClass");
     selectDiv.appendChild(selectElement);
 
     let fixedPayDiv = document.createElement("div");
-    fixedPayDiv.setAttribute("class", "col-2");
+    fixedPayDiv.setAttribute("class", "col ");
     let fixedPayInput = document.createElement("input");
     fixedPayInput.setAttribute("type","text");
     fixedPayInput.setAttribute("class","form-control fixedPayoutClass");
@@ -71,7 +71,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     fixedPayDiv.appendChild(fixedPayInput);
 
     let variablePayDiv = document.createElement("div");
-    variablePayDiv.setAttribute("class", "col");
+    variablePayDiv.setAttribute("class", "col ");
     let variablePayInput = document.createElement("input");
     variablePayInput.setAttribute("type","text");
     variablePayInput.setAttribute("class","form-control variablePayoutClass");
@@ -80,7 +80,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     variablePayDiv.appendChild(variablePayInput);
 
     let checkBoxDiv = document.createElement("div");
-    checkBoxDiv.setAttribute("class", "col row align-items-center");
+    checkBoxDiv.setAttribute("class", "col row align-items-center toggleClass");
     let checkBoxLabel = document.createElement("label");
     checkBoxLabel.setAttribute("class","ml-2 mr-2 switch toggleButton");
     let checkBoxinput = document.createElement("input");
@@ -95,9 +95,18 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     heading.innerHTML = "Completed";
     checkBoxDiv.appendChild(checkBoxLabel);
     checkBoxDiv.appendChild(heading);
+
+    let PayDiv = document.createElement("div");
+    PayDiv.setAttribute("class", "col ");
+    let PayInput = document.createElement("input");
+    PayInput.setAttribute("type","text");
+    PayInput.setAttribute("class","form-control payStatus");
+    PayInput.setAttribute("placeholder","Payout Status");
+    PayInput.setAttribute("style","display: inline;");
+    PayDiv.appendChild(PayInput);
     
     let deleteButton = document.createElement("button");
-    deleteButton.setAttribute("class","btn deleteButton");
+    deleteButton.setAttribute("class","btn deleteButton ");
     deleteButton.setAttribute("id", "delete"+string);
     deleteButton.setAttribute("onclick","confirmDelete(id)");
     let deleteLogo = document.createElement("i");
@@ -111,6 +120,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     outerDiv.appendChild(fixedPayDiv);
     outerDiv.appendChild(variablePayDiv);
     outerDiv.appendChild(checkBoxDiv);
+    outerDiv.appendChild(PayDiv);
     outerDiv.appendChild(deleteButton);
 
     cardbody[0].appendChild(outerDiv);
@@ -159,6 +169,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     }
     selectOption[countTask-1].setAttribute("value", teamMember);
 
+    PayInput.setAttribute("value", payStatus);
     $('.datepicker').datepicker({
         format: "dd/mm/yyyy",
         autoclose: true,
@@ -171,6 +182,23 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
         clearBtn: true,
         todayBtn: "linked"
     });
+}
+
+function checkTasks(id) {
+    let toggle = document.getElementById(id);
+
+    if(toggle.checked == true) {
+        let elem = toggle.parentElement.parentElement.parentElement.parentElement;
+
+        let checkbox = elem.getElementsByClassName("checkboxClass");
+        for(let i=0; i<checkbox.length; i++) {
+            if(checkbox[i].checked == false) {
+
+                let modal = document.getElementById("myModal1");
+                modal.style.display = "block";
+            }
+        }
+    }
 }
 
 function makeProject(projectId, projectName, count, deliveryArray) {
@@ -193,7 +221,7 @@ function makeProject(projectId, projectName, count, deliveryArray) {
                         Ongoing
                     </h6>
                     <label class="ml-2 mr-2 switch toggleButton">
-                        <input type="checkbox" id="Toggle`+count+`" class="projectStatus">
+                        <input type="checkbox" id="Toggle`+count+`" class="projectStatus" onclick="checkTasks(id)">
                         <span class="slider round"></span>
                     </label>
                     <h6 class="completedText">
@@ -208,26 +236,32 @@ function makeProject(projectId, projectName, count, deliveryArray) {
                         <button class="btn manageProjectAddTaskButton" id="`+count+`" onclick="addNewTask(id)">Add New Task</button>
                     </div>
                     <div class="row ml-1 mt-4">
-                        <div class="col-1 taskId">
+                        <div class="col-1 taskId ">
                             <h6>Task ID</h6>
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 ">
                             <h6>Task Name</h6>
                         </div>
-                        <div class="col-2">
+                        <div class="col ">
                             <h6>Due Date</h6>
                         </div>
-                        <div class="col-2">
+                        <div class="col ">
                             <h6>Team Member</h6>
                         </div>
-                        <div class="col-2">
+                        <div class="col ">
                             <h6>Fixed Payout</h6>
                         </div>
-                        <div class="col">
+                        <div class="col ">
                             <h6>Variable Payout</h6>
                         </div>
-                        <div class="col">
+                        <div class="col ">
                             <h6>Task Status</h6>
+                        </div>
+                        <div class="col ">
+                            <h6>Payout</h6>
+                        </div>
+                        <div class="deleteButtonClass">
+                            <h6></h6>
                         </div>
                     </div>
                 </div>
@@ -237,7 +271,7 @@ function makeProject(projectId, projectName, count, deliveryArray) {
 
     if(projectName == "ProjectBlank") {
         let elem = document.getElementById("accordion"+count);
-        addNewTask(count,"","","","","","","");
+        addNewTask(count,"","","","","","","","");
         elem.style.visibility = "hidden";
     }
 
@@ -245,7 +279,7 @@ function makeProject(projectId, projectName, count, deliveryArray) {
 
         for(let i=0; i<deliveryArray.length; i++) {
             if(deliveryArray[i][0] == projectId) {
-                addNewTask(count, deliveryArray[i][2], deliveryArray[i][3], deliveryArray[i][5], deliveryArray[i][4], deliveryArray[i][6], deliveryArray[i][7], deliveryArray[i][8]);
+                addNewTask(count, deliveryArray[i][2], deliveryArray[i][3], deliveryArray[i][5], deliveryArray[i][4], deliveryArray[i][6], deliveryArray[i][7], deliveryArray[i][8], deliveryArray[i][12]);
             }
         }
     }
@@ -304,8 +338,11 @@ async function saveProjectTasks() {
             let fixedPayoutClass = taskData[j].getElementsByClassName("fixedPayoutClass");
             let variablePayoutClass = taskData[j].getElementsByClassName("variablePayoutClass");
             let checkboxClass = taskData[j].getElementsByClassName("checkboxClass");
+            let paidStatus = taskData[j].getElementsByClassName("payStatus");
         
             for(let k=0; k<taskIdNum.length; k++) {
+                
+                let trackerFlag = false;
                 let temp = [];
                 let temp1 = [];
                 let data = [];
@@ -318,12 +355,22 @@ async function saveProjectTasks() {
                 temp.push(datePickerClass[k].value);
                 temp.push(fixedPayoutClass[k].value);
                 temp.push(variablePayoutClass[k].value);
-                if(checkboxClass[k].checked == true)
+                if(checkboxClass[k].checked == true) {
                     temp.push("Completed"); 
+                    if(paidStatus[k].value == "") {
+                        paidStatus[k].value = "Due";
+                    }
+                }
                 else
                     temp.push("Ongoing");
-
                 data.push(temp);
+
+                if(paidStatus[k].value == "Due") {
+                    trackerFlag = true;
+                }
+
+                let arr = [];
+                arr.push(paidStatus[k].value);
                 
                 temp1.push(id);
                 temp1.push(name);
@@ -337,11 +384,6 @@ async function saveProjectTasks() {
                     temp1.push("Completed"); 
                 else
                     temp1.push("Ongoing");
-
-                temp1.push("");
-                temp1.push("");
-                temp1.push("");
-                temp1.push("Due");
 
                 data1.push(temp1);
                 
@@ -367,6 +409,38 @@ async function saveProjectTasks() {
                             };
                         
                             var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+
+                            let paidValue = [];
+                            paidValue.push(arr);
+
+                            var params1 = {
+                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                range: "Delivery!M"+num,
+                                valueInputOption: "USER_ENTERED",
+                            };
+                        
+                            var valueRangeBody1 = {
+                                "majorDimension": "ROWS",
+                                "values": paidValue,
+                            };
+                        
+                            var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
+
+                            if(trackerFlag == true) {
+
+                                var params2 = {
+                                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                    range: "Delivery!O"+num,
+                                    valueInputOption: "USER_ENTERED",
+                                };
+                            
+                                var valueRangeBody2 = {
+                                    "majorDimension": "ROWS",
+                                    "values": [["Yet to update"]],
+                                };
+                            
+                                var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
+                            }
                         }
                     }
                 }
@@ -539,7 +613,7 @@ async function updateSheet() {
         str += str1;
         str += num;
         str += ":";
-        a+=12;
+        a+=14;
         var str1 =String.fromCharCode(a);
         str += str1;
         str += num;
@@ -588,7 +662,7 @@ async function deleteTask(id) {
             str += str1;
             str += num;
             str += ":";
-            a+=12;
+            a+=14;
             var str1 =String.fromCharCode(a);
             str += str1;
             str += num;
