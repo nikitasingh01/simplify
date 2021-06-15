@@ -175,12 +175,32 @@ input:checked + .slider:before {
   
 .modal-body {padding: 2px 16px;}
 
-/* .toggleClass {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
 .deleteButtonClass {
-    width: 20px;
+    visibility: hidden;
+}
+
+.taskStatusDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+}
+
+.payStatusDiv {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.taskNameDivClass {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fieldClass {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 43px;
 }

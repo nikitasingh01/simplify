@@ -35,7 +35,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     taskIdDiv.appendChild(taskIdNumber);
 
     let taskNameDiv = document.createElement("div");
-    taskNameDiv.setAttribute("class", "col-2 ");
+    taskNameDiv.setAttribute("class", "col-2 fieldClass ");
     let taskNameInput = document.createElement("input");
     taskNameInput.setAttribute("type","text");
     taskNameInput.setAttribute("class","form-control taskNameClass");
@@ -44,7 +44,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     taskNameDiv.appendChild(taskNameInput);
 
     let datepickerDiv = document.createElement("div");
-    datepickerDiv.setAttribute("class", "col input-group date datepicker form-group ");
+    datepickerDiv.setAttribute("class", "col input-group date datepicker form-group fieldClass ");
     datepickerDiv.setAttribute("data-date-format", "dd-mm-yyyy");
     let datepickerInput = document.createElement("input");
     datepickerInput.setAttribute("type", "text");
@@ -56,13 +56,13 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     datepickerDiv.appendChild(datepickerSpan);
 
     let selectDiv = document.createElement("div");
-    selectDiv.setAttribute("class", "col ");
+    selectDiv.setAttribute("class", "col fieldClass ");
     let selectElement = document.createElement("select");
     selectElement.setAttribute("class","custom-select selectClass");
     selectDiv.appendChild(selectElement);
 
     let fixedPayDiv = document.createElement("div");
-    fixedPayDiv.setAttribute("class", "col ");
+    fixedPayDiv.setAttribute("class", "col fieldClass ");
     let fixedPayInput = document.createElement("input");
     fixedPayInput.setAttribute("type","text");
     fixedPayInput.setAttribute("class","form-control fixedPayoutClass");
@@ -71,7 +71,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     fixedPayDiv.appendChild(fixedPayInput);
 
     let variablePayDiv = document.createElement("div");
-    variablePayDiv.setAttribute("class", "col ");
+    variablePayDiv.setAttribute("class", "col fieldClass ");
     let variablePayInput = document.createElement("input");
     variablePayInput.setAttribute("type","text");
     variablePayInput.setAttribute("class","form-control variablePayoutClass");
@@ -80,7 +80,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     variablePayDiv.appendChild(variablePayInput);
 
     let checkBoxDiv = document.createElement("div");
-    checkBoxDiv.setAttribute("class", "col row align-items-center toggleClass");
+    checkBoxDiv.setAttribute("class", "col row align-items-center toggleClass taskStatusDiv  fieldClass");
     let checkBoxLabel = document.createElement("label");
     checkBoxLabel.setAttribute("class","ml-2 mr-2 switch toggleButton");
     let checkBoxinput = document.createElement("input");
@@ -97,16 +97,14 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     checkBoxDiv.appendChild(heading);
 
     let PayDiv = document.createElement("div");
-    PayDiv.setAttribute("class", "col ");
-    let PayInput = document.createElement("input");
-    PayInput.setAttribute("type","text");
-    PayInput.setAttribute("class","form-control payStatus");
-    PayInput.setAttribute("placeholder","Payout Status");
+    PayDiv.setAttribute("class", "col payStatusDiv fieldClass");
+    let PayInput = document.createElement("h6");
     PayInput.setAttribute("style","display: inline;");
+    PayInput.setAttribute("class", "payStatus");
     PayDiv.appendChild(PayInput);
     
     let deleteButton = document.createElement("button");
-    deleteButton.setAttribute("class","btn deleteButton ");
+    deleteButton.setAttribute("class","btn deleteButton  fieldClass");
     deleteButton.setAttribute("id", "delete"+string);
     deleteButton.setAttribute("onclick","confirmDelete(id)");
     let deleteLogo = document.createElement("i");
@@ -169,7 +167,7 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     }
     selectOption[countTask-1].setAttribute("value", teamMember);
 
-    PayInput.setAttribute("value", payStatus);
+    PayInput.innerText = payStatus;
     $('.datepicker').datepicker({
         format: "dd/mm/yyyy",
         autoclose: true,
@@ -236,32 +234,34 @@ function makeProject(projectId, projectName, count, deliveryArray) {
                         <button class="btn manageProjectAddTaskButton" id="`+count+`" onclick="addNewTask(id)">Add New Task</button>
                     </div>
                     <div class="row ml-1 mt-4">
-                        <div class="col-1 taskId ">
+                        <div class="col-1 taskId  ">
                             <h6>Task ID</h6>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-2 taskNameDivClass ">
                             <h6>Task Name</h6>
                         </div>
-                        <div class="col ">
+                        <div class="col taskNameDivClass ">
                             <h6>Due Date</h6>
                         </div>
-                        <div class="col ">
+                        <div class="col taskNameDivClass ">
                             <h6>Team Member</h6>
                         </div>
-                        <div class="col ">
+                        <div class="col taskNameDivClass ">
                             <h6>Fixed Payout</h6>
                         </div>
-                        <div class="col ">
+                        <div class="col taskNameDivClass ">
                             <h6>Variable Payout</h6>
                         </div>
-                        <div class="col ">
+                        <div class="col taskNameDivClass ">
                             <h6>Task Status</h6>
                         </div>
-                        <div class="col ">
+                        <div class="col taskNameDivClass ">
                             <h6>Payout</h6>
                         </div>
-                        <div class="deleteButtonClass">
-                            <h6></h6>
+                        <div class="deleteButtonClass ">
+                            <button class="btn deleteButton" onclick="deleteTask(id)">
+                                <i class="bi bi-trash cardIconManageProject"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -357,20 +357,20 @@ async function saveProjectTasks() {
                 temp.push(variablePayoutClass[k].value);
                 if(checkboxClass[k].checked == true) {
                     temp.push("Completed"); 
-                    if(paidStatus[k].value == "") {
-                        paidStatus[k].value = "Due";
+                    if(paidStatus[k].innerText == "") {
+                        paidStatus[k].innerText = "Due";
                     }
                 }
                 else
                     temp.push("Ongoing");
                 data.push(temp);
 
-                if(paidStatus[k].value == "Due") {
+                if(paidStatus[k].innerText == "Due") {
                     trackerFlag = true;
                 }
 
                 let arr = [];
-                arr.push(paidStatus[k].value);
+                arr.push(paidStatus[k].innerText);
                 
                 temp1.push(id);
                 temp1.push(name);
