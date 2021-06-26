@@ -296,12 +296,12 @@ async function saveProjectTasks() {
     obj.style.backgroundColor = "#f1f1f1";
     obj.style.borderColor = "black";
     obj.style.color = "black";
-    obj.innerHTML = "Saved <b>&#10003;</b>";
-    setTimeout(function() {
-        obj.style.backgroundColor = "#007bff";
-        obj.innerHTML = "Save";
-        obj.style.color = "white";
-    }, 4000);
+    obj.innerHTML = "Saving <b>&#10003;</b>";
+    // setTimeout(function() {
+    //     obj.style.backgroundColor = "#007bff";
+    //     obj.innerHTML = "Save";
+    //     obj.style.color = "white";
+    // }, 4000);
 
     var paramsDelivery = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -534,10 +534,17 @@ async function saveProjectTasks() {
             }
         }
     }
+
+    obj.innerHTML = "Saved <b>&#10003;</b>";
+    setTimeout(function() {
+        obj.style.backgroundColor = "#007bff";
+        obj.innerHTML = "Save";
+        obj.style.color = "white";
+    }, 4000);
     
     setTimeout(function() {
         location.reload();
-    }, 500);
+    }, 5000);
 }
 
 async function makeApiCallManageProjects() {
@@ -728,14 +735,14 @@ function closeModal1(id) {
 
     let id1 = id.slice(0,-1);
     let toggle = document.getElementById(id1);
-    toggle.setAttribute("checked", false);
-
+    toggle.checked = false;
+    
     let label = toggle.parentElement;
     label.setAttribute("class", "ml-2 mr-2 switch toggleButton");
-    // let spanItem = label.getElementsByTagName("span");
-    // spanItem = spanItem[0];
+    let spanItem = label.getElementsByTagName("span");
+    spanItem = spanItem[0];
 
-    // spanItem.classList.add("addClass");
+    spanItem.setAttribute("class","slider round addClass");
     modal.style.display = "none";
 }
 
