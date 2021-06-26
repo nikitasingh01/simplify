@@ -193,7 +193,13 @@ function checkTasks(id) {
             if(checkbox[i].checked == false) {
 
                 let modal = document.getElementById("myModal1");
+                let span1 = modal.getElementsByTagName("span");
+                span1 = span1[0];
+                console.log(span1);
+                
+                span1.setAttribute("id", id+"0");
                 modal.style.display = "block";
+                break;
             }
         }
     }
@@ -703,9 +709,9 @@ window.onclick = function(event) {
 var modal = document.getElementById("myModal1");
 var span = document.getElementsByClassName("close")[1];
 
-span.onclick = function() {
-    modal.style.display = "none";
-}
+// span.onclick = function() {
+//     modal.style.display = "none";
+// }
 
 window.onclick = function(event) {
     if (event.target == modal) {
@@ -715,6 +721,21 @@ window.onclick = function(event) {
 
 function closeModal() {
     var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+
+function closeModal1(id) {
+
+    let id1 = id.slice(0,-1);
+    let toggle = document.getElementById(id1);
+    toggle.setAttribute("checked", false);
+
+    let label = toggle.parentElement;
+    label.setAttribute("class", "ml-2 mr-2 switch toggleButton");
+    // let spanItem = label.getElementsByTagName("span");
+    // spanItem = spanItem[0];
+
+    // spanItem.classList.add("addClass");
     modal.style.display = "none";
 }
 

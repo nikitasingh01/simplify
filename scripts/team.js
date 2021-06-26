@@ -5,6 +5,7 @@ function displayTeam(arr) {
     
     var tableRow = document.createElement("tr");
     var name = document.createElement("th");
+    var memberID = document.createElement("td");
     var primarySkill = document.createElement("td");
     var status = document.createElement("td");
     var performance = document.createElement("td");
@@ -17,6 +18,7 @@ function displayTeam(arr) {
     name.setAttribute("scope","row");
 
     name.innerHTML = arr[0];
+    memberID.innerHTML = arr[17];
     primarySkill.innerHTML = arr[1];
     status.innerHTML = arr[2];
     performance.innerHTML = arr[3];
@@ -28,7 +30,7 @@ function displayTeam(arr) {
     buttons.innerHTML = "More Details";
     detailsButton.appendChild(buttons);
 
-
+    tableRow.appendChild(memberID);
     tableRow.appendChild(name);
     tableRow.appendChild(primarySkill);
     tableRow.appendChild(status);
@@ -58,7 +60,7 @@ async function makeApiCallTeam() {
     }
 }
 
-function makeRow(a, b, c, d) {
+async function makeRow(a, b, c, d) {
     var containerTeam = document.getElementById("containerTeam");
     
     var firstRow = document.createElement("div");
@@ -92,9 +94,41 @@ function makeRow(a, b, c, d) {
     bankNameContent.value = b;
     bankNameContentDiv.appendChild(bankNameContent);
 
+    let primarySkillSelect;
     firstRow.appendChild(bankNameTagDiv);
-    firstRow.appendChild(bankNameContentDiv);
+    if(a == "Primary Skills") {
+        var params1 = {
+            spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+            range: 'Skills!A2:Z1000',
+        };
+    
+        var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+        let skills = [];
+    
+        if(request1.result.values != undefined) 
+            skills = request1.result.values;
+    
+        primarySkillSelect = document.createElement("select");
+        for(let i=0; i<skills.length; i++) {
+            if(skills[i] !== "") {
+                let options = document.createElement("option");
+                options.innerHTML = skills[i];
+    
+                primarySkillSelect.appendChild(options);
+            }
+        }
 
+        primarySkillSelect.value = b;
+        var bankNameContentDiv = document.createElement("div");
+        bankNameContentDiv.setAttribute("class","col-4 mt-3");
+        primarySkillSelect.setAttribute("class","custom-select");
+        primarySkillSelect.setAttribute("style","border: 2px solid black");
+        bankNameContentDiv.appendChild(primarySkillSelect);
+        firstRow.appendChild(bankNameContentDiv);
+    } else {
+        firstRow.appendChild(bankNameContentDiv);
+    }
+    
     var accountNumberTagDiv = document.createElement("div");
     accountNumberTagDiv.setAttribute("class","col-2 mt-3");
     var accountNumberTag = document.createElement("h6");
@@ -213,7 +247,7 @@ async function updateMemberDetails(id) {
     }
 }
 
-function moreDetails(memberId) {
+async function moreDetails(memberId) {
     memberId = parseInt(memberId.substring(2));
     var memberDetail = teamArray[memberId-1];
     
@@ -248,7 +282,6 @@ function moreDetails(memberId) {
     titleDiv.appendChild(backButtonDiv);
     titleDiv.appendChild(saveButton);
     containerTeam.appendChild(titleDiv);
-    
 
     var memberNameDiv = document.createElement("div");
     memberNameDiv.setAttribute("class","row mt-2");
@@ -275,13 +308,13 @@ function moreDetails(memberId) {
     containerTeam.appendChild(memberNameDiv);
     // containerTeam.appendChild(memberJoinDate);
     
-    makeRow("Phone", memberDetail[7], "Email", memberDetail[6]);
-    makeRow("Status", memberDetail[2], "Performance", memberDetail[3]);
-    makeRow("Earnings", memberDetail[4], "Projects", memberDetail[5]);
-    makeRow("Bank Name", memberDetail[12], "Account Number", memberDetail[11]);
-    makeRow("IFSC", memberDetail[13], "PAN", memberDetail[10]);
-    makeRow("Primary Skills", memberDetail[1], "Skill Details", memberDetail[9]);
-    makeRow("Address", memberDetail[8], "Remarks", memberDetail[15]);
+    let x = await makeRow("Phone", memberDetail[7], "Email", memberDetail[6]);
+    // makeRow("Status", memberDetail[2], "Performance", memberDetail[3]);
+    // makeRow("Earnings", memberDetail[4], "Projects", memberDetail[5]);
+    x = await makeRow("Bank Name", memberDetail[12], "Account Number", memberDetail[11]);
+    x = await makeRow("IFSC", memberDetail[13], "PAN", memberDetail[10]);
+    x = await makeRow("Primary Skills", memberDetail[1], "Skill Details", memberDetail[9]);
+    x = await makeRow("Address", memberDetail[8], "Remarks", memberDetail[15]);
 
     var firstRow = document.createElement("div");
     firstRow.setAttribute("class","row");
