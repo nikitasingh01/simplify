@@ -40,11 +40,86 @@
                     <a class="nav-link" href="./revenues.html">Revenues</a>
                 </li>
             </ul>
-            <button class="btn signinButton mr-2" onclick="handleSignInClick()">Sign in</button>
-            <button class="btn signoutButton" onclick="handleSignOutClick()">Sign out</button>
+            <button class="btn signinButton mr-2" onclick="handleSignInClick()" id="reportsSignIn">Sign in</button>
+            <button class="btn signoutButton" onclick="handleSignOutClick()" id="reportsSignOut">Sign out</button>
         </div>
     </nav>
+
+    <div class="container">
+        <div class="row justify-content-center mt-3 mb-3 sectionTab">
+            <ul class="nav nav-pills" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href="#projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#team">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#payouts">Payouts</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     
+  
+    <div class="tab-content">
+        <div id="projects" class="container tab-pane active">
+            <h2>Projects</h2>
+
+            <h5>Yearly View</h5>
+            <div>
+
+            </div>
+
+            <h5>Quarterly View</h5>
+            <div>
+                
+            </div>
+
+            <h5>Monthly View</h5>
+            <div>
+                
+            </div>
+
+            <h5>All Projects</h5>
+            <div id="allProjects">
+                
+            </div>
+        </div>
+        <div id="team" class="container tab-pane fade">
+            <h2>Team</h2>
+
+            <h5>Earnings & Performance</h5>
+            <div>
+
+            </div>
+
+            <h5>Leverage</h5>
+            <div>
+                
+            </div>
+        </div>
+        <div id="payouts" class="container tab-pane fade">
+            <h2>Payouts</h2>
+
+            <h5>Yearly View</h5>
+            <div>
+
+            </div>
+
+            <h5>Quarterly View</h5>
+            <div>
+                
+            </div>
+
+            <h5>Monthly View</h5>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -52,6 +127,6 @@
     onload="this.onload=function(){};handleClientLoad()"
     onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/reports.js"></script>
 </body>
 </html>
