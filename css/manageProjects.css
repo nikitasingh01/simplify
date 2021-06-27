@@ -97,12 +97,6 @@ input:checked + .slider:before {
     transform: translateX(19px);
 }
 
-/* .addClass:before{
-    -webkit-transform: translateX(-19px);
-    -ms-transform: translateX(-19px);
-    transform: translateX(-19px);
-} */
-
 .slider.round {
     border-radius: 34px;
 }

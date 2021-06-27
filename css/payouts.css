@@ -35,6 +35,30 @@
     transition: .4s;
 }
 
+input:not(:checked) + .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #9fa19f;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:not(:checked) + .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
 input:checked + .slider {
     background-color: #007bff;
 }

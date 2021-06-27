@@ -713,18 +713,18 @@ window.onclick = function(event) {
     }
 }
 
-var modal = document.getElementById("myModal1");
-var span = document.getElementsByClassName("close")[1];
+var modal1 = document.getElementById("myModal1");
+var span1 = document.getElementsByClassName("close")[1];
 
 // span.onclick = function() {
 //     modal.style.display = "none";
 // }
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
+// window.onclick = function(event) {
+//     if (event.target == modal1) {
+//         modal1.style.display = "none";
+//     }
+// }
 
 function closeModal() {
     var modal = document.getElementById("myModal");
@@ -732,18 +732,10 @@ function closeModal() {
 }
 
 function closeModal1(id) {
-
     let id1 = id.slice(0,-1);
     let toggle = document.getElementById(id1);
     toggle.checked = false;
-    
-    let label = toggle.parentElement;
-    label.setAttribute("class", "ml-2 mr-2 switch toggleButton");
-    let spanItem = label.getElementsByTagName("span");
-    spanItem = spanItem[0];
-
-    spanItem.setAttribute("class","slider round addClass");
-    modal.style.display = "none";
+    modal1.style.display = "none";
 }
 
 function confirmDelete(id) {

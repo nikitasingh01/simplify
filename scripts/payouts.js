@@ -357,6 +357,22 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     trackerContent.innerHTML += "Update Tracker";
     trackerDiv.appendChild(trackerContent);
 
+    let totalPayoutsBoolean = false;
+
+    for(let i=0; i<deliveryArray.length; i++) {
+        if(deliveryArray[i][4] == arr[0] && deliveryArray[i][12] == "Paid" && deliveryArray[i][14] == "Yet to update") {
+            paidInput.checked = true;
+            totalPayoutsBoolean = true;
+            trackerContent.setAttribute("onclick","updateTracker(id)");
+            trackerContent.setAttribute("class","btn btn-primary trackerButton");
+            trackerContent.setAttribute("style","cursor: pointer");
+            paidInput.removeAttribute("onclick","updatePayoutsSheet(id)");
+            paidInput.setAttribute("disabled", true);
+            paidInput.setAttribute("style","cursor: context-menu !important;");
+            break;
+        }
+    }
+
     cardHead.appendChild(title);
     cardHead.appendChild(totalDueDiv);
     cardHead.appendChild(saveDiv);
@@ -562,7 +578,10 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 totalPayContent.setAttribute("style","display: inline;")
                 totalPayContent.setAttribute("class","ml-1")
                 totalPayContent.setAttribute("id","totalPayContent"+count+projectsCount+tasksCount);
-                totalPayContent.innerText = addTaskArray[j][6];
+                if(totalPayoutsBoolean == true)
+                    totalPayContent.innerText = addTaskArray[j][6];
+                else
+                totalPayContent.innerText = "0";
                 totalPayDiv.appendChild(totalPayButton);
                 totalPayDiv.appendChild(totalPayContent);
 
@@ -780,14 +799,21 @@ function todayDate() {
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 
-span.onclick = function() {
-    modal.style.display = "none";
-}
+// span.onclick = function() {
+//     modal.style.display = "none";
+// }
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+// window.onclick = function(event) {
+//     if (event.target == modal) {
+//         modal.style.display = "none";
+//     }
+// }
+
+function closeModal1(id) {
+    let id1 = id.slice(0,-1);
+    let toggle = document.getElementById(id1);
+    toggle.checked = false;
+    modal.style.display = "none";
 }
 
 async function updatePayoutsSheet(id) {
@@ -816,6 +842,9 @@ async function updatePayoutsSheet(id) {
             toggleButton.checked = true;
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
+            let span = modal.getElementsByTagName("span");
+            span = span[0];
+            span.setAttribute("id", id+"0");
             return;
         }
 
