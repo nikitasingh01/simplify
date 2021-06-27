@@ -348,6 +348,7 @@ async function saveProjectTasks() {
         
             for(let k=0; k<taskIdNum.length; k++) {
                 
+                let completedTaskBoolean = false;
                 let trackerFlag = false;
                 let temp = [];
                 let temp1 = [];
@@ -363,6 +364,7 @@ async function saveProjectTasks() {
                 temp.push(variablePayoutClass[k].value);
                 if(checkboxClass[k].checked == true) {
                     temp.push("Completed"); 
+                    completedTaskBoolean = true;
                     if(paidStatus[k].innerText == "") {
                         paidStatus[k].innerText = "Due";
                     }
@@ -390,6 +392,26 @@ async function saveProjectTasks() {
                     temp1.push("Completed"); 
                 else
                     temp1.push("Ongoing");
+
+                temp1.push("");
+                temp1.push("");
+                temp1.push("");
+                temp1.push("");
+                temp1.push("");
+                temp1.push("");
+
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; 
+                var yyyy = today.getFullYear();
+                if(dd<10) 
+                    dd='0'+dd;
+
+                if(mm<10) 
+                    mm='0'+mm;
+                    
+                var date = dd+'/'+mm+'/'+yyyy;
+                temp1.push(date);
 
                 data1.push(temp1);
                 
@@ -443,6 +465,35 @@ async function saveProjectTasks() {
                                 var valueRangeBody2 = {
                                     "majorDimension": "ROWS",
                                     "values": [["Yet to update"]],
+                                };
+                            
+                                var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
+                            }
+
+                            if(completedTaskBoolean == true && requestDelivery[l][16] == undefined) {
+                                console.log(requestDelivery[l][16]);
+
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth()+1; 
+                                var yyyy = today.getFullYear();
+                                if(dd<10) 
+                                    dd='0'+dd;
+
+                                if(mm<10) 
+                                    mm='0'+mm;
+                                    
+                                var date = dd+'/'+mm+'/'+yyyy;
+
+                                var params2 = {
+                                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                    range: "Delivery!Q"+num,
+                                    valueInputOption: "USER_ENTERED",
+                                };
+                            
+                                var valueRangeBody2 = {
+                                    "majorDimension": "ROWS",
+                                    "values": [[date]],
                                 };
                             
                                 var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
@@ -542,9 +593,74 @@ async function saveProjectTasks() {
         obj.style.color = "white";
     }, 4000);
     
-    setTimeout(function() {
-        location.reload();
-    }, 5000);
+    // setTimeout(function() {
+    //     location.reload();
+    // }, 5000);
+
+    //Team member occupancy update function
+
+    var paramsDelivery1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Team!A2:Z1000',
+    };
+
+    var requestTeam = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery1);
+    requestTeam = requestTeam.result.values;
+
+    paramsDelivery = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2:Z1000',
+    };
+
+    var requestTasks = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    requestTasks = requestTasks.result.values;
+
+
+    for(let i=0; i<requestTeam.length; i++) {
+        let taskBoolean = false;
+        for(let j=0; j<requestTasks.length; j++) {
+            if(requestTeam[i][0] == requestTasks[j][4] && requestTasks[j][8] == "Ongoing") {
+                taskBoolean = true;
+            
+                var num = i+2;
+                var str = "Team!C"+num; 
+
+                var params1 = {
+                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    range: str,
+                    valueInputOption: "USER_ENTERED",
+                };
+            
+                var valueRangeBody1 = {
+                    "majorDimension": "COLUMNS",
+                    "values": [["Occupied"]],
+                };
+            
+                var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
+                break;
+            }
+        }
+
+        if(taskBoolean == false) {
+            var num = i+2;
+            var str = "Team!C"+num; 
+
+            var params1 = {
+                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                range: str,
+                valueInputOption: "USER_ENTERED",
+            };
+        
+            var valueRangeBody1 = {
+                "majorDimension": "COLUMNS",
+                "values": [["Free"]],
+            };
+        
+            var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
+        }
+    }
+
+
 }
 
 async function makeApiCallManageProjects() {
