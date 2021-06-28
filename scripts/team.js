@@ -34,9 +34,9 @@ function displayTeam(arr) {
     tableRow.appendChild(name);
     tableRow.appendChild(primarySkill);
     tableRow.appendChild(status);
-    tableRow.appendChild(performance);
-    tableRow.appendChild(earnings);
-    tableRow.appendChild(projects);
+    // tableRow.appendChild(performance);
+    // tableRow.appendChild(earnings);
+    // tableRow.appendChild(projects);
     tableRow.appendChild(detailsButton);
 
     tableBody.appendChild(tableRow);

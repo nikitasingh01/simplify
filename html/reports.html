@@ -64,27 +64,119 @@
   
     <div class="tab-content">
         <div id="projects" class="container tab-pane active">
-            <h2>Projects</h2>
-
-            <h5>Yearly View</h5>
-            <div>
-
+            
+            <div class="headNav">
+                <h2>Projects</h2>
+                <div class="pointerNav">
+                    <a class="" href="#projectsYearlyViewTitle">Yearly View</a>
+                    <a class="" href="#projectsQuarterlyViewTitle">Quarterly View</a>
+                    <a class="" href="#projectsMonthlyViewTitle">Monthly View</a>
+                    <a class="" href="#allProjectsTitle">All Projects</a>
+                </div>
+            </div>
+            
+            <div class="borderClass">
+                <div class="borderBottom" id="projectsYearlyViewTitle">
+                    <h5>Yearly View</h5>
+                </div>
+                <div id="projectsYearlyView">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">FY</th>  
+                                <th scope="col">Projects Value ($)</th>
+                                <th scope="col">Revenue (₹)</th>
+                                <th scope="col">Cost (₹)</th>
+                                <th scope="col">Profit (₹)</th>
+                                <th scope="col">Profit (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsYearlyViewTable">
+                            <!-- <tr>
+                                <th scope="row">Steve Rogers</th>
+                                <td>skill 1</td>
+                                <td>Free</td>
+                                <td>4/5</td>
+                                <td>1234</td>
+                                <td>10</td>
+                                <td><button class="btn btn-primary" onclick="">More Details</button></td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <h5>Quarterly View</h5>
-            <div>
-                
+            <div class="borderClass">
+                <div class="borderBottom" id="projectsQuarterlyViewTitle">
+                    <h5>Quarterly View</h5>
+                </div>
+                <div id="projectsQuarterlyView">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">FY</th>  
+                                <th scope="col">Quarter</th>  
+                                <th scope="col">Projects Value ($)</th>
+                                <th scope="col">Revenue (₹)</th>
+                                <th scope="col">Cost (₹)</th>
+                                <th scope="col">Profit (₹)</th>
+                                <th scope="col">Profit (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsQuarterlyViewTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <h5>Monthly View</h5>
-            <div>
-                
+            
+            <div class="borderClass">
+                <div class="borderBottom" id="projectsMonthlyViewTitle">
+                    <h5>Monthly View</h5>
+                </div>
+                <div id="projectsMonthlyView">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">Month</th>  
+                                <th scope="col">Projects Value ($)</th>
+                                <th scope="col">Revenue (₹)</th>
+                                <th scope="col">Cost (₹)</th>
+                                <th scope="col">Profit (₹)</th>
+                                <th scope="col">Profit (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsMonthlyViewTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <h5>All Projects</h5>
-            <div id="allProjects">
-                
-            </div>
+            
+            <div class="borderClass">
+                <div class="borderBottom" id="allProjectsTitle">
+                    <h5>All Projects</h5>
+                </div>
+                <div id="allProjects">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">ID</th>  
+                                <th scope="col">Date Awarded</th>
+                                <th scope="col">Project Type</th>
+                                <th scope="col">Client Name</th>
+                                <th scope="col-1">Project Name</th>
+                                <th scope="col">Value ($)</th>
+                                <th scope="col">Fees Rate (%)</th>
+                                <th scope="col">Revenue (₹)</th>
+                                <th scope="col">Cost (₹)</th>
+                                <th scope="col">Profit (₹)</th>
+                                <th scope="col">Profit (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
         </div>
         <div id="team" class="container tab-pane fade">
             <h2>Team</h2>
