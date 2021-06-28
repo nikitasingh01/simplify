@@ -63,8 +63,7 @@
     
   
     <div class="tab-content">
-        <div id="projects" class="container tab-pane active">
-            
+        <div id="projects" class="container tab-pane active">   
             <div class="headNav">
                 <h2>Projects</h2>
                 <div class="pointerNav">
@@ -74,7 +73,6 @@
                     <a class="" href="#allProjectsTitle">All Projects</a>
                 </div>
             </div>
-            
             <div class="borderClass">
                 <div class="borderBottom" id="projectsYearlyViewTitle">
                     <h5>Yearly View</h5>
@@ -105,7 +103,6 @@
                     </table>
                 </div>
             </div>
-
             <div class="borderClass">
                 <div class="borderBottom" id="projectsQuarterlyViewTitle">
                     <h5>Quarterly View</h5>
@@ -128,7 +125,6 @@
                     </table>
                 </div>
             </div>
-            
             <div class="borderClass">
                 <div class="borderBottom" id="projectsMonthlyViewTitle">
                     <h5>Monthly View</h5>
@@ -150,7 +146,6 @@
                     </table>
                 </div>
             </div>
-            
             <div class="borderClass">
                 <div class="borderBottom" id="allProjectsTitle">
                     <h5>All Projects</h5>
@@ -178,17 +173,53 @@
                 </div>
             </div>            
         </div>
+
+
         <div id="team" class="container tab-pane fade">
-            <h2>Team</h2>
-
-            <h5>Earnings & Performance</h5>
-            <div>
-
+            <div class="borderClass">
+                <div class="headNav">
+                    <h2>Team</h2>
+                    <div class="pointerNav">
+                        <a class="" href="#teamEarningsTitle">Earnings & Performance</a>
+                        <a class="" href="#leverageTitle">Leverage</a>
+                    </div>
+                </div>
+                <div class="borderBottom" id="teamEarningsTitle">
+                    <h5>Earnings & Performance</h5>
+                </div>
+                <div id="teamEarningsTableDiv">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">Member</th>  
+                                <th scope="col">Projects Done</th>
+                                <th scope="col">Earnings (₹)</th>
+                                <th scope="col">Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teamEarningsTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <h5>Leverage</h5>
-            <div>
-                
+            <div class="borderClass">
+                <div class="borderBottom" id="leverageTitle">
+                    <h5>Leverage</h5>
+                </div>
+                <div id="leverageTitleView">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">Member</th>  
+                                <th scope="col">Project Days</th>
+                                <th scope="col">Non-Project Days</th>
+                                <th scope="col">Leverage</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leverageTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div id="payouts" class="container tab-pane fade">

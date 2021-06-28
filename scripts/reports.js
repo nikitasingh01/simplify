@@ -1,5 +1,7 @@
-function displayYearlyView(year, projects, delivery) {
+var delivery = [];
+var projects = [];
 
+function displayYearlyView(year, projects, delivery) {
     let revenue = 0.0;
     let value = 0.0;
     let cost = 0.0;
@@ -57,22 +59,22 @@ function displayYearlyView(year, projects, delivery) {
     tableBody.appendChild(tableRow);
 }
 
-async function reportsYearlyView() {
-    var paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Projects!A2:Z1000',
-    };
+async function reportsYearlyView(projects, delivery) {
+    // paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Projects!A2:Z1000',
+    // };
 
-    var projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    projects = projects.result.values;
+    // projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // projects = projects.result.values;
 
-    paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Delivery!A2:Z1000',
-    };
+    // paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Delivery!A2:Z1000',
+    // };
 
-    var delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    delivery = delivery.result.values;
+    // delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // delivery = delivery.result.values;
 
     var d = new Date();
     end = d.getFullYear();
@@ -196,22 +198,22 @@ function displayQuarterlyView(num, year, projects, delivery) {
     tableBody.appendChild(tableRow);
 }
 
-async function reportsQuarterlyView() {
-    var paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Projects!A2:Z1000',
-    };
+async function reportsQuarterlyView(projects, delivery) {
+    // var paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Projects!A2:Z1000',
+    // };
 
-    var projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    projects = projects.result.values;
+    // var projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // projects = projects.result.values;
 
-    paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Delivery!A2:Z1000',
-    };
+    // paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Delivery!A2:Z1000',
+    // };
 
-    var delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    delivery = delivery.result.values;
+    // var delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // delivery = delivery.result.values;
 
     var d = new Date();
     end = d.getFullYear();
@@ -229,9 +231,9 @@ async function reportsQuarterlyView() {
 
 function displayMonthlyView(thisMonth, monthArray, delivery, projects) {
 
-    let projectCost = 0.0;
-    let projectsRevenue = 0.0;
-    let projectsValue = 0.0;
+    let cost = 0.0;
+    let revenue = 0.0;
+    let value = 0.0;
 
     for(let i=0; i<projects.length; i++) {
         let projectMonth = projects[i][1];
@@ -241,9 +243,9 @@ function displayMonthlyView(thisMonth, monthArray, delivery, projects) {
             for(let j=0; j<delivery.length; j++) {
                 if(projects[i][0] == delivery[j][0]) {
                     if(delivery[j][11] != "") {
-                        projectCost += parseFloat(delivery[j][11]);    
+                        cost += parseFloat(delivery[j][11]);    
                     } else {
-                        projectCost += parseFloat(delivery[i][6]) + (parseFloat(delivery[i][6])*parseFloat(delivery[i][7]))/100.0;
+                        cost += parseFloat(delivery[i][6]) + (parseFloat(delivery[i][6])*parseFloat(delivery[i][7]))/100.0;
                     }
                     
                 }
@@ -256,8 +258,8 @@ function displayMonthlyView(thisMonth, monthArray, delivery, projects) {
         let projectsMonth = projectMonth.substring(3);
 
         if(projectsMonth == thisMonth) {
-            projectsRevenue += parseFloat(projects[i][9]);
-            projectsValue += parseFloat(projects[i][7]);
+            revenue += parseFloat(projects[i][9]);
+            value += parseFloat(projects[i][7]);
         }
     }
 
@@ -266,46 +268,46 @@ function displayMonthlyView(thisMonth, monthArray, delivery, projects) {
     var tableRow = document.createElement("tr");
 
     var month = document.createElement("td");
-    var value = document.createElement("td");
-    var revenue = document.createElement("td");
-    var cost = document.createElement("td");
+    var projectValue = document.createElement("td");
+    var projectRevenue = document.createElement("td");
+    var projectCost = document.createElement("td");
     var profit = document.createElement("td");
     var profitPercentage = document.createElement("td");
     
     let temp = thisMonth[0] + thisMonth[1];
 
     month.innerHTML = monthArray[temp-1] + ", " + thisMonth[3] + thisMonth[4] + thisMonth[5] + thisMonth[6];
-    value.innerHTML = projectsValue.toFixed(1);
-    revenue.innerHTML = projectsRevenue.toFixed(1);
-    cost.innerHTML = projectCost.toFixed(1);
-    profit.innerHTML = (projectsRevenue - projectCost).toFixed(1);
-    profitPercentage.innerHTML = (((projectsRevenue - projectCost)/projectsRevenue)*100.0).toFixed(1);
+    projectValue.innerHTML = value.toFixed(1);
+    projectRevenue.innerHTML = revenue.toFixed(1);
+    projectCost.innerHTML = cost.toFixed(1);
+    profit.innerHTML = (revenue - cost).toFixed(1);
+    profitPercentage.innerHTML = (((revenue - cost)/revenue)*100.0).toFixed(1);
     
     tableRow.appendChild(month);
-    tableRow.appendChild(value);
-    tableRow.appendChild(revenue);
-    tableRow.appendChild(cost);
+    tableRow.appendChild(projectValue);
+    tableRow.appendChild(projectRevenue);
+    tableRow.appendChild(projectCost);
     tableRow.appendChild(profit);
     tableRow.appendChild(profitPercentage);
     tableBody.appendChild(tableRow);
 }
 
-async function reportsMonthlyView() {
-    var paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Projects!A2:Z1000',
-    };
+async function reportsMonthlyView(projects, delivery) {
+    // var paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Projects!A2:Z1000',
+    // };
 
-    var projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    projects = projects.result.values;
+    // var projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // projects = projects.result.values;
 
-    paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Delivery!A2:Z1000',
-    };
+    // paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Delivery!A2:Z1000',
+    // };
 
-    var delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    delivery = delivery.result.values;
+    // var delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // delivery = delivery.result.values;
 
     let monthArray = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
@@ -400,25 +402,89 @@ function displayProjects(arr, deliveryArray) {
     tableBody.appendChild(tableRow);
 }
 
-async function fetchProjectData() {
-    var paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Projects!A2:Z1000',
-    };
+async function fetchProjectData(projects, delivery) {
+    // var paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Projects!A2:Z1000',
+    // };
 
-    var projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    projects = projects.result.values;
+    // projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // projects = projects.result.values;
 
-    paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Delivery!A2:Z1000',
-    };
+    // paramsDelivery = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Delivery!A2:Z1000',
+    // };
 
-    var delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
-    delivery = delivery.result.values;
+    // delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+    // delivery = delivery.result.values;
 
     for(let i=0; i<projects.length; i++) {
         displayProjects(projects[i], delivery);
+    }
+}
+
+function displayEarningsPerformance(arr, delivery, projects) {
+    let projectsArray = projects;
+    let projectsDone = 0;
+    let earnings = 0.0;
+    let earningsMax = 0.0;
+    let performance = 0.0;
+
+    for(let j=0; j<delivery.length; j++) {
+        if(delivery[j][4] == arr[0]) {
+            if(delivery[j][11] != "")
+                earnings += parseFloat(delivery[j][11]);
+            earningsMax += parseFloat(delivery[j][6]) + (parseFloat(delivery[j][6])*parseFloat(delivery[j][7]))/100.0;
+        }
+    }
+
+    performance = (earnings/earningsMax)*100.0;
+
+    for(let i=0; i<projectsArray.length; i++) {
+        projectsArray[i] = [projects[i][0], 0];
+    }
+
+    for(let j=0; j<delivery.length; j++) {
+        if(delivery[j][4] == arr[0]) {
+            for(let i=0; i<projectsArray.length; i++) {
+                if(projectsArray[i][0] == delivery[j][0] && delivery[j][8] == "Completed") {
+                    projectsArray[i][1] += 1;
+                }
+            }
+        }
+    }
+
+    for(let i=0; i<projectsArray.length; i++) {
+        if(projectsArray[i][1] > 0) {
+            projectsDone += 1;
+        }
+    }
+
+
+    var tableBody = document.getElementById("teamEarningsTable");
+    
+    var tableRow = document.createElement("tr");
+    var member = document.createElement("td");
+    var memberProjects = document.createElement("td");
+    var memberEarnings = document.createElement("td");
+    var memberPerformance = document.createElement("td");
+    
+    member.innerHTML = arr[0];
+    memberProjects.innerHTML = projectsDone;
+    memberEarnings.innerHTML = earnings.toFixed(1);
+    memberPerformance.innerHTML = performance.toFixed(1);
+
+    tableRow.appendChild(member);
+    tableRow.appendChild(memberProjects);
+    tableRow.appendChild(memberEarnings);
+    tableRow.appendChild(memberPerformance);
+    tableBody.appendChild(tableRow);
+}
+
+function reportsEarningsPerformance(team, delivery, projects) {
+    for(let i=0; i<team.length; i++) {
+        displayEarningsPerformance(team[i], delivery, projects);
     }
 }
 
@@ -451,7 +517,7 @@ function handleClientLoad() {
     gapi.load('client:auth2', initClient);
 }
 
-function updateSignInStatus(isSignedIn) {
+async function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
         let signInButton = document.getElementById("reportsSignIn");
         signInButton.style.backgroundColor = "#f1f1f1";
@@ -460,10 +526,36 @@ function updateSignInStatus(isSignedIn) {
         signInButton.style.color = "black";
         signInButton.innerHTML = "<b>Signed In</b>";
 
-        reportsYearlyView();
-        reportsQuarterlyView();
-        reportsMonthlyView();
-        fetchProjectData();
+        paramsDelivery = {
+            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            range: 'Projects!A2:Z1000',
+        };
+    
+        let projects = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+        projects = projects.result.values;
+    
+        paramsDelivery = {
+            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            range: 'Delivery!A2:Z1000',
+        };
+    
+        let delivery = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+        delivery = delivery.result.values;
+    
+        paramsDelivery = {
+            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            range: 'Team!A2:Z1000',
+        };
+    
+        let team = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+        team = team.result.values;
+
+        reportsYearlyView(projects, delivery);
+        reportsQuarterlyView(projects, delivery);
+        reportsMonthlyView(projects, delivery);
+        fetchProjectData(projects, delivery);
+
+        reportsEarningsPerformance(team, delivery, projects);
     }
 }
 
