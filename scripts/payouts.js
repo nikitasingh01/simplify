@@ -16,7 +16,13 @@ function totalPayCalculation(id) {
     for(let i=0; i<totalPayoutsDiv.length; i++) {
         let num = totalPayoutsDiv[i].getElementsByTagName("h6");
         if(num[0].innerText != "Total Payout" && num[0].innerText != "") {
-            x += parseInt(num[0].innerText);
+
+            let toggleStatus = num[0].parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+            toggleStatus = toggleStatus.getElementsByTagName("input");
+            toggleStatus = toggleStatus[0];
+
+            if(toggleStatus.checked == false)
+                x += parseInt(num[0].innerText);
         }
     }
 
@@ -888,6 +894,11 @@ async function updatePayoutsSheet(id) {
         toggleButton.removeAttribute("onclick","updatePayoutsSheet(id)");
         toggleButton.setAttribute("disabled", true);
         toggleButton.setAttribute("style","cursor: context-menu !important;");
+
+        let dueNum = toggleButton.parentElement.parentElement.parentElement;
+        dueNum = dueNum.getElementsByTagName("h6");
+        dueNum = dueNum[0];
+        dueNum.innerText = "Total Due: Rs 0";
 
         let temp = document.getElementById("totalpayNum");
         let temp1 = document.getElementById("payoutsMadeNum");

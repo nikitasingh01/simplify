@@ -284,8 +284,9 @@ function makeProject(projectId, projectName, count, deliveryArray) {
     if(deliveryArray != undefined) {
 
         for(let i=0; i<deliveryArray.length; i++) {
-            if(deliveryArray[i][0] == projectId) {
+            if(deliveryArray[i][0] == projectId && projectId != 0) {
                 addNewTask(count, deliveryArray[i][2], deliveryArray[i][3], deliveryArray[i][5], deliveryArray[i][4], deliveryArray[i][6], deliveryArray[i][7], deliveryArray[i][8], deliveryArray[i][12]);
+                // console.log(projectId);
             }
         }
     }
@@ -379,6 +380,8 @@ async function saveProjectTasks() {
 
                 let arr = [];
                 arr.push(paidStatus[k].innerText);
+
+                let taskStatusChecker = "";
                 
                 temp1.push(id);
                 temp1.push(name);
@@ -388,10 +391,13 @@ async function saveProjectTasks() {
                 temp1.push(datePickerClass[k].value);
                 temp1.push(fixedPayoutClass[k].value);
                 temp1.push(variablePayoutClass[k].value);
-                if(checkboxClass[k].checked == true)
-                    temp1.push("Completed"); 
-                else
+                if(checkboxClass[k].checked == true) {
+                    temp1.push("Completed");
+                    taskStatusChecker = "Completed";
+                } else {
                     temp1.push("Ongoing");
+                    taskStatusChecker = "Ongoing";
+                }
 
                 temp1.push("");
                 temp1.push("");
@@ -420,10 +426,14 @@ async function saveProjectTasks() {
                 if(requestDelivery != undefined) {
 
                     for(let l=0; l<requestDelivery.length; l++) {
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText)) {
+                        let num = l+2;
 
+                        if(requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) {
                             flag = true;
-                            let num = l+2;
+                        }
+                            
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && (taskNameClass[k].value != requestDelivery[l][3] || selectClass[k].value != requestDelivery[l][4] || datePickerClass[k].value != requestDelivery[l][5] || fixedPayoutClass[k].value != requestDelivery[l][6] || variablePayoutClass[k].value != requestDelivery[l][7] || taskStatusChecker != requestDelivery[l][8])) {
+
                             let str = "Delivery!A"+num;
                             var params = {
                                 spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -438,9 +448,70 @@ async function saveProjectTasks() {
                         
                             var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
 
-                            let paidValue = [];
-                            paidValue.push(arr);
+                            // if(requestDelivery[l][12] == "Due") {
+                            //     var params1 = {
+                            //         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                            //         range: "Delivery!M"+num,
+                            //         valueInputOption: "USER_ENTERED",
+                            //     };
+                            
+                            //     var valueRangeBody1 = {
+                            //         "majorDimension": "ROWS",
+                            //         "values": paidValue,
+                            //     };
+                            
+                            //     var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
+                            // }
+                            // if(trackerFlag == true) {
 
+                            //     var params2 = {
+                            //         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                            //         range: "Delivery!O"+num,
+                            //         valueInputOption: "USER_ENTERED",
+                            //     };
+                            
+                            //     var valueRangeBody2 = {
+                            //         "majorDimension": "ROWS",
+                            //         "values": [["Yet to update"]],
+                            //     };
+                            
+                            //     var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
+                            // }
+
+                            // if(completedTaskBoolean == true && requestDelivery[l][16] == undefined) {
+                            //     console.log(requestDelivery[l][16]);
+
+                            //     var today = new Date();
+                            //     var dd = today.getDate();
+                            //     var mm = today.getMonth()+1; 
+                            //     var yyyy = today.getFullYear();
+                            //     if(dd<10) 
+                            //         dd='0'+dd;
+
+                            //     if(mm<10) 
+                            //         mm='0'+mm;
+                                    
+                            //     var date = dd+'/'+mm+'/'+yyyy;
+
+                            //     var params2 = {
+                            //         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                            //         range: "Delivery!Q"+num,
+                            //         valueInputOption: "USER_ENTERED",
+                            //     };
+                            
+                            //     var valueRangeBody2 = {
+                            //         "majorDimension": "ROWS",
+                            //         "values": [[date]],
+                            //     };
+                            
+                            //     var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
+                            // }
+                        }
+
+                        let paidValue = [];
+                        paidValue.push(arr);
+
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText)) {
                             var params1 = {
                                 spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
                                 range: "Delivery!M"+num,
@@ -453,51 +524,49 @@ async function saveProjectTasks() {
                             };
                         
                             var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
+                        }
 
-                            if(trackerFlag == true) {
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && trackerFlag == true && requestDelivery[l][14] == undefined) {
 
-                                var params2 = {
-                                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                                    range: "Delivery!O"+num,
-                                    valueInputOption: "USER_ENTERED",
-                                };
-                            
-                                var valueRangeBody2 = {
-                                    "majorDimension": "ROWS",
-                                    "values": [["Yet to update"]],
-                                };
-                            
-                                var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
-                            }
+                            var params2 = {
+                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                range: "Delivery!O"+num,
+                                valueInputOption: "USER_ENTERED",
+                            };
+                        
+                            var valueRangeBody2 = {
+                                "majorDimension": "ROWS",
+                                "values": [["Yet to update"]],
+                            };
+                        
+                            var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
+                        }
 
-                            if(completedTaskBoolean == true && requestDelivery[l][16] == undefined) {
-                                console.log(requestDelivery[l][16]);
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && completedTaskBoolean == true && requestDelivery[l][16] == undefined) {
+                            var today = new Date();
+                            var dd = today.getDate();
+                            var mm = today.getMonth()+1; 
+                            var yyyy = today.getFullYear();
+                            if(dd<10) 
+                                dd='0'+dd;
 
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth()+1; 
-                                var yyyy = today.getFullYear();
-                                if(dd<10) 
-                                    dd='0'+dd;
+                            if(mm<10) 
+                                mm='0'+mm;
+                                
+                            var date = dd+'/'+mm+'/'+yyyy;
 
-                                if(mm<10) 
-                                    mm='0'+mm;
-                                    
-                                var date = dd+'/'+mm+'/'+yyyy;
-
-                                var params2 = {
-                                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                                    range: "Delivery!Q"+num,
-                                    valueInputOption: "USER_ENTERED",
-                                };
-                            
-                                var valueRangeBody2 = {
-                                    "majorDimension": "ROWS",
-                                    "values": [[date]],
-                                };
-                            
-                                var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
-                            }
+                            var params2 = {
+                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                range: "Delivery!Q"+num,
+                                valueInputOption: "USER_ENTERED",
+                            };
+                        
+                            var valueRangeBody2 = {
+                                "majorDimension": "ROWS",
+                                "values": [[date]],
+                            };
+                        
+                            var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
                         }
                     }
                 }
@@ -522,6 +591,13 @@ async function saveProjectTasks() {
             }
         }
     }
+
+    obj.innerHTML = "Saved <b>&#10003;</b>";
+    setTimeout(function() {
+        obj.style.backgroundColor = "#007bff";
+        obj.innerHTML = "Save";
+        obj.style.color = "white";
+    }, 4000);
 
     // Project Toggle Button
 
@@ -565,7 +641,7 @@ async function saveProjectTasks() {
         }
 
         for(let j=0; j<requestProjects.length; j++) {
-            if(id == requestProjects[j][0]) {
+            if(id == requestProjects[j][0] && requestProjects[j][10] != arr[0]) {
 
                 var num = j+2;
                 var str = "Projects!K"+num; 
@@ -584,15 +660,7 @@ async function saveProjectTasks() {
                 var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
             }
         }
-    }
-
-    obj.innerHTML = "Saved <b>&#10003;</b>";
-    setTimeout(function() {
-        obj.style.backgroundColor = "#007bff";
-        obj.innerHTML = "Save";
-        obj.style.color = "white";
-    }, 4000);
-    
+    } 
     // setTimeout(function() {
     //     location.reload();
     // }, 5000);
@@ -659,8 +727,6 @@ async function saveProjectTasks() {
             var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
         }
     }
-
-
 }
 
 async function makeApiCallManageProjects() {
