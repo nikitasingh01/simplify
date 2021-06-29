@@ -420,7 +420,7 @@ async function saveProjectTasks() {
                 if(requestDelivery != undefined) {
 
                     for(let l=0; l<requestDelivery.length; l++) {
-                        if(requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) {
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText)) {
 
                             flag = true;
                             let num = l+2;

@@ -53,11 +53,6 @@ async function updateTracker(id) {
     updateButton.style.borderColor = "black";
     updateButton.style.color = "black";
     updateButton.innerHTML = "Updating <b>&#10003;</b>";
-    setTimeout(function() {
-        updateButton.style.backgroundColor = "#f1f1f1";
-        updateButton.innerHTML = "Updated";
-        updateButton.style.color = "black";
-    }, 4000);
 
     var today = new Date();
     var dd = today.getDate();
@@ -283,7 +278,7 @@ async function updateTracker(id) {
     updateButton.style.color = "black";
     updateButton.style.cursor = "default";
     updateButton.style.boxShadow = "none";
-    updateButton.innerHTML = "Updated <b>&#10003;</b>";
+    updateButton.innerHTML = "Updated";
 }
 
 function createPayouts(arr, projectsArray, deliveryArray, count) {
@@ -619,12 +614,7 @@ async function savePayouts(id, count) {
     obj.style.backgroundColor = "#f1f1f1";
     obj.style.borderColor = "black";
     obj.style.color = "black";
-    obj.innerHTML = "Saved <b>&#10003;</b>";
-    setTimeout(function() {
-        obj.style.backgroundColor = "#007bff";
-        obj.innerHTML = "Save";
-        obj.style.color = "white";
-    }, 4000);
+    obj.innerHTML = "Saving <b>&#10003;</b>";
 
     var params1 = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -737,6 +727,13 @@ async function savePayouts(id, count) {
             }
         }
     }
+
+    obj.innerHTML = "Saved <b>&#10003;</b>";
+    setTimeout(function() {
+        obj.style.backgroundColor = "#007bff";
+        obj.innerHTML = "Save";
+        obj.style.color = "white";
+    }, 4000);
 }
 
 async function makeApiCallPayouts() {
