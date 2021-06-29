@@ -857,7 +857,7 @@ async function deleteTask(id) {
             str += str1;
             str += num;
             str += ":";
-            a+=14;
+            a+=16;
             var str1 =String.fromCharCode(a);
             str += str1;
             str += num;
