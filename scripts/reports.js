@@ -48,7 +48,11 @@ function displayYearlyView(year, projects, delivery) {
     projectRevenue.innerHTML = revenue.toFixed(1);
     projectCost.innerHTML = cost.toFixed(1);
     profit.innerHTML = (revenue - cost).toFixed(1);
-    profitPercentage.innerHTML = (((revenue - cost)/revenue)*100.0).toFixed(1);
+
+    if((((revenue - cost)/revenue)*100.0) !== NaN)
+        profitPercentage.innerHTML = (((revenue - cost)/revenue)*100.0).toFixed(1);
+    else    
+        profitPercentage.innerHTML = 0;
     
     tableRow.appendChild(finYear);
     tableRow.appendChild(projectsValue);
@@ -186,7 +190,11 @@ function displayQuarterlyView(num, year, projects, delivery) {
     projectRevenue.innerHTML = revenue.toFixed(1);
     projectCost.innerHTML = cost.toFixed(1);
     profit.innerHTML = (revenue - cost).toFixed(1);
-    profitPercentage.innerHTML = (((revenue - cost)/revenue)*100.0).toFixed(1);
+    
+    if((((revenue - cost)/revenue)*100.0).toFixed(1) != NaN)
+        profitPercentage.innerHTML = (((revenue - cost)/revenue)*100.0).toFixed(1);
+    else    
+        profitPercentage.innerHTML = 0;
     
     tableRow.appendChild(finYear);
     tableRow.appendChild(quarter);
@@ -281,8 +289,11 @@ function displayMonthlyView(thisMonth, monthArray, delivery, projects) {
     projectRevenue.innerHTML = revenue.toFixed(1);
     projectCost.innerHTML = cost.toFixed(1);
     profit.innerHTML = (revenue - cost).toFixed(1);
-    profitPercentage.innerHTML = (((revenue - cost)/revenue)*100.0).toFixed(1);
-    
+    if((((revenue - cost)/revenue)*100.0).toFixed(1) != NaN)
+        profitPercentage.innerHTML = (((revenue - cost)/revenue)*100.0).toFixed(1);
+    else    
+        profitPercentage.innerHTML = 0;
+
     tableRow.appendChild(month);
     tableRow.appendChild(projectValue);
     tableRow.appendChild(projectRevenue);
@@ -385,7 +396,11 @@ function displayProjects(arr, deliveryArray) {
     profit.innerHTML = (parseFloat(arr[9]) - totalCost);
     let temp = 0.0;
     temp += (parseFloat(arr[9]) - totalCost)/(parseFloat(arr[9]))*100.0;
-    profitPercentage.innerHTML = temp.toFixed(1);
+
+    if(temp.toFixed(1) != NaN)
+        profitPercentage.innerHTML = temp.toFixed(1);
+    else
+        profitPercentage.innerHTML = 0;
 
     tableRow.appendChild(id);
     tableRow.appendChild(dateAwarded);

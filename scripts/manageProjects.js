@@ -687,7 +687,7 @@ async function saveProjectTasks() {
     for(let i=0; i<requestTeam.length; i++) {
         let taskBoolean = false;
         for(let j=0; j<requestTasks.length; j++) {
-            if(requestTeam[i][0] == requestTasks[j][4] && requestTasks[j][8] == "Ongoing") {
+            if(requestTeam[i][0] == requestTasks[j][2] && requestTasks[j][8] == "Ongoing") {
                 taskBoolean = true;
             
                 var num = i+2;
