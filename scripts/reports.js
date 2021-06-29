@@ -457,7 +457,8 @@ function displayEarningsPerformance(arr, delivery, projects) {
         }
     }
 
-    performance = (earnings/earningsMax)*100.0;
+    if(earningsMax != 0)
+        performance = (earnings/earningsMax)*100.0;
 
     for(let i=0; i<projectsArray.length; i++) {
         projectsArray[i] = [projects[i][0], 0];
@@ -580,10 +581,18 @@ function displayLeverage(arr, delivery, projects) {
         return a[0]-b[0]
     });
 
-    let start = dateArray[0][0];
-    let end = dateArray[0][1];
+    let start = "01/06/2020";
+    let end = "01/06/2020";
+
+    if(dateArray.length > 0) {
+        start = dateArray[0][0];
+        end = dateArray[0][1];
+    }
 
     projectDays += noOfDays(start, end);
+
+    if(dateArray.length == 0)
+        projectDays = 0;
 
     for(let i=1; i<dateArray.length; i++) {
         let tempStart = dateArray[i][0];
