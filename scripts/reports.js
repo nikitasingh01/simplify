@@ -433,9 +433,10 @@ function displayEarningsPerformance(arr, delivery, projects) {
 
     for(let j=0; j<delivery.length; j++) {
         if(delivery[j][4] == arr[0]) {
-            if(delivery[j][11] != "")
+            if(delivery[j][11] != "") {
                 earnings += parseFloat(delivery[j][11]);
-            earningsMax += parseFloat(delivery[j][6]) + (parseFloat(delivery[j][6])*parseFloat(delivery[j][7]))/100.0;
+                earningsMax += parseFloat(delivery[j][6]) + (parseFloat(delivery[j][6])*parseFloat(delivery[j][7]))/100.0;
+            }
         }
     }
 
@@ -488,6 +489,346 @@ function reportsEarningsPerformance(team, delivery, projects) {
     }
 }
 
+function noOfDays(dates1, dates2) {
+    let date1 = dates1.split('/');
+    let date2 = dates2.split('/');
+
+    // console.log(date1);
+    // console.log(date2);
+
+    date1 = new Date(date1[2], date1[1], date1[0]);
+    date2 = new Date(date2[2], date2[1], date2[0]);
+
+    // console.log(date1);
+    // console.log(date2);
+
+    date1_unixtime = parseFloat(date1.getTime() / 1000);
+    date2_unixtime = parseFloat(date2.getTime() / 1000);
+
+    // console.log(date1_unixtime);
+    // console.log(date2_unixtime);
+
+    var timeDifference = date2_unixtime - date1_unixtime;
+
+    // console.log(timeDifference);
+
+    var timeDifferenceInHours = timeDifference / 60 / 60;
+
+    var timeDifferenceInDays = timeDifferenceInHours  / 24;
+
+    // console.log(timeDifferenceInDays);
+    // console.log(timeDifferenceInHours);
+
+    return timeDifferenceInDays+1;
+}
+
+function displayLeverage(arr, delivery, projects) {
+    let leverage = 0.0;
+    let projectDays = 0.0;
+    
+    let totalDays = 0.0;
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+        dd='0'+dd;
+
+    if(mm<10) 
+        mm='0'+mm;
+        
+    var endDate = "";
+    endDate = dd+'/'+mm+'/'+yyyy;
+    let startDate = arr[16];
+    totalDays = noOfDays(startDate, endDate);
+
+    let dateArray = [];
+
+    for(let j=0; j<delivery.length; j++) {
+        if(delivery[j][4] == arr[0]) {
+            let temp = [];
+            temp.push(delivery[j][15]);
+
+            if(delivery[j][16] == undefined) {
+                temp.push(endDate); 
+            } else {
+                temp.push(delivery[j][16]);
+            }
+
+            dateArray.push(temp);
+        }
+    }
+
+    dateArray.sort(function(a,b) {
+        return a[0]-b[0]
+    });
+
+    let start = dateArray[0][0];
+    let end = dateArray[0][1];
+
+    projectDays += noOfDays(start, end);
+
+    for(let i=1; i<dateArray.length; i++) {
+        let tempStart = dateArray[i][0];
+        let tempEnd = dateArray[i][1];
+
+        let flag = noOfDays(tempStart, end);
+        if(flag >= 0) {
+            let flag1 = noOfDays(tempEnd, end);
+            if(flag1 >= 0) {
+
+            } else {
+                projectDays += noOfDays(end, tempEnd);
+                end = tempEnd;
+            }
+        } else {
+            start = tempStart;
+            end = tempEnd;
+
+            projectDays += noOfDays(start, end);
+        }
+    }
+
+    var tableBody = document.getElementById("leverageTable");
+    
+    var tableRow = document.createElement("tr");
+    var member = document.createElement("td");
+    var memberProjectDays = document.createElement("td");
+    var memberNonProjectDays = document.createElement("td");
+    var memberLeverage = document.createElement("td");
+    
+    member.innerHTML = arr[0];
+    memberProjectDays.innerHTML = projectDays;
+    memberNonProjectDays.innerHTML = (totalDays) - (projectDays);
+    memberLeverage.innerHTML = ((projectDays)/(totalDays)*100.0).toFixed(1);
+
+    tableRow.appendChild(member);
+    tableRow.appendChild(memberProjectDays);
+    tableRow.appendChild(memberNonProjectDays);
+    tableRow.appendChild(memberLeverage);
+    tableBody.appendChild(tableRow);
+}
+
+
+function reportsLeverage(team, delivery, projects) {
+    for(let i=0; i<team.length; i++) {
+        displayLeverage(team[i], delivery, projects);
+    }
+}
+
+function displayPayoutsMonthly(thisMonth, monthArray, payouts) {
+    let revenue = 0.0;
+    
+    for(let i=0; i<payouts.length; i++) {
+        let projectMonth = payouts[i][0];
+        let projectsMonth = projectMonth.substring(3);
+
+        if(projectsMonth == thisMonth) {
+            revenue += parseFloat(payouts[i][2]);
+        }
+    }
+
+    var tableBody = document.getElementById("payoutMonthlyTable");
+    
+    var tableRow = document.createElement("tr");
+    var month = document.createElement("td");
+    var payoutsRevenue = document.createElement("td");
+    
+    let temp = thisMonth[0] + thisMonth[1];
+
+    month.innerHTML = monthArray[temp-1] + ", " + thisMonth[3] + thisMonth[4] + thisMonth[5] + thisMonth[6];
+    payoutsRevenue.innerHTML = revenue.toFixed(1);
+
+    tableRow.appendChild(month);
+    tableRow.appendChild(payoutsRevenue);
+    tableBody.appendChild(tableRow);
+
+}
+
+function payoutsMonthlyView(payouts) {
+    let monthArray = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+
+    let startDate = "01/06/2020";
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+        dd='0'+dd;
+
+    if(mm<10) 
+        mm='0'+mm;
+        
+    var endDate = dd+'/'+mm+'/'+yyyy;
+
+    var start      = startDate.split('/');
+    var end        = endDate.split('/');
+    var startYear  = parseInt(start[2]);
+    var endYear    = parseInt(end[2]);
+    var dates      = [];
+    
+    for(var i = startYear; i <= endYear; i++) {
+        var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
+        var startMon = i === startYear ? parseInt(start[1])-1 : 0;
+        for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
+        var month = j+1;
+        var displayMonth = month < 10 ? '0'+month : month;
+        dates.push([displayMonth, i].join('/'));
+        }
+    }
+
+    for(let i=0; i<dates.length; i++) {
+        displayPayoutsMonthly(dates[i], monthArray, payouts);
+    }
+}
+
+function displayPayoutsQuarterlyView(num, year, payouts) {
+    let todayDate = new Date();
+    let m = todayDate.getMonth();
+    m = parseInt(m)+1;
+    let y = todayDate.getFullYear();
+    y = parseInt(y);
+
+    let first = -1;
+    let second = -1;
+    let third = -1;
+
+    if(num == 1) {
+        first = 4;
+        second = 5;
+        third = 6;
+    } else if(num == 2) {
+        first = 7;
+        second = 8;
+        third = 9;
+    } else if(num == 3) {
+        first = 10;
+        second = 11;
+        third = 12;
+    } else if(num == 4) {
+        first = 1;
+        second = 2;
+        third = 3;
+    }
+
+    if(year < y) {
+        
+    } else if(year == y) {
+        if(num <= 3) {
+            if(m>=first || m>=second || m>=third) {
+
+            } else {
+                return;
+            }
+        } else {
+            if(m==first || m==second || m==third) {
+
+            } else {
+                return;
+            }
+        }
+    } else {
+        return;
+    }
+
+    let revenue = 0.0;
+
+    for(let i=0; i<payouts.length; i++) {
+
+        let dateAwarded = payouts[i][0];
+        let date = dateAwarded.split("/");
+        let month = date[1];
+        if(((num == 4 && (year+1) == date[2]) || (num != 4 && (year) == date[2])) && (month == first || month == second || month == third)) {
+            revenue += parseFloat(payouts[i][2]);
+        }
+    }
+
+    var tableBody = document.getElementById("payoutQuarterlyTable");
+    
+    var tableRow = document.createElement("tr");
+
+    var finYear = document.createElement("td");
+    var quarter = document.createElement("td");
+    var projectRevenue = document.createElement("td");
+    
+    let str = "";
+    str += year;
+    year++;
+    str += "-"
+    str += year;
+
+    finYear.innerHTML = str;
+    quarter.innerHTML = "Q"+num;
+    projectRevenue.innerHTML = revenue.toFixed(1);
+    
+    tableRow.appendChild(finYear);
+    tableRow.appendChild(quarter);
+    tableRow.appendChild(projectRevenue);
+    tableBody.appendChild(tableRow);
+}
+
+function payoutsQuarterlyView(payouts) {
+    var d = new Date();
+    end = d.getFullYear();
+    end = parseInt(end);
+
+    var start = 2020;
+   
+    for(let i=start; i<=end; i++) {
+        let year = i;
+        for(let j=1; j<=4; j++) {
+            displayPayoutsQuarterlyView(j, year, payouts);
+        }
+    }
+}
+
+function displayPayoutsYearlyView(year, payouts) {
+    let revenue = 0.0;
+
+    for(let i=0; i<payouts.length; i++) {
+        let dateAwarded = payouts[i][0];
+
+        let date = dateAwarded.split("/");
+        let month = date[1];
+        
+        if(((month <= 12 || month >= 4) && year == date[2]) || ((month<=3 && month>=1) && year+1 == date[2])) {
+            revenue += parseFloat(payouts[i][2]);
+        }
+    }
+
+    var tableBody = document.getElementById("payoutYearlyTable");
+    var tableRow = document.createElement("tr");
+
+    var finYear = document.createElement("td");
+    var projectRevenue = document.createElement("td");
+    
+    let str = "";
+    str += year;
+    year++;
+    str += "-"
+    str += year;
+
+    finYear.innerHTML = str;
+    projectRevenue.innerHTML = revenue.toFixed(1);
+    
+    tableRow.appendChild(finYear);
+    tableRow.appendChild(projectRevenue);
+    tableBody.appendChild(tableRow);
+}
+
+function payoutsYearlyView(payouts) {
+    var d = new Date();
+    end = d.getFullYear();
+    end = parseInt(end);
+
+    var start = 2020;
+   
+    for(let i=start; i<=end; i++) {
+        let year = i;
+        displayPayoutsYearlyView(year, payouts);
+    }
+}
 
 //Authentication functions used for this app
 
@@ -550,12 +891,25 @@ async function updateSignInStatus(isSignedIn) {
         let team = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
         team = team.result.values;
 
+        paramsDelivery = {
+            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            range: 'Payouts!A2:Z1000',
+        };
+    
+        let payouts = await gapi.client.sheets.spreadsheets.values.get(paramsDelivery);
+        payouts = payouts.result.values;
+
         reportsYearlyView(projects, delivery);
         reportsQuarterlyView(projects, delivery);
         reportsMonthlyView(projects, delivery);
         fetchProjectData(projects, delivery);
 
         reportsEarningsPerformance(team, delivery, projects);
+        reportsLeverage(team, delivery, projects);
+
+        payoutsYearlyView(payouts);
+        payoutsQuarterlyView(payouts);
+        payoutsMonthlyView(payouts);
     }
 }
 

@@ -223,21 +223,65 @@
             </div>
         </div>
         <div id="payouts" class="container tab-pane fade">
-            <h2>Payouts</h2>
-
-            <h5>Yearly View</h5>
-            <div>
-
+            <div class="borderClass">
+                <div class="headNav">
+                    <h2>Payouts</h2>
+                    <div class="pointerNav">
+                        <a class="" href="#payoutYearly">Yearly View</a>
+                        <a class="" href="#payoutsQuarterly">Quarterly View</a>
+                        <a class="" href="#payoutMonthly">Monthly View</a>
+                    </div>
+                </div>
+                <div class="borderBottom" id="payoutYearly">
+                    <h5>Yearly View</h5>
+                </div>
+                <div id="payoutYearlyTableDiv">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">FY</th>  
+                                <th scope="col">Payouts (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payoutYearlyTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <h5>Quarterly View</h5>
-            <div>
-                
+            <div class="borderClass">
+                <div class="borderBottom" id="payoutsQuarterly">
+                    <h5>Quarterly View</h5>
+                </div>
+                <div id="payoutQuarterlyDiv">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">FY</th>  
+                                <th scope="col">Quarter</th>
+                                <th scope="col">Payouts (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payoutQuarterlyTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <h5>Monthly View</h5>
-            <div>
-                
+            <div class="borderClass">
+                <div class="borderBottom" id="payoutMonthly">
+                    <h5>Monthly View</h5>
+                </div>
+                <div id="payoutMonthlyDiv">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-active tableHead">
+                            <tr>
+                                <th scope="col">Month</th>  
+                                <th scope="col">Payouts (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payoutMonthlyTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
