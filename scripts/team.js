@@ -179,7 +179,7 @@ async function updateMemberDetails(id) {
 
     let inputDetails = container.getElementsByTagName("input");
     let textDetails = container.getElementsByTagName("textarea");
-    // let selectDetails = container.getElementsByTagName("select");
+    let selectDetails = container.getElementsByTagName("select");
 
     let arrOne = [];
     let arrTwo = [];
@@ -204,20 +204,20 @@ async function updateMemberDetails(id) {
         if(request[i][17] == id1) {
             
             arrOne.push(name);
-            arrOne.push(inputDetails[10].value);
-            arrOne.push(inputDetails[2].value);
-            arrOne.push(inputDetails[3].value);
-            arrOne.push(inputDetails[4].value);
-            arrOne.push(inputDetails[5].value);
+            arrOne.push(selectDetails[0].value);
+            arrOne.push(request[i][2]);
+            arrOne.push(request[i][3]);
+            arrOne.push(request[i][4]);
+            arrOne.push(request[i][5]);
             arrOne.push(inputDetails[1].value);
             arrOne.push(inputDetails[0].value);
             arrOne.push(textDetails[1].value);
             arrOne.push(textDetails[0].value);
-            arrOne.push(inputDetails[9].value);
-            arrOne.push(inputDetails[7].value);
+            arrOne.push(inputDetails[5].value);
+            arrOne.push(inputDetails[3].value);
+            arrOne.push(inputDetails[2].value);
+            arrOne.push(inputDetails[4].value);
             arrOne.push(inputDetails[6].value);
-            arrOne.push(inputDetails[8].value);
-            arrOne.push(inputDetails[11].value);
             arrOne.push(textDetails[2].value);
             arrOne.push(request[i][16]);
             arrOne.push(request[i][17]);
