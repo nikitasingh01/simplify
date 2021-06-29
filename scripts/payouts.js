@@ -185,12 +185,14 @@ async function updateTracker(id) {
         iterator++;
     }
 
+    let tempRange=0;
     for(let k=0; k<payoutsArray.length; k++) {
-        if(payoutsArray[k][0] == date && payoutsArray[k][1]==teamMemberName && payoutsArray[k][2]==num) {
+        console.log(num);
+        if(payoutsArray[k][1]==teamMemberName) {
             let arr = [["Updated"]];
 
-            let temp = k+2;
-            let str = "Payouts!D"+temp;
+            tempRange = k+2;
+            let str = "Payouts!D"+tempRange;
             
             var params2 = {
                 spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -361,7 +363,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     let totalPayoutsBoolean = false;
 
     for(let i=0; i<deliveryArray.length; i++) {
-        if(deliveryArray[i][4] == arr[0] && deliveryArray[i][12] == "Paid" && deliveryArray[i][14] == "Yet to update") {
+        if(deliveryArray[i][4] == arr[0] && deliveryArray[i][12] == "Paid" && (deliveryArray[i][14] == "Yet to update")) {
             paidInput.checked = true;
             totalPayoutsBoolean = true;
             trackerContent.setAttribute("onclick","updateTracker(id)");
@@ -400,7 +402,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
         let addTaskArray = [];
         for(let j=0; j<deliveryArray.length; j++) {
 
-            if(deliveryArray[j][4]==arr[0] && deliveryArray[j][0] == projectsArray[i][0] && deliveryArray[j][8]=="Completed" && deliveryArray[j][14]=="Yet to update") {
+            if(deliveryArray[j][4]==arr[0] && deliveryArray[j][0] == projectsArray[i][0] && deliveryArray[j][8]=="Completed" && (deliveryArray[j][14]!="Updated")) {
                 
                 let dummyArray = [];
                 dummyArray.push(deliveryArray[j][2]);
@@ -823,6 +825,19 @@ async function updatePayoutsSheet(id) {
     let toggleButton = document.getElementById(id);
     let num = "";
     if(toggleButton.checked == true) {
+
+        let calcButton = toggleButton.parentElement.parentElement.parentElement.parentElement;
+        calcButton = calcButton.getElementsByClassName("Row");
+
+        for(let i=0; i<calcButton.length; i++) {
+            let temp = calcButton[i].getElementsByTagName("button");
+            temp = temp[0];
+
+            temp.removeAttribute("onclick","totalPayCalculation(id)");
+            temp.setAttribute("disabled", true);
+            temp.setAttribute("style","cursor: context-menu !important;");
+        }
+
         let elem = toggleButton.parentElement.parentElement.parentElement;
 
         let teamMember = elem.getElementsByTagName("h5");

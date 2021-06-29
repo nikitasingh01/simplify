@@ -526,7 +526,7 @@ async function saveProjectTasks() {
                             var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
                         }
 
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && trackerFlag == true && requestDelivery[l][14] == undefined) {
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && trackerFlag == true && (requestDelivery[l][14] != "Yet to update" || requestDelivery[l][14] != "Updated")) {
 
                             var params2 = {
                                 spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -808,7 +808,7 @@ async function updateSheet() {
         str += str1;
         str += num;
         str += ":";
-        a+=14;
+        a+=16;
         var str1 =String.fromCharCode(a);
         str += str1;
         str += num;
@@ -826,7 +826,7 @@ async function updateSheet() {
         var request = await gapi.client.sheets.spreadsheets.values.clear(params1, clearValuesRequestBody);
     }
 
-    location.reload();
+    // location.reload();
 }
 
 async function deleteTask(id) {
