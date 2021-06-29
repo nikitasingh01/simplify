@@ -65,7 +65,7 @@ function saveRevenue() {
         obj.style.backgroundColor = "#f1f1f1";
         obj.style.borderColor = "black";
         obj.style.color = "black";
-        obj.innerHTML = "Saved <b>&#10003;</b>";
+        obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Saving...`;
         setTimeout(function() {
             obj.style.backgroundColor = "#007bff";
             obj.innerHTML = "Save";
@@ -114,7 +114,6 @@ function makeApiCallRevenue() {
         for(var i=0; i<revenueArray.length; i++) {
             displayRevenue(revenueArray[i]);
         }
-        // console.log(revenueArray);
     }, function(reason) {
     console.error('error: ' + reason.result.error.message);
     });
@@ -150,15 +149,13 @@ function handleClientLoad() {
 
 function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
-        let signInButton = document.getElementsByClassName("signinButton");
+        let signInButton = document.getElementById("revenueSignInButton");
 
-        for(let i=0; i<signInButton.length; i++) {
-            signInButton[i].style.backgroundColor = "#f1f1f1";
-            signInButton[i].style.borderColor = "black";
-            signInButton[i].style.borderWidth = "2px";
-            signInButton[i].style.color = "black";
-            signInButton[i].innerHTML = "<b>Signed In</b>";
-        }
+        signInButton.style.backgroundColor = "#f1f1f1";
+        signInButton.style.borderColor = "black";
+        signInButton.style.borderWidth = "2px";
+        signInButton.style.color = "black";
+        signInButton.innerHTML = "<b>Signed In</b>";
         
         makeApiCallRevenue();
     }

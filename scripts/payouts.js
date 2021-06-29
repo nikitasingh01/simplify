@@ -58,7 +58,7 @@ async function updateTracker(id) {
     updateButton.style.backgroundColor = "#f1f1f1";
     updateButton.style.borderColor = "black";
     updateButton.style.color = "black";
-    updateButton.innerHTML = "Updating <b>&#10003;</b>";
+    updateButton.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Updating...`;
 
     var today = new Date();
     var dd = today.getDate();
@@ -622,7 +622,7 @@ async function savePayouts(id, count) {
     obj.style.backgroundColor = "#f1f1f1";
     obj.style.borderColor = "black";
     obj.style.color = "black";
-    obj.innerHTML = "Saving <b>&#10003;</b>";
+    obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Saving...`;
 
     var params1 = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -741,7 +741,7 @@ async function savePayouts(id, count) {
         obj.style.backgroundColor = "#007bff";
         obj.innerHTML = "Save";
         obj.style.color = "white";
-    }, 4000);
+    }, 1000);
 }
 
 async function makeApiCallPayouts() {

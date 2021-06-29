@@ -164,12 +164,7 @@ async function updateMemberDetails(id) {
     obj.style.backgroundColor = "#f1f1f1";
     obj.style.borderColor = "black";
     obj.style.color = "black";
-    obj.innerHTML = "Updating <b>&#10003;</b>";
-    setTimeout(function() {
-        obj.style.backgroundColor = "#007bff";
-        obj.innerHTML = "Update";
-        obj.style.color = "white";
-    }, 4000);
+    obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Updating...`;
 
     var params = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -245,6 +240,10 @@ async function updateMemberDetails(id) {
             var request = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
         }
     }
+
+    obj.style.backgroundColor = "#007bff";
+    obj.innerHTML = "Update";
+    obj.style.color = "white";
 }
 
 async function moreDetails(memberId) {
@@ -372,15 +371,13 @@ function handleClientLoad() {
 function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
         makeApiCallTeam();
-        let signInButton = document.getElementsByClassName("signinButton");
+        let signInButton = document.getElementById("teamSignInButton");
 
-        for(let i=0; i<signInButton.length; i++) {
-            signInButton[i].style.backgroundColor = "#f1f1f1";
-            signInButton[i].style.borderColor = "black";
-            signInButton[i].style.borderWidth = "2px";
-            signInButton[i].style.color = "black";
-            signInButton[i].innerHTML = "<b>Signed In</b>";
-        }
+        signInButton.style.backgroundColor = "#f1f1f1";
+        signInButton.style.borderColor = "black";
+        signInButton.style.borderWidth = "2px";
+        signInButton.style.color = "black";
+        signInButton.innerHTML = "<b>Signed In</b>";
     }
 }
 

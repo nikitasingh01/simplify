@@ -23,6 +23,13 @@ async function makeApiCallHelperSheet() {
 
 async function addTeamMember() {
 
+    let obj = document.getElementById("addMemberSaveButton");
+    obj.style.backgroundColor = "#f1f1f1";
+    obj.style.borderColor = "black";
+    obj.style.color = "black";
+    obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Saving...`;
+    
+
     var params = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
         range: 'Team!A2:Z1000',
@@ -94,16 +101,9 @@ async function addTeamMember() {
     };
 
     var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
-    obj = document.getElementById("addMemberSaveButton");
-    obj.style.backgroundColor = "#f1f1f1";
-    obj.style.borderColor = "black";
-    obj.style.color = "black";
-    obj.innerHTML = "Saved <b>&#10003;</b>";
-    setTimeout(function() {
-        obj.style.backgroundColor = "#007bff";
-        obj.innerHTML = "Save";
-        obj.style.color = "white";
-    }, 4000);
+    obj.style.backgroundColor = "#007bff";
+    obj.innerHTML = "Save";
+    obj.style.color = "white";
 }
 
 //Authentication functions used for this app
@@ -137,15 +137,13 @@ function handleClientLoad() {
 function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
         makeApiCallHelperSheet();
-        let signInButton = document.getElementsByClassName("signinButton");
+        let signInButton = document.getElementById("addTeamMemberSignInButton");
 
-        for(let i=0; i<signInButton.length; i++) {
-            signInButton[i].style.backgroundColor = "#f1f1f1";
-            signInButton[i].style.borderColor = "black";
-            signInButton[i].style.borderWidth = "2px";
-            signInButton[i].style.color = "black";
-            signInButton[i].innerHTML = "<b>Signed In</b>";
-        }
+        signInButton.style.backgroundColor = "#f1f1f1";
+        signInButton.style.borderColor = "black";
+        signInButton.style.borderWidth = "2px";
+        signInButton.style.color = "black";
+        signInButton.innerHTML = "<b>Signed In</b>";
     }
 }
 

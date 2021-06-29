@@ -297,7 +297,7 @@ async function saveProjectTasks() {
     obj.style.backgroundColor = "#f1f1f1";
     obj.style.borderColor = "black";
     obj.style.color = "black";
-    obj.innerHTML = "Saving <b>&#10003;</b>";
+    obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Saving...`;
     // setTimeout(function() {
     //     obj.style.backgroundColor = "#007bff";
     //     obj.innerHTML = "Save";
