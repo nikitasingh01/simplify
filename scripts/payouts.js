@@ -26,12 +26,12 @@ function totalPayCalculation(id) {
         }
     }
 
-    let totalpayNum = document.getElementById("totalpayNum");
-    totalpayNum.innerText = x;
+    // let totalpayNum = document.getElementById("totalpayNum");
+    // totalpayNum.innerText = x;
 
-    let payoutsMadeNum = document.getElementById("payoutsMadeNum");
-    let payoutsDueNum = document.getElementById("payoutsDueNum");
-    payoutsDueNum.innerText = parseInt(totalpayNum.innerText) - parseInt(payoutsMadeNum.innerText);
+    // let payoutsMadeNum = document.getElementById("payoutsMadeNum");
+    // let payoutsDueNum = document.getElementById("payoutsDueNum");
+    // payoutsDueNum.innerText = parseInt(totalpayNum.innerText) - parseInt(payoutsMadeNum.innerText);
 
     let elem = totalPay.parentElement.parentElement.parentElement.parentElement;
     let totalDue = totalPay.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -574,6 +574,12 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
                 totalPayButton.setAttribute("class", "btn calculatorButton");
                 totalPayButton.setAttribute("id","totalPay"+count+projectsCount+tasksCount);
                 totalPayButton.setAttribute("onclick","totalPayCalculation("+count+projectsCount+tasksCount+")");
+
+                if(paidInput.checked == true) {
+                    totalPayButton.removeAttribute("onclick","totalPayCalculation("+count+projectsCount+tasksCount+")");
+                    totalPayButton.setAttribute("disabled", true);
+                    totalPayButton.setAttribute("style","cursor: context-menu !important;");
+                }
                 let buttonLogo = document.createElement("i");
                 buttonLogo.setAttribute("class","bi bi-calculator");
                 totalPayButton.appendChild(buttonLogo);
@@ -769,6 +775,57 @@ async function makeApiCallPayouts() {
 
     var request3 = await gapi.client.sheets.spreadsheets.values.get(params3);
     let projectsArray = request3.result.values;
+
+    var params4 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Payouts!A2:Z1000',
+    };
+
+    var request4 = await gapi.client.sheets.spreadsheets.values.get(params4);
+    let payouts = request4.result.values;
+
+    let totalSum = 0.0;
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+        dd='0'+dd;
+
+    if(mm<10) 
+        mm='0'+mm;
+        
+    var date = dd+'/'+mm+'/'+yyyy;
+
+    for(let i=0; i<payouts.length; i++) {
+        if(payouts[i][0] == date) {
+            totalSum += parseFloat(payouts[i][2]);
+        }
+    }
+
+    console.log(deliveryArray);
+
+    let payoutsMade = document.getElementById("payoutsMadeNum");
+    payoutsMade.innerText = totalSum;
+
+    let totalDue = 0.0;
+    for(let i=0; i<deliveryArray.length; i++) {
+        if(deliveryArray[i][12] == "Due") {
+            if(deliveryArray[i][11] != "") {
+                totalDue += parseFloat(deliveryArray[i][11]);
+            } else if(deliveryArray[i][10] != "" && deliveryArray[i][9] != "") {
+                totalDue += parseFloat(deliveryArray[i][9]) + parseFloat(deliveryArray[i][9])*parseFloat(deliveryArray[i][10])/100.0;
+            } else {
+                totalDue += parseFloat(deliveryArray[i][6]) + parseFloat(deliveryArray[i][6])*parseFloat(deliveryArray[i][7])/100.0;
+            }
+        }
+    }
+
+    let payoutsDue = document.getElementById("payoutsDueNum");
+    payoutsDue.innerText = totalDue;
+
+    let payoutsTotal = document.getElementById("totalpayNum");
+    payoutsTotal.innerText = totalDue+totalSum;
 
     for(let i=0; i<teamArray.length; i++) {
         let flag = false;

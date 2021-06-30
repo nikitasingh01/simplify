@@ -597,7 +597,7 @@ async function saveProjectTasks() {
         obj.style.backgroundColor = "#007bff";
         obj.innerHTML = "Save";
         obj.style.color = "white";
-    }, 4000);
+    }, 1000);
 
     // Project Toggle Button
 
