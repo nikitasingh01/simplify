@@ -1,10 +1,10 @@
 body {
-    background-image: url(../images/landing_1.png);
+    /* background-image: url(../images/landing_1.png);
     background-size: 250px;
     background-position-y: 545px;
     background-position-x: 10px;
     background-repeat: no-repeat;
-    z-index: 2;
+    z-index: 2; */
 }
 
 .form-control {

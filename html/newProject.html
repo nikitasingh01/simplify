@@ -12,7 +12,7 @@
     <link rel="shortcut icon" type="image/png" href="../images/favicon.png">
     <title>SB® | New Project</title>
 </head>
-<body>
+<body onload="handleClientLoad()">
     <nav class="navbar navbar-expand-lg navbar-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse navbarList" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link active" href="#">New Project</a>
+                    <a class="nav-link active" href="./newProject.html">New Project</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./manageProjects.html">Manage Projects</a>
@@ -150,8 +150,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js"
+    <!-- <script async defer src="https://apis.google.com/js/api.js"
     onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script> -->
+    <script async defer src="https://apis.google.com/js/api.js"
     onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
     <script src="../scripts/newProject.js"></script>

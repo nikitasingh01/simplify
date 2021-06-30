@@ -13,7 +13,7 @@
     <link rel="shortcut icon" type="image/png" href="../images/favicon.png">
     <title>SB® | Revenues</title>
 </head>
-<body>
+<body onload="handleClientLoad()">
     <div id="myModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -50,7 +50,7 @@
                     <a class="nav-link" href="./reports.html">Reports</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Revenues</a>
+                    <a class="nav-link active" href="./reports.html">Revenues</a>
                 </li>
             </ul>
             <button class="btn signinButton mr-2" id="revenueSignInButton" onclick="handleSignInClick()">Sign in</button>
@@ -112,8 +112,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js"
+    <!-- <script async defer src="https://apis.google.com/js/api.js"
     onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script> -->
+    <script async defer src="https://apis.google.com/js/api.js"
     onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
     <script src="../scripts/revenue.js"></script>

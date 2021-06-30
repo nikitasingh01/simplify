@@ -803,8 +803,6 @@ async function makeApiCallPayouts() {
         }
     }
 
-    console.log(deliveryArray);
-
     let payoutsMade = document.getElementById("payoutsMadeNum");
     payoutsMade.innerText = totalSum;
 
