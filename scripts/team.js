@@ -254,9 +254,9 @@ async function moreDetails(memberId) {
     containerTeam.innerHTML = "";
 
     let titleDiv = document.createElement("div");
-    titleDiv.setAttribute("class","mt-1 teamTitle d-flex align-items-center");
+    titleDiv.setAttribute("class","mt-2 teamTitle d-flex align-items-center");
     let backButtonDiv = document.createElement("div");
-    backButtonDiv.setAttribute("class","col-11");
+    backButtonDiv.setAttribute("class","col-10");
     let backButtonLink = document.createElement("a");
     backButtonLink.setAttribute("href","./team.html");
     let backButton = document.createElement("button");

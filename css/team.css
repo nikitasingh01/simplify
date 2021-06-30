@@ -30,12 +30,17 @@ h5 {
 .saveDetailsButton {
     float: right;
     margin-left: 10px;
+    width: 150px;
 }
 
-.updateMemberButton {
+#updateMemberButton {
     float: right;
 }
 
 td, th {
     text-align: center;
+}
+
+span {
+    display: inline;
 }

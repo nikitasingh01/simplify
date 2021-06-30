@@ -160,7 +160,7 @@ input:checked + .slider:before {
 }
 
 .savePayoutsButton {
-    width: 100px;
+    width: 150px;
 }
 
 .manageProjectsToggle {
@@ -170,6 +170,7 @@ input:checked + .slider:before {
 
 .trackerButton {
     float: right;
+    width: 200px;
 }
 
 .pointerClass {

@@ -301,7 +301,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     cardHead.setAttribute("id","heading"+count);
 
     let title = document.createElement("a");
-    title.setAttribute("class","title col-3");
+    title.setAttribute("class","title col-2");
     title.setAttribute("data-toggle","collapse");
     title.setAttribute("data-target","#collapse"+count);
     let titleContent = document.createElement("h5");
@@ -352,7 +352,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     paidStatusDiv.appendChild(paidStatus);
 
     let trackerDiv = document.createElement("div");
-    trackerDiv.setAttribute("class","col-2");
+    trackerDiv.setAttribute("class","col-3");
     let trackerContent = document.createElement("button");
     trackerContent.setAttribute("class","btn trackerButton");
     trackerContent.setAttribute("id","trackerButton"+count);
