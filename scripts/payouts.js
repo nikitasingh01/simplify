@@ -1,4 +1,4 @@
-function totalPayCalculation(id) {
+async function totalPayCalculation(id) {
     let fixedPay = document.getElementById("fixedPayActual"+id);
     let variablePay = document.getElementById("variablePayActual"+id);
     let totalPay = document.getElementById("totalPayContent"+id);
@@ -12,26 +12,36 @@ function totalPayCalculation(id) {
 
     let totalPayoutsDiv = document.getElementsByClassName("totalPay");
 
+    var params1 = {
+        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        range: 'Delivery!A2:Z1000',
+    };
+
+    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    let deliveryArray = request1.result.values;
+
     let x = 0.0;
-    for(let i=0; i<totalPayoutsDiv.length; i++) {
-        let num = totalPayoutsDiv[i].getElementsByTagName("h6");
-        if(num[0].innerText != "Total Payout" && num[0].innerText != "") {
-
-            let toggleStatus = num[0].parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-            toggleStatus = toggleStatus.getElementsByTagName("input");
-            toggleStatus = toggleStatus[0];
-
-            if(toggleStatus.checked == false)
-                x += parseInt(num[0].innerText);
+    for(let i=0; i<deliveryArray.length; i++) {
+        if(deliveryArray[i][12] == "Due") {
+            if(deliveryArray[i][11] != "") {
+                x += parseFloat(deliveryArray[i][11]);
+            } else if(deliveryArray[i][10] != "" && deliveryArray[i][9] != "") {
+                x += parseFloat(deliveryArray[i][9]) + parseFloat(deliveryArray[i][9])*parseFloat(deliveryArray[i][10])/100.0;
+            } 
         }
     }
 
-    // let totalpayNum = document.getElementById("totalpayNum");
-    // totalpayNum.innerText = x;
+    let payoutsDueNum = document.getElementById("payoutsDueNum");
+    payoutsDueNum.innerText = x + total;
 
-    // let payoutsMadeNum = document.getElementById("payoutsMadeNum");
-    // let payoutsDueNum = document.getElementById("payoutsDueNum");
-    // payoutsDueNum.innerText = parseInt(totalpayNum.innerText) - parseInt(payoutsMadeNum.innerText);
+    let totalMadeNum = document.getElementById("payoutsMadeNum");
+
+    let totalpayNum = document.getElementById("totalpayNum");
+    totalpayNum.innerText = parseFloat(totalMadeNum.innerText) + total + x;
+
+
+
+    
 
     let elem = totalPay.parentElement.parentElement.parentElement.parentElement;
     let totalDue = totalPay.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -813,9 +823,10 @@ async function makeApiCallPayouts() {
                 totalDue += parseFloat(deliveryArray[i][11]);
             } else if(deliveryArray[i][10] != "" && deliveryArray[i][9] != "") {
                 totalDue += parseFloat(deliveryArray[i][9]) + parseFloat(deliveryArray[i][9])*parseFloat(deliveryArray[i][10])/100.0;
-            } else {
-                totalDue += parseFloat(deliveryArray[i][6]) + parseFloat(deliveryArray[i][6])*parseFloat(deliveryArray[i][7])/100.0;
-            }
+            } 
+            // else {
+            //     totalDue += parseFloat(deliveryArray[i][6]) + parseFloat(deliveryArray[i][6])*parseFloat(deliveryArray[i][7])/100.0;
+            // }
         }
     }
 
