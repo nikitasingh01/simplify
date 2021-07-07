@@ -1,4 +1,23 @@
 async function totalPayCalculation(id) {
+    
+    let str = "";
+    let s = "";
+    str += id;
+
+    if(str[0] == 't') {
+        let i=0;
+        while(i<str.length && str[i] != 'y') {
+            i++;
+        }
+
+        i++;
+        while(i<str.length) {
+            s += str[i];
+            i++;
+        }
+        id = s;
+    }
+
     let fixedPay = document.getElementById("fixedPayActual"+id);
     let variablePay = document.getElementById("variablePayActual"+id);
     let totalPay = document.getElementById("totalPayContent"+id);
@@ -12,36 +31,55 @@ async function totalPayCalculation(id) {
 
     let totalPayoutsDiv = document.getElementsByClassName("totalPay");
 
-    var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-        range: 'Delivery!A2:Z1000',
-    };
+    // var params1 = {
+    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     range: 'Delivery!A2:Z1000',
+    // };
 
-    var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
-    let deliveryArray = request1.result.values;
+    // var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
+    // let deliveryArray = request1.result.values;
+
+    // let x = 0.0;
+    // for(let i=0; i<deliveryArray.length; i++) {
+    //     if(deliveryArray[i][12] == "Due") {
+    //         if(deliveryArray[i][11] != "") {
+    //             x += parseFloat(deliveryArray[i][11]);
+    //         } else if(deliveryArray[i][10] != "" && deliveryArray[i][9] != "") {
+    //             x += parseFloat(deliveryArray[i][9]) + parseFloat(deliveryArray[i][9])*parseFloat(deliveryArray[i][10])/100.0;
+    //         } 
+    //     }
+    // }
 
     let x = 0.0;
-    for(let i=0; i<deliveryArray.length; i++) {
-        if(deliveryArray[i][12] == "Due") {
-            if(deliveryArray[i][11] != "") {
-                x += parseFloat(deliveryArray[i][11]);
-            } else if(deliveryArray[i][10] != "" && deliveryArray[i][9] != "") {
-                x += parseFloat(deliveryArray[i][9]) + parseFloat(deliveryArray[i][9])*parseFloat(deliveryArray[i][10])/100.0;
-            } 
+    let toggle = document.getElementsByClassName("toggleClass");
+    for(let i=0; i<toggle.length; i++) {
+        if(toggle[i].checked == false) {
+            let t = toggle[i].parentElement.parentElement.parentElement.parentElement;
+            let pay = t.getElementsByClassName("totalPay");
+
+            for(let j=0; j<pay.length; j++) {
+                if(pay[j].innerText != "Total Payout") {
+                    if(pay[j].innerText == '0') {
+                        let e = pay[j].parentElement.parentElement;
+                        let fixed = e.getElementsByTagName("input");
+
+                        if(fixed[0].value != "" && fixed[1].value != "")
+                            x += parseFloat(fixed[0].value)*(100 + parseFloat(fixed[1].value))/100.0;
+                    } else {
+                        x += parseFloat(pay[j].innerText);
+                    }
+                }
+            }
         }
     }
 
     let payoutsDueNum = document.getElementById("payoutsDueNum");
-    payoutsDueNum.innerText = x + total;
+    payoutsDueNum.innerText = x;
 
     let totalMadeNum = document.getElementById("payoutsMadeNum");
 
     let totalpayNum = document.getElementById("totalpayNum");
-    totalpayNum.innerText = parseFloat(totalMadeNum.innerText) + total + x;
-
-
-
-    
+    totalpayNum.innerText = parseFloat(totalMadeNum.innerText) + parseFloat(payoutsDueNum.innerText);
 
     let elem = totalPay.parentElement.parentElement.parentElement.parentElement;
     let totalDue = totalPay.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -347,6 +385,7 @@ function createPayouts(arr, projectsArray, deliveryArray, count) {
     paidInput.setAttribute("type","checkbox");
     paidInput.setAttribute("id","Toggle"+count);
     paidInput.setAttribute("onclick","updatePayoutsSheet(id)");
+    paidInput.setAttribute("class", "toggleClass");
     let paidSpan = document.createElement("span");
     paidSpan.setAttribute("class","slider round");
     paidLabel.appendChild(paidInput);
@@ -824,9 +863,6 @@ async function makeApiCallPayouts() {
             } else if(deliveryArray[i][10] != "" && deliveryArray[i][9] != "") {
                 totalDue += parseFloat(deliveryArray[i][9]) + parseFloat(deliveryArray[i][9])*parseFloat(deliveryArray[i][10])/100.0;
             } 
-            // else {
-            //     totalDue += parseFloat(deliveryArray[i][6]) + parseFloat(deliveryArray[i][6])*parseFloat(deliveryArray[i][7])/100.0;
-            // }
         }
     }
 
@@ -884,6 +920,19 @@ function closeModal1(id) {
     let id1 = id.slice(0,-1);
     let toggle = document.getElementById(id1);
     toggle.checked = false;
+
+    let calcButton = toggle.parentElement.parentElement.parentElement.parentElement;
+    calcButton = calcButton.getElementsByClassName("Row");
+
+    for(let i=0; i<calcButton.length; i++) {
+        let temp = calcButton[i].getElementsByTagName("button");
+        temp = temp[0];
+
+        temp.setAttribute("onclick","totalPayCalculation(id)");
+        temp.disabled = false;
+        temp.removeAttribute("style","cursor: context-menu !important;");
+    }
+
     modal.style.display = "none";
 }
 
@@ -904,25 +953,43 @@ async function updatePayoutsSheet(id) {
             temp.setAttribute("style","cursor: context-menu !important;");
         }
 
+        // let elem = toggleButton.parentElement.parentElement.parentElement;
+
+        // let teamMember = elem.getElementsByTagName("h5");
+        // teamMember = teamMember[0].innerText;
+
+        // let pay = elem.getElementsByTagName("h6");
+        // pay = pay[0].innerText;
+
+        // let iterator = 0;
+        // while(pay[iterator] != "s") {
+        //     iterator++;
+        // }
+        // iterator+=2;
+        // while(iterator < pay.length) {
+        //     num += pay[iterator];
+        //     iterator++;
+        // }
+
         let elem = toggleButton.parentElement.parentElement.parentElement;
 
         let teamMember = elem.getElementsByTagName("h5");
         teamMember = teamMember[0].innerText;
 
-        let pay = elem.getElementsByTagName("h6");
-        pay = pay[0].innerText;
+        elem = elem.parentElement;
 
-        let iterator = 0;
-        while(pay[iterator] != "s") {
-            iterator++;
+        let num = 0.0;
+        let pay = elem.getElementsByClassName("totalPay");
+        for(let k=0; k<pay.length; k++) {
+            if(pay[k].innerText == "0") {
+                num = 0;
+                break;
+            } else if(pay[k].innerText != "Total Payout") {
+                num += parseFloat(pay[k].innerText);
+            }
         }
-        iterator+=2;
-        while(iterator < pay.length) {
-            num += pay[iterator];
-            iterator++;
-        }
-
-        if(parseInt(num) == 0) {
+        
+        if(num == 0) {
             toggleButton.checked = true;
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
