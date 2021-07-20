@@ -169,7 +169,8 @@ async function feesRateCalculation() {
         feeRate += val;
         document.getElementById("feesRate").value = val.toFixed(1) + "%";
     } else if(contractTypeSelect === "Direct Contract") {
-        document.getElementById("feesRate").value = directContractFeesRate[0];
+        document.getElementById("feesRate").value = (directContractFeesRate[0][0]);
+        feeRate = parseFloat(directContractFeesRate[0][0]);
     }
 
     let projValue = document.getElementById("projectValue").value;
@@ -177,9 +178,6 @@ async function feesRateCalculation() {
     let exchangeRate = document.getElementById("exchangeRate").value;
     exchangeRate = parseInt(exchangeRate);
 
-    console.log(projValue);
-    console.log(feeRate);
-    console.log(exchangeRate);
     let num = 0.0;
     num += (projValue*(100.0 - feeRate)*exchangeRate)/100.0;
     console.log(num);
