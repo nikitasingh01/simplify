@@ -181,7 +181,7 @@ async function updateTracker(id) {
             let arr = [];
             arr.push(id);
             arr.push(name);
-            arr.push(task[0].innerText);
+            // arr.push(task[0].innerText);
             arr.push(task[1].innerText);
             arr.push(task[2].innerText);
             arr.push(task[3].innerText);

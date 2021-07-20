@@ -768,7 +768,7 @@ async function updateSheet() {
     };
 
     var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
-    deliveryArray = request1.result.values;
+    var deliveryArray = request1.result.values;
 
     console.log(deliveryArray);
     let count2 = deliveryArray.length;
@@ -810,7 +810,7 @@ async function updateSheet() {
         str += num;
         str += ":";
         a+=16;
-        var str1 =String.fromCharCode(a);
+        str1 =String.fromCharCode(a);
         str += str1;
         str += num;
 
@@ -881,6 +881,10 @@ async function deleteTask(id) {
 
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
+
+    setTimeout(function() {
+        location.reload();
+    }, 2000);
 }
 
 var modal = document.getElementById("myModal");
