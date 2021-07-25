@@ -12,16 +12,17 @@ function displayYearlyView(year, projects, delivery) {
         let date = dateAwarded.split("/");
         let month = date[1];
         
-        if(((month <= 12 || month >= 4) && year == date[2]) || ((month<=3 && month>=1) && year+1 == date[2])) {
+        if(((month <= 12 && month >= 4) && year == date[2]) || ((month<=3 && month>=1) && year+1 == date[2])) {
             value += parseFloat(projects[i][7]);
             revenue += parseFloat(projects[i][9]);
 
             for(let j=0; j<delivery.length; j++) {
+                console.log(delivery[j]);
                 if(delivery[j][0] == projects[i][0]) {
                     if(delivery[j][11] != "")
                         cost += parseFloat(delivery[j][11]);
                     else
-                        cost += parseFloat(delivery[i][6]) + (parseFloat(delivery[i][6])*parseFloat(delivery[i][7]))/100.0;
+                        cost += parseFloat(delivery[j][6]) + (parseFloat(delivery[j][6])*parseFloat(delivery[j][7]))/100.0;
                 }
             }
         }
@@ -162,7 +163,7 @@ function displayQuarterlyView(num, year, projects, delivery) {
                     if(delivery[j][11] != "")
                         cost += parseFloat(delivery[j][11]);
                     else
-                        cost += parseFloat(delivery[i][6]) + (parseFloat(delivery[i][6])*parseFloat(delivery[i][7]))/100.0;
+                        cost += parseFloat(delivery[j][6]) + (parseFloat(delivery[j][6])*parseFloat(delivery[j][7]))/100.0;
                 }
             }
         }
@@ -255,7 +256,7 @@ function displayMonthlyView(thisMonth, monthArray, delivery, projects) {
                     if(delivery[j][11] != "") {
                         cost += parseFloat(delivery[j][11]);    
                     } else {
-                        cost += parseFloat(delivery[i][6]) + (parseFloat(delivery[i][6])*parseFloat(delivery[i][7]))/100.0;
+                        cost += parseFloat(delivery[j][6]) + (parseFloat(delivery[j][6])*parseFloat(delivery[j][7]))/100.0;
                     }
                     
                 }
@@ -698,9 +699,9 @@ function payoutsMonthlyView(payouts) {
         var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
         var startMon = i === startYear ? parseInt(start[1])-1 : 0;
         for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
-        var month = j+1;
-        var displayMonth = month < 10 ? '0'+month : month;
-        dates.push([displayMonth, i].join('/'));
+            var month = j+1;
+            var displayMonth = month < 10 ? '0'+month : month;
+            dates.push([displayMonth, i].join('/'));
         }
     }
 
@@ -894,6 +895,8 @@ async function updateSignInStatus(isSignedIn) {
         signInButton.innerHTML = "<b>Signed In</b>";
 
         paramsDelivery = {
+            
+            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Projects!A2:Z1000',
         };
@@ -902,6 +905,7 @@ async function updateSignInStatus(isSignedIn) {
         projects = projects.result.values;
     
         paramsDelivery = {
+            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Delivery!A2:Z1000',
         };
@@ -910,6 +914,7 @@ async function updateSignInStatus(isSignedIn) {
         delivery = delivery.result.values;
     
         paramsDelivery = {
+            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Team!A2:Z1000',
         };
@@ -918,6 +923,7 @@ async function updateSignInStatus(isSignedIn) {
         team = team.result.values;
 
         paramsDelivery = {
+            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Payouts!A2:Z1000',
         };
