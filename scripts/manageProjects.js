@@ -11,8 +11,10 @@ async function getTeamArray() {
     request = request.result.values;
     
     for(let i=0; i<request.length; i++) {
-        teamArray.push(request[i][0]);
+        teamArray.push([request[i][0],request[i][2]]);
     }
+
+    console.log(teamArray);
 }
 
 let idArray = [];
@@ -148,14 +150,15 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
     let selectOption = cardbody[0].getElementsByTagName("select");
     for(let i=0; i<teamArray.length; i++) {
         let option1 = document.createElement("option");
-        option1.setAttribute("value", teamArray[i]);
-        option1.innerHTML = teamArray[i];
+        option1.setAttribute("value", teamArray[i][0]);
+        option1.innerHTML = teamArray[i][0];
 
-        if(teamMember == teamArray[i]) {
+        if(teamMember == teamArray[i][0]) {
             option1.setAttribute("selected", "selected");
         }
 
-        selectOption[countTask-1].appendChild(option1);
+        if(teamArray[i][1] != "Unavailable")
+            selectOption[countTask-1].appendChild(option1);
     }
 
     taskNameInput.setAttribute("value", taskName);
