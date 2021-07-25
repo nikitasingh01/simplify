@@ -704,7 +704,7 @@ async function saveProjectTasks() {
     for(let i=0; i<requestTeam.length; i++) {
         let taskBoolean = false;
         for(let j=0; j<requestTasks.length; j++) {
-            if(requestTeam[i][0] == requestTasks[j][4] && requestTasks[j][8] == "Ongoing") {
+            if(requestTeam[i][0] == requestTasks[j][4] && requestTasks[j][8] == "Ongoing" && requestTeam[i][2] != "Occupied") {
                 taskBoolean = true;
                 console.log(requestTeam[i][0]);
             
@@ -727,7 +727,7 @@ async function saveProjectTasks() {
             }
         }
 
-        if(taskBoolean == false) {
+        if(taskBoolean == false  && requestTeam[i][2] == "Occupied") {
             var num = i+2;
             var str = "Team!C"+num; 
 
