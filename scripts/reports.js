@@ -819,7 +819,7 @@ function displayPayoutsYearlyView(year, payouts) {
         let date = dateAwarded.split("/");
         let month = date[1];
         
-        if(((month <= 12 || month >= 4) && year == date[2]) || ((month<=3 && month>=1) && year+1 == date[2])) {
+        if(((month <= 12 && month >= 4) && year == date[2]) || ((month<=3 && month>=1) && year+1 == date[2])) {
             revenue += parseFloat(payouts[i][2]);
         }
     }
