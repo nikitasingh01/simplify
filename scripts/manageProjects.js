@@ -208,7 +208,7 @@ function checkTasks(id) {
     }
 }
 
-function makeProject(projectId, projectName, count, deliveryArray) {
+function makeProject(projectId, clientName, projectName, count, deliveryArray) {
     idArray.push(0);
     let outerDiv = document.getElementById("outerDiv");
 
@@ -218,7 +218,7 @@ function makeProject(projectId, projectName, count, deliveryArray) {
             <div class="card-header d-flex" id="heading`+count+`">
                 <a class="title col-7">
                     <h5 class="mb-0 projectTitle" data-toggle="collapse" data-target="#collapse`+count+`">
-                    `+projectId+` : `+projectName+`  
+                    `+projectId+` : `+clientName+` : `+projectName+`  
                     </h5>
                 </a>
                 <div class="col-2">   
@@ -332,7 +332,14 @@ async function saveProjectTasks() {
             id += idName[iterator];
             iterator++;
         }
-        iterator+=3;
+        while(idName[iterator] != ":") {
+            iterator++;
+        }
+        iterator++;
+        while(idName[iterator] != ":") {
+            iterator++;
+        }
+        iterator+=2;
         while(iterator < idName.length) {
             name += idName[iterator];
             iterator++;
@@ -626,7 +633,14 @@ async function saveProjectTasks() {
             id += idName[iterator];
             iterator++;
         }
-        iterator+=3;
+        while(idName[iterator] != ":") {
+            iterator++;
+        }
+        iterator++;
+        while(idName[iterator] != ":") {
+            iterator++;
+        }
+        iterator+=2;
         while(iterator < idName.length) {
             name += idName[iterator];
             iterator++;
@@ -755,11 +769,11 @@ async function makeApiCallManageProjects() {
     for(let i=0; i<projectArray.length+1; i++) {
         if(i == projectArray.length) {
             count++;
-            makeProject(0, "ProjectBlank", count, deliveryArray);
+            makeProject(0,"No Client", "ProjectBlank", count, deliveryArray);
         }
         else if(projectArray[i][10] == "Ongoing") {
             count++;
-            makeProject(projectArray[i][0], projectArray[i][3], count, deliveryArray);
+            makeProject(projectArray[i][0], projectArray[i][2], projectArray[i][3], count, deliveryArray);
         }
     }
 }
