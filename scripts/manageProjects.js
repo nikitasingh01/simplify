@@ -131,9 +131,13 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
         let num = taskId[0].getElementsByTagName("h6");
         num[0].innerHTML = "1";
     } else {
-        let taskId = arrList[countTask-2].getElementsByClassName("taskId");
-        let num = taskId[0].getElementsByTagName("h6");
-        let x = num[0].innerHTML;
+        let x=0;
+        for(let i=0; i<arrList.length-1; i++) {
+            let taskId = arrList[i].getElementsByClassName("taskId");
+            let num = taskId[0].getElementsByTagName("h6");
+            let temp = num[0].innerHTML;
+            x = max(x, parseInt(temp));
+        }
 
         taskId = arrList[countTask-1].getElementsByClassName("taskId");
         num = taskId[0].getElementsByTagName("h6");
