@@ -504,7 +504,7 @@ async function saveProjectTasks() {
                 
                     var valueRangeBody = {
                         "majorDimension": "ROWS",
-                        "values": data1,
+                        "values": data,
                     };
                 
                     var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
