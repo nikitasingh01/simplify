@@ -895,8 +895,6 @@ async function updateSignInStatus(isSignedIn) {
         signInButton.innerHTML = "<b>Signed In</b>";
 
         paramsDelivery = {
-            
-            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Projects!A2:Z1000',
         };
@@ -905,7 +903,6 @@ async function updateSignInStatus(isSignedIn) {
         projects = projects.result.values;
     
         paramsDelivery = {
-            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Delivery!A2:Z1000',
         };
@@ -914,7 +911,6 @@ async function updateSignInStatus(isSignedIn) {
         delivery = delivery.result.values;
     
         paramsDelivery = {
-            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Team!A2:Z1000',
         };
@@ -923,7 +919,6 @@ async function updateSignInStatus(isSignedIn) {
         team = team.result.values;
 
         paramsDelivery = {
-            // spreadsheetId: '19yzsHtMIhagTjTKoHc5QVQghCKeHbpukdRSIrQptW7g',
             spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
             range: 'Payouts!A2:Z1000',
         };

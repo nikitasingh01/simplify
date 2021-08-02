@@ -1,7 +1,7 @@
 let teamArray = [];
 let projectArray = [];
 let deliveryArray = [];
-async function getTeamArray() {
+async function getAllSheets() {
     var params = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
         range: 'Team!A2:Z1000',
@@ -13,8 +13,6 @@ async function getTeamArray() {
     for(let i=0; i<request.length; i++) {
         teamArray.push([request[i][0],request[i][2]]);
     }
-
-    console.log(teamArray);
 }
 
 let idArray = [];
@@ -301,11 +299,6 @@ async function saveProjectTasks() {
     obj.style.borderColor = "black";
     obj.style.color = "black";
     obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Saving...`;
-    // setTimeout(function() {
-    //     obj.style.backgroundColor = "#007bff";
-    //     obj.innerHTML = "Save";
-    //     obj.style.color = "white";
-    // }, 4000);
 
     var paramsDelivery = {
         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
@@ -317,8 +310,6 @@ async function saveProjectTasks() {
 
     let outerDiv = document.getElementById("outerDiv");
     let projects = outerDiv.getElementsByClassName("manageProjectContainer");
-    
-    // let data = [];
 
     for(let i=0; i<projects.length-1; i++) {
         let idName = projects[i].getElementsByTagName("h5");
@@ -359,80 +350,22 @@ async function saveProjectTasks() {
         
             for(let k=0; k<taskIdNum.length; k++) {
                 
+                let taskStatusChecker = "";
                 let completedTaskBoolean = false;
                 let trackerFlag = false;
-                let temp = [];
-                let temp1 = [];
-                let data = [];
-                let data1 = [];
-                temp.push(id);
-                temp.push(name);
-                temp.push(taskIdNum[k].innerText);
-                temp.push(taskNameClass[k].value);
-                temp.push(selectClass[k].value);
-                temp.push(datePickerClass[k].value);
-                temp.push(fixedPayoutClass[k].value);
-                temp.push(variablePayoutClass[k].value);
+                
                 if(checkboxClass[k].checked == true) {
-                    temp.push("Completed"); 
+                    taskStatusChecker = "Completed";
                     completedTaskBoolean = true;
-                    if(paidStatus[k].innerText == "") {
-                        paidStatus[k].innerText = "Due";
-                    }
+                } else {
+                    taskStatusChecker = "Ongoing";
                 }
-                else
-                    temp.push("Ongoing");
-                data.push(temp);
-
+                
                 if(paidStatus[k].innerText == "Due") {
                     trackerFlag = true;
                 }
 
-                let arr = [];
-                arr.push(paidStatus[k].innerText);
-
-                let taskStatusChecker = "";
-                
-                temp1.push(id);
-                temp1.push(name);
-                temp1.push(taskIdNum[k].innerText);
-                temp1.push(taskNameClass[k].value);
-                temp1.push(selectClass[k].value);
-                temp1.push(datePickerClass[k].value);
-                temp1.push(fixedPayoutClass[k].value);
-                temp1.push(variablePayoutClass[k].value);
-                if(checkboxClass[k].checked == true) {
-                    temp1.push("Completed");
-                    taskStatusChecker = "Completed";
-                } else {
-                    temp1.push("Ongoing");
-                    taskStatusChecker = "Ongoing";
-                }
-
-                temp1.push("");
-                temp1.push("");
-                temp1.push("");
-                temp1.push("");
-                temp1.push("");
-                temp1.push("");
-
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth()+1; 
-                var yyyy = today.getFullYear();
-                if(dd<10) 
-                    dd='0'+dd;
-
-                if(mm<10) 
-                    mm='0'+mm;
-                    
-                var date = dd+'/'+mm+'/'+yyyy;
-                temp1.push(date);
-
-                data1.push(temp1);
-                
                 var flag = false;
-
                 if(requestDelivery != undefined) {
 
                     for(let l=0; l<requestDelivery.length; l++) {
@@ -442,7 +375,63 @@ async function saveProjectTasks() {
                             flag = true;
                         }
                             
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && (taskNameClass[k].value != requestDelivery[l][3] || selectClass[k].value != requestDelivery[l][4] || datePickerClass[k].value != requestDelivery[l][5] || fixedPayoutClass[k].value != requestDelivery[l][6] || variablePayoutClass[k].value != requestDelivery[l][7] || taskStatusChecker != requestDelivery[l][8])) {
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && (taskNameClass[k].value != requestDelivery[l][3] || selectClass[k].value != requestDelivery[l][4] || datePickerClass[k].value != requestDelivery[l][5] || fixedPayoutClass[k].value != requestDelivery[l][6] || variablePayoutClass[k].value != requestDelivery[l][7] || taskStatusChecker != requestDelivery[l][8] || paidStatus[k].innerText != requestDelivery[l][12] || (trackerFlag == true && (requestDelivery[l][14] != "Yet to update" || requestDelivery[l][14] != "Updated")) || (completedTaskBoolean == true && requestDelivery[l][16] == undefined))) {
+
+                            let temp = [];
+                            let data = [];
+                            
+                            temp.push(id);
+                            temp.push(name);
+                            temp.push(taskIdNum[k].innerText);
+                            temp.push(taskNameClass[k].value);
+                            temp.push(selectClass[k].value);
+                            temp.push(datePickerClass[k].value);
+                            temp.push(fixedPayoutClass[k].value);
+                            temp.push(variablePayoutClass[k].value);
+                            if(checkboxClass[k].checked == true) {
+                                temp.push("Completed"); 
+                                if(paidStatus[k].innerText == "") {
+                                    paidStatus[k].innerText = "Due";
+                                }
+                            } else {
+                                temp.push("Ongoing");
+                                taskStatusChecker = "Ongoing";
+                            }
+
+                            temp.push(requestDelivery[l][9]);
+                            temp.push(requestDelivery[l][10]);
+                            temp.push(requestDelivery[l][11]);
+
+                            temp.push(paidStatus[k].innerText);
+                            
+                            temp.push(requestDelivery[l][13]);
+                            
+                            if(trackerFlag == true && (requestDelivery[l][14] != "Yet to update" || requestDelivery[l][14] != "Updated")) {
+                                temp.push("Yet to update");    
+                            } else {
+                                temp.push(requestDelivery[l][14]);
+                            }
+                            
+                            temp.push(requestDelivery[l][15]);
+                            if(completedTaskBoolean == true && requestDelivery[l][16] == undefined) {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth()+1; 
+                                var yyyy = today.getFullYear();
+                                if(dd<10) 
+                                    dd='0'+dd;
+
+                                if(mm<10) 
+                                    mm='0'+mm;
+                                    
+                                var date = dd+'/'+mm+'/'+yyyy;
+
+                                temp.push(date);
+                            } else {
+                                temp.push(requestDelivery[l][16]);
+                            }
+
+                            data.push(temp);
 
                             let str = "Delivery!A"+num;
                             var params = {
@@ -457,131 +446,53 @@ async function saveProjectTasks() {
                             };
                         
                             var request = await gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
-
-                            // if(requestDelivery[l][12] == "Due") {
-                            //     var params1 = {
-                            //         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                            //         range: "Delivery!M"+num,
-                            //         valueInputOption: "USER_ENTERED",
-                            //     };
-                            
-                            //     var valueRangeBody1 = {
-                            //         "majorDimension": "ROWS",
-                            //         "values": paidValue,
-                            //     };
-                            
-                            //     var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
-                            // }
-                            // if(trackerFlag == true) {
-
-                            //     var params2 = {
-                            //         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                            //         range: "Delivery!O"+num,
-                            //         valueInputOption: "USER_ENTERED",
-                            //     };
-                            
-                            //     var valueRangeBody2 = {
-                            //         "majorDimension": "ROWS",
-                            //         "values": [["Yet to update"]],
-                            //     };
-                            
-                            //     var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
-                            // }
-
-                            // if(completedTaskBoolean == true && requestDelivery[l][16] == undefined) {
-                            //     console.log(requestDelivery[l][16]);
-
-                            //     var today = new Date();
-                            //     var dd = today.getDate();
-                            //     var mm = today.getMonth()+1; 
-                            //     var yyyy = today.getFullYear();
-                            //     if(dd<10) 
-                            //         dd='0'+dd;
-
-                            //     if(mm<10) 
-                            //         mm='0'+mm;
-                                    
-                            //     var date = dd+'/'+mm+'/'+yyyy;
-
-                            //     var params2 = {
-                            //         spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                            //         range: "Delivery!Q"+num,
-                            //         valueInputOption: "USER_ENTERED",
-                            //     };
-                            
-                            //     var valueRangeBody2 = {
-                            //         "majorDimension": "ROWS",
-                            //         "values": [[date]],
-                            //     };
-                            
-                            //     var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
-                            // }
-                        }
-
-                        let paidValue = [];
-                        paidValue.push(arr);
-
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText)) {
-                            var params1 = {
-                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                                range: "Delivery!M"+num,
-                                valueInputOption: "USER_ENTERED",
-                            };
-                        
-                            var valueRangeBody1 = {
-                                "majorDimension": "ROWS",
-                                "values": paidValue,
-                            };
-                        
-                            var request1 = await gapi.client.sheets.spreadsheets.values.update(params1, valueRangeBody1);
-                        }
-
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && trackerFlag == true && (requestDelivery[l][14] != "Yet to update" || requestDelivery[l][14] != "Updated")) {
-
-                            var params2 = {
-                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                                range: "Delivery!O"+num,
-                                valueInputOption: "USER_ENTERED",
-                            };
-                        
-                            var valueRangeBody2 = {
-                                "majorDimension": "ROWS",
-                                "values": [["Yet to update"]],
-                            };
-                        
-                            var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
-                        }
-
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && completedTaskBoolean == true && requestDelivery[l][16] == undefined) {
-                            var today = new Date();
-                            var dd = today.getDate();
-                            var mm = today.getMonth()+1; 
-                            var yyyy = today.getFullYear();
-                            if(dd<10) 
-                                dd='0'+dd;
-
-                            if(mm<10) 
-                                mm='0'+mm;
-                                
-                            var date = dd+'/'+mm+'/'+yyyy;
-
-                            var params2 = {
-                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
-                                range: "Delivery!Q"+num,
-                                valueInputOption: "USER_ENTERED",
-                            };
-                        
-                            var valueRangeBody2 = {
-                                "majorDimension": "ROWS",
-                                "values": [[date]],
-                            };
-                        
-                            var request1 = await gapi.client.sheets.spreadsheets.values.update(params2, valueRangeBody2);
                         }
                     }
                 }
 
                 if(flag == false) {
+                    let temp = [];
+                    let data = [];
+                    
+                    temp.push(id);
+                    temp.push(name);
+                    temp.push(taskIdNum[k].innerText);
+                    temp.push(taskNameClass[k].value);
+                    temp.push(selectClass[k].value);
+                    temp.push(datePickerClass[k].value);
+                    temp.push(fixedPayoutClass[k].value);
+                    temp.push(variablePayoutClass[k].value);
+                    if(checkboxClass[k].checked == true) {
+                        temp.push("Completed"); 
+                        taskStatusChecker = "Completed";
+                        completedTaskBoolean = true;
+                        if(paidStatus[k].innerText == "") {
+                            paidStatus[k].innerText = "Due";
+                        }
+                    } else {
+                        temp.push("Ongoing");
+                        taskStatusChecker = "Ongoing";
+                    }
+                    temp.push("");
+                    temp.push("");
+                    temp.push("");
+                    temp.push("");
+                    temp.push("");
+                    temp.push("");
+
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth()+1; 
+                    var yyyy = today.getFullYear();
+                    if(dd<10) 
+                        dd='0'+dd;
+
+                    if(mm<10) 
+                        mm='0'+mm;
+                        
+                    var date = dd+'/'+mm+'/'+yyyy;
+                    temp.push(date);
+                    data.push(temp);
 
                     console.log('false');
 
@@ -626,23 +537,9 @@ async function saveProjectTasks() {
         idName = idName[0].innerText;
 
         let id = "";
-        let name = "";
-
         let iterator = 0;
         while(idName[iterator] != " ") {
             id += idName[iterator];
-            iterator++;
-        }
-        while(idName[iterator] != ":") {
-            iterator++;
-        }
-        iterator++;
-        while(idName[iterator] != ":") {
-            iterator++;
-        }
-        iterator+=2;
-        while(iterator < idName.length) {
-            name += idName[iterator];
             iterator++;
         }
 
@@ -651,11 +548,10 @@ async function saveProjectTasks() {
             
         if(temp[0].checked == true) {
             arr.push("Completed");
-            projectStatusArray.push(arr);
         } else {
             arr.push("Ongoing");
-            projectStatusArray.push(arr);
         }
+        projectStatusArray.push(arr);
 
         for(let j=0; j<requestProjects.length; j++) {
             if(id == requestProjects[j][0] && requestProjects[j][10] != arr[0]) {
@@ -678,9 +574,6 @@ async function saveProjectTasks() {
             }
         }
     } 
-    // setTimeout(function() {
-    //     location.reload();
-    // }, 5000);
 
     //Team member occupancy update function
 
@@ -843,8 +736,6 @@ async function updateSheet() {
     
         var request = await gapi.client.sheets.spreadsheets.values.clear(params1, clearValuesRequestBody);
     }
-
-    // location.reload();
 }
 
 async function deleteTask(id) {
@@ -1026,7 +917,7 @@ function updateSignInStatus(isSignedIn) {
         signInButton.innerHTML = "<b>Signed In</b>";
 
         makeApiCallManageProjects();
-        getTeamArray();
+        getAllSheets();
     }
 }
 
