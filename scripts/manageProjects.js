@@ -136,7 +136,10 @@ function addNewTask(id, Id ="", taskName = "", dueDate = "", teamMember = "", fi
             let taskId = arrList[i].getElementsByClassName("taskId");
             let num = taskId[0].getElementsByTagName("h6");
             let temp = num[0].innerHTML;
-            x = max(x, parseInt(temp));
+
+            if(parseInt(temp) > x) {
+                x = parseInt(temp);
+            }
         }
 
         taskId = arrList[countTask-1].getElementsByClassName("taskId");
