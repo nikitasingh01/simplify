@@ -3,7 +3,8 @@ let projectArray = [];
 let deliveryArray = [];
 async function getAllSheets() {
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo',
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE', 
         range: 'Team!A2:Z1000',
     };
 
@@ -308,7 +309,8 @@ async function saveProjectTasks() {
     obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Saving...`;
 
     var paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Delivery!A2:Z1000',
     };
 
@@ -387,8 +389,19 @@ async function saveProjectTasks() {
                             flag = true;
                         }
                             
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && (taskNameClass[k].value != requestDelivery[l][3] || selectClass[k].value != requestDelivery[l][4] || datePickerClass[k].value != requestDelivery[l][5] || fixedPayoutClass[k].value != requestDelivery[l][6] || variablePayoutClass[k].value != requestDelivery[l][7] || taskStatusChecker != requestDelivery[l][8] || paidStatus[k].innerText != requestDelivery[l][12] || ((trackerFlag == true && (requestDelivery[l][14] == undefined))) || (completedTaskBoolean == true && requestDelivery[l][16] == undefined))) {
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && 
+                            (taskNameClass[k].value != requestDelivery[l][3] || 
+                            selectClass[k].value != requestDelivery[l][4] || 
+                            datePickerClass[k].value != requestDelivery[l][5] || 
+                            fixedPayoutClass[k].value != requestDelivery[l][6] || 
+                            variablePayoutClass[k].value != requestDelivery[l][7] || 
+                            taskStatusChecker != requestDelivery[l][8] || 
+                            paidStatus[k].innerText != requestDelivery[l][12] || 
+                            ((trackerFlag == true && (requestDelivery[l][14] == ""))) || 
+                            (completedTaskBoolean == true && requestDelivery[l][16] == undefined))) {
 
+                            console.log(id);
+                            console.log(taskIdNum[k].innerText);
                             let temp = [];
                             let data = [];
                             
@@ -413,9 +426,8 @@ async function saveProjectTasks() {
                             temp.push(paidStatus[k].innerText);
                             
                             temp.push(requestDelivery[l][13]);
-                            console.log("yet to update");
                                 
-                            if(trackerFlag == true && (requestDelivery[l][14] == undefined)) {
+                            if(trackerFlag == true && (requestDelivery[l][14] == "")) {
                                 console.log("yet to update");
                                 temp.push("Yet to update");    
                             } else {
@@ -442,10 +454,11 @@ async function saveProjectTasks() {
                             }
 
                             data.push(temp);
-
+                            console.log(data);
                             let str = "Delivery!A"+num;
                             var params = {
-                                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                                spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
                                 range: str,
                                 valueInputOption: "USER_ENTERED",
                             };
@@ -508,7 +521,8 @@ async function saveProjectTasks() {
                     console.log('false');
 
                     var params = {
-                        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
                         range: 'Delivery!A2:Z1000',
                         valueInputOption: "USER_ENTERED",
                     };
@@ -534,7 +548,8 @@ async function saveProjectTasks() {
     // Project Toggle Button
 
     var paramsProjects = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Projects!A2:Z1000',
     };
 
@@ -571,7 +586,8 @@ async function saveProjectTasks() {
                 var str = "Projects!K"+num; 
 
                 var params1 = {
-                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
                     range: str,
                     valueInputOption: "USER_ENTERED",
                 };
@@ -589,7 +605,8 @@ async function saveProjectTasks() {
     //Team member occupancy update function
 
     var paramsDelivery1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Team!A2:Z1000',
     };
 
@@ -597,7 +614,8 @@ async function saveProjectTasks() {
     requestTeam = requestTeam.result.values;
 
     paramsDelivery = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Delivery!A2:Z1000',
     };
 
@@ -610,13 +628,13 @@ async function saveProjectTasks() {
         for(let j=0; j<requestTasks.length; j++) {
             if(requestTeam[i][0] == requestTasks[j][4] && requestTasks[j][8] == "Ongoing" && requestTeam[i][2] != "Occupied") {
                 taskBoolean = true;
-                console.log(requestTeam[i][0]);
-            
+
                 var num = i+2;
                 var str = "Team!C"+num; 
 
                 var params1 = {
-                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
                     range: str,
                     valueInputOption: "USER_ENTERED",
                 };
@@ -636,7 +654,8 @@ async function saveProjectTasks() {
             var str = "Team!C"+num; 
 
             var params1 = {
-                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
                 range: str,
                 valueInputOption: "USER_ENTERED",
             };
@@ -653,15 +672,19 @@ async function saveProjectTasks() {
 
 async function makeApiCallManageProjects() {
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Projects!A2:Z1000',
     };
 
     var request = await gapi.client.sheets.spreadsheets.values.get(params);
     projectArray = request.result.values;
 
+    // console.log(projectArray);
+
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo',
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE', 
         range: 'Delivery!A2:Z1000',
     };
 
@@ -684,7 +707,8 @@ async function makeApiCallManageProjects() {
 
 async function updateSheet() {
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Delivery!A2:Z1000',
     };
 
@@ -709,7 +733,8 @@ async function updateSheet() {
     }
 
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Delivery!A2',
         valueInputOption: "USER_ENTERED",
     };
@@ -738,7 +763,8 @@ async function updateSheet() {
         console.log(str);
 
         var params1 = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
             range: str,
         };
     
@@ -760,7 +786,8 @@ async function deleteTask(id) {
     taskName = taskName[0].value;
     
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
         range: 'Delivery!A2:Z1000',
     };
 
@@ -785,7 +812,8 @@ async function deleteTask(id) {
             console.log(str);
             
             var params1 = {
-                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                // spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                spreadsheetId: '12qJIZIOTvOc8KMaxu90_VHbcwDqqpDAMP-Ec8aOnGIE',
                 range: str,
             };
         
