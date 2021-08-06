@@ -413,7 +413,8 @@ async function saveProjectTasks() {
                             temp.push(paidStatus[k].innerText);
                             
                             temp.push(requestDelivery[l][13]);
-                            
+                            console.log("yet to update");
+                                
                             if(trackerFlag == true && (requestDelivery[l][14] == undefined)) {
                                 console.log("yet to update");
                                 temp.push("Yet to update");    
