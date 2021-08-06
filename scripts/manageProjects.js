@@ -382,7 +382,7 @@ async function saveProjectTasks() {
                             flag = true;
                         }
                             
-                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && (taskNameClass[k].value != requestDelivery[l][3] || selectClass[k].value != requestDelivery[l][4] || datePickerClass[k].value != requestDelivery[l][5] || fixedPayoutClass[k].value != requestDelivery[l][6] || variablePayoutClass[k].value != requestDelivery[l][7] || taskStatusChecker != requestDelivery[l][8] || paidStatus[k].innerText != requestDelivery[l][12] || (trackerFlag == true && (requestDelivery[l][14] != "Yet to update" || requestDelivery[l][14] != "Updated")) || (completedTaskBoolean == true && requestDelivery[l][16] == undefined))) {
+                        if((requestDelivery[l][0] == id && requestDelivery[l][2]==taskIdNum[k].innerText) && (taskNameClass[k].value != requestDelivery[l][3] || selectClass[k].value != requestDelivery[l][4] || datePickerClass[k].value != requestDelivery[l][5] || fixedPayoutClass[k].value != requestDelivery[l][6] || variablePayoutClass[k].value != requestDelivery[l][7] || taskStatusChecker != requestDelivery[l][8] || paidStatus[k].innerText != requestDelivery[l][12] || (trackerFlag == true && (requestDelivery[l][14] == undefined)) || (completedTaskBoolean == true && requestDelivery[l][16] == undefined))) {
 
                             let temp = [];
                             let data = [];
@@ -413,7 +413,7 @@ async function saveProjectTasks() {
                             
                             temp.push(requestDelivery[l][13]);
                             
-                            if(trackerFlag == true && (requestDelivery[l][14] != "Yet to update" || requestDelivery[l][14] != "Updated")) {
+                            if(trackerFlag == true && (requestDelivery[l][14] == undefined)) {
                                 temp.push("Yet to update");    
                             } else {
                                 temp.push(requestDelivery[l][14]);
