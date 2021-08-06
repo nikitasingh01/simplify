@@ -875,7 +875,7 @@ async function makeApiCallPayouts() {
     for(let i=0; i<teamArray.length; i++) {
         let flag = false;
         for(let j=0; j<deliveryArray.length; j++) {
-            if(deliveryArray[j][4] == teamArray[i][0] && deliveryArray[j][14]=="Yet to update") {
+            if(deliveryArray[j][4] == teamArray[i][0] && (deliveryArray[j][12] == "Due" || deliveryArray[j][14] == "Yet to update")) {
                 flag = true;
             }
         }
