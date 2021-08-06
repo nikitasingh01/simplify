@@ -364,6 +364,10 @@ async function saveProjectTasks() {
                 if(checkboxClass[k].checked == true) {
                     taskStatusChecker = "Completed";
                     completedTaskBoolean = true;
+
+                    if(paidStatus[k].innerText == "") {
+                        paidStatus[k].innerText = "Due";
+                    }
                 } else {
                     taskStatusChecker = "Ongoing";
                 }
@@ -397,12 +401,8 @@ async function saveProjectTasks() {
                             temp.push(variablePayoutClass[k].value);
                             if(checkboxClass[k].checked == true) {
                                 temp.push("Completed"); 
-                                if(paidStatus[k].innerText == "") {
-                                    paidStatus[k].innerText = "Due";
-                                }
                             } else {
                                 temp.push("Ongoing");
-                                taskStatusChecker = "Ongoing";
                             }
 
                             temp.push(requestDelivery[l][9]);
