@@ -45,7 +45,7 @@ function displayTeam(arr) {
 let teamArray = [];
 async function makeApiCallTeam() {
     var params = {
-    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     range: 'Team!A2:Z1000',
     };
 
@@ -98,7 +98,7 @@ async function makeRow(a, b, c, d) {
     firstRow.appendChild(bankNameTagDiv);
     if(a == "Primary Skills") {
         var params1 = {
-            spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+            spreadsheetId: '139zjaiJ1Fm6BG3XX3Pego_fB8n1cwF8aCKIJFY57g0w', 
             range: 'Skills!A2:Z1000',
         };
     
@@ -167,7 +167,7 @@ async function updateMemberDetails(id) {
     obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Updating...`;
 
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Team!A2:Z1000',
     };
 
@@ -227,7 +227,7 @@ async function updateMemberDetails(id) {
             let num = i+2;
 
             var params2 = {
-                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
                 range: "Team!A"+num,
                 valueInputOption: "USER_ENTERED",
             };
