@@ -68,7 +68,7 @@ function displayYearlyView(year, projects, delivery) {
 
 async function reportsYearlyView(projects, delivery) {
     // paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Projects!A2:Z1000',
     // };
 
@@ -76,7 +76,7 @@ async function reportsYearlyView(projects, delivery) {
     // projects = projects.result.values;
 
     // paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Delivery!A2:Z1000',
     // };
 
@@ -211,7 +211,7 @@ function displayQuarterlyView(num, year, projects, delivery) {
 
 async function reportsQuarterlyView(projects, delivery) {
     // var paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Projects!A2:Z1000',
     // };
 
@@ -219,7 +219,7 @@ async function reportsQuarterlyView(projects, delivery) {
     // projects = projects.result.values;
 
     // paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Delivery!A2:Z1000',
     // };
 
@@ -308,7 +308,7 @@ function displayMonthlyView(thisMonth, monthArray, delivery, projects) {
 
 async function reportsMonthlyView(projects, delivery) {
     // var paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Projects!A2:Z1000',
     // };
 
@@ -316,7 +316,7 @@ async function reportsMonthlyView(projects, delivery) {
     // projects = projects.result.values;
 
     // paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Delivery!A2:Z1000',
     // };
 
@@ -422,7 +422,7 @@ function displayProjects(arr, deliveryArray) {
 
 async function fetchProjectData(projects, delivery) {
     // var paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Projects!A2:Z1000',
     // };
 
@@ -430,7 +430,7 @@ async function fetchProjectData(projects, delivery) {
     // projects = projects.result.values;
 
     // paramsDelivery = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Delivery!A2:Z1000',
     // };
 
@@ -895,7 +895,7 @@ async function updateSignInStatus(isSignedIn) {
         signInButton.innerHTML = "<b>Signed In</b>";
 
         paramsDelivery = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
             range: 'Projects!A2:Z1000',
         };
     
@@ -903,7 +903,7 @@ async function updateSignInStatus(isSignedIn) {
         projects = projects.result.values;
     
         paramsDelivery = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
             range: 'Delivery!A2:Z1000',
         };
     
@@ -911,7 +911,7 @@ async function updateSignInStatus(isSignedIn) {
         delivery = delivery.result.values;
     
         paramsDelivery = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
             range: 'Team!A2:Z1000',
         };
     
@@ -919,7 +919,7 @@ async function updateSignInStatus(isSignedIn) {
         team = team.result.values;
 
         paramsDelivery = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
             range: 'Payouts!A2:Z1000',
         };
     
