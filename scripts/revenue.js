@@ -44,7 +44,7 @@ function saveRevenue() {
     }
 
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Revenue!A2:Z1000',
         valueInputOption: "USER_ENTERED",
     };
@@ -94,7 +94,7 @@ function saveRevenue() {
 let revenueArray = [];
 function makeApiCallRevenue() {
     var params = {
-    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     range: 'Revenue!A2:Z1000',
     };
 
