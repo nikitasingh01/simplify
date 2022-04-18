@@ -1,6 +1,6 @@
 async function makeApiCallHelperSheet() {
     var params1 = {
-        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        spreadsheetId: '139zjaiJ1Fm6BG3XX3Pego_fB8n1cwF8aCKIJFY57g0w', 
         range: 'Skills!A2:Z1000',
     };
 
@@ -31,7 +31,7 @@ async function addTeamMember() {
     
 
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Team!A2:Z1000',
     };
 
@@ -71,7 +71,7 @@ async function addTeamMember() {
     var date = dd+'/'+mm+'/'+yyyy;
 
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Team!A2:Z1000',
         valueInputOption: "USER_ENTERED",
     };
