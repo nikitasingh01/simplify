@@ -1,6 +1,6 @@
 async function makeApiCallHelperSheet() {
     var params1 = {
-        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        spreadsheetId: '139zjaiJ1Fm6BG3XX3Pego_fB8n1cwF8aCKIJFY57g0w', 
         range: 'Project Type!A2:Z1000',
     };
 
@@ -12,7 +12,7 @@ async function makeApiCallHelperSheet() {
         projectType = request1.result.values;
 
     var params2 = {
-        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        spreadsheetId: '139zjaiJ1Fm6BG3XX3Pego_fB8n1cwF8aCKIJFY57g0w', 
         range: 'Contract Type!A2:Z1000',
     };
 
@@ -50,7 +50,7 @@ let clientArrayAutoFill = [];
 async function makeApiCallTotalProjectValue() {
     let clientArray = [];
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Clients!A2:Z1000',
     };
 
@@ -61,7 +61,7 @@ async function makeApiCallTotalProjectValue() {
     }
 
     var params2 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Projects!A2:Z1000',
     };
 
@@ -84,7 +84,7 @@ async function makeApiCallTotalProjectValue() {
     }
 
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Clients!A2',
         valueInputOption: "USER_ENTERED",
     };
@@ -104,14 +104,14 @@ async function makeApiCallTotalProjectValue() {
 async function feesRateCalculation() {
     let feeRate = 0.0;
     var params1 = {
-        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        spreadsheetId: '139zjaiJ1Fm6BG3XX3Pego_fB8n1cwF8aCKIJFY57g0w', 
         range: 'Fees Rate!A4:Z1000',
     };
     var request1 = await gapi.client.sheets.spreadsheets.values.get(params1);
     var regularContractFeesRate = request1.result.values;
 
     var params2 = {
-        spreadsheetId: '1_pUO34inYV81KGTy-DFZsr7rLtpTewd7tZuL_g9EwHA', 
+        spreadsheetId: '139zjaiJ1Fm6BG3XX3Pego_fB8n1cwF8aCKIJFY57g0w', 
         range: 'Fees Rate!E3',
     };
     var request2 = await gapi.client.sheets.spreadsheets.values.get(params2);
@@ -125,7 +125,7 @@ async function feesRateCalculation() {
 
     var totalProjectValue = 0;
     var params3 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Projects!A2:Z1000',
     };
 
@@ -189,7 +189,7 @@ async function saveNewProject(id) {
     let clientArray = [];
 
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Clients!A2:Z1000',
     };
 
@@ -199,7 +199,7 @@ async function saveNewProject(id) {
         clientArray = request.result.values;
 
     var params2 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Projects!A2:Z1000',
     };
 
@@ -248,7 +248,7 @@ async function saveNewProject(id) {
             }
 
             var params = {
-                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
                 range: 'Clients!A2',
                 valueInputOption: "USER_ENTERED",
             };
@@ -272,7 +272,7 @@ async function saveNewProject(id) {
     if(flag === false) {
 
         var params = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
             range: 'Clients!A2:Z1000',
             valueInputOption: "USER_ENTERED",
         };
@@ -330,7 +330,7 @@ async function saveNewProject(id) {
 
 
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Projects!A2:Z1000',
         valueInputOption: "USER_ENTERED",
     };
