@@ -32,7 +32,7 @@ async function totalPayCalculation(id) {
     let totalPayoutsDiv = document.getElementsByClassName("totalPay");
 
     // var params1 = {
-    //     spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+    //     spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
     //     range: 'Delivery!A2:Z1000',
     // };
 
@@ -125,7 +125,7 @@ async function updateTracker(id) {
     teamMemberName = teamMemberName[0].innerText;
 
     var params = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Team!A2:Z1000',
     };
 
@@ -211,7 +211,7 @@ async function updateTracker(id) {
     var request = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
 
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Payouts!A2:Z1000',
     };
 
@@ -243,7 +243,7 @@ async function updateTracker(id) {
             let str = "Payouts!D"+tempRange;
             
             var params2 = {
-                spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
                 range: str,
                 valueInputOption: "USER_ENTERED",
             };
@@ -258,7 +258,7 @@ async function updateTracker(id) {
     }
 
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Delivery!A2:Z1000',
     };
 
@@ -313,7 +313,7 @@ async function updateTracker(id) {
                 let num = j+2;
                 rangeStr += num;
                 var params = {
-                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
                     range: rangeStr,
                     valueInputOption: "USER_ENTERED",
                 };
@@ -680,7 +680,7 @@ async function savePayouts(id, count) {
     obj.innerHTML = `<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span> Saving...`;
 
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Delivery!A2:Z1000',
     };
 
@@ -776,7 +776,7 @@ async function savePayouts(id, count) {
                 rangeStr += num;
 
                 var params = {
-                    spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                    spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
                     range: rangeStr,
                     valueInputOption: "USER_ENTERED",
                 };
@@ -802,7 +802,7 @@ async function savePayouts(id, count) {
 async function makeApiCallPayouts() {
     
     var params1 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Delivery!A2:Z1000',
     };
 
@@ -810,7 +810,7 @@ async function makeApiCallPayouts() {
     let deliveryArray = request1.result.values;
 
     var params2 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Team!A2:Z1000',
     };
 
@@ -818,7 +818,7 @@ async function makeApiCallPayouts() {
     let teamArray = request2.result.values;
 
     var params3 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Projects!A2:Z1000',
     };
 
@@ -826,7 +826,7 @@ async function makeApiCallPayouts() {
     let projectsArray = request3.result.values;
 
     var params4 = {
-        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
         range: 'Payouts!A2:Z1000',
     };
 
@@ -1020,7 +1020,7 @@ async function updatePayoutsSheet(id) {
         arrayTwo.push(arrayOne);
 
         var params = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
             range: 'Payouts!A2:Z1000',
             valueInputOption: "USER_ENTERED",
         };
@@ -1056,7 +1056,7 @@ async function updatePayoutsSheet(id) {
         temp2.innerText = parseInt(temp.innerText) - parseInt(temp1.innerText);
 
         var params1 = {
-            spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+            spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
             range: 'Delivery!A2:Z1000',
         };
     
@@ -1115,7 +1115,7 @@ async function updatePayoutsSheet(id) {
                     let num = j+2;
                     rangeStr += num;
                     var params = {
-                        spreadsheetId: '1g9y32IkyujOupw6O6eRhtlCcwhn5vv9mM_Yr4peRRmo', 
+                        spreadsheetId: '1FJGc-rKYqcrwDTPfdo4Hzx2Mpcou558aco9Sp1BKNLA', 
                         range: rangeStr,
                         valueInputOption: "USER_ENTERED",
                     };
